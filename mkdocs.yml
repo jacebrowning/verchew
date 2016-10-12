@@ -1,0 +1,13 @@
+site_name: verchew
+site_description: Chews through your system dependencies, spitting out incompatible versions.
+site_author: Jace Browning
+repo_url: https://github.com/jacebrowning/verchew
+
+theme: readthedocs
+
+pages:
+- Home: index.md
+- About:
+  - Release Notes: about/changelog.md
+  - Contributing: about/contributing.md
+  - License: about/license.md
