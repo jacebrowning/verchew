@@ -13,7 +13,6 @@ class TestVerchew(unittest.TestCase):
 
     def test_conversion(self):
         runner = CliRunner()
-        result = runner.invoke(main, ['42'])
+        result = runner.invoke(main, [])
 
-        self.assertEqual(result.exit_code, 0)
-        self.assertEqual(result.output, "12.80165\n")
+        self.assertEqual(result.exit_code, -1)

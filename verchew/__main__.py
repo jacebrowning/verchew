@@ -3,7 +3,7 @@
 """Package entry point."""
 
 
-from verchew.gui import main
+from verchew.cli import main
 
 
 if __name__ == '__main__':
