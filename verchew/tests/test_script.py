@@ -1,5 +1,7 @@
 # pylint: disable=unused-variable,unused-argument,expression-not-assigned
 
+from __future__ import unicode_literals
+
 import pytest
 from expecter import expect
 
