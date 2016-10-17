@@ -35,4 +35,4 @@ def describe_cli():
         cmd = cli(env, '--version')
 
         expect(cmd.returncode) == 0
-        expect(cmd.stderr).contains("verchew v0.")
+        expect(cmd.stdout or cmd.stderr).contains("verchew v0.")
