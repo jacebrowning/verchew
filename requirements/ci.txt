@@ -1,3 +1,6 @@
+# Compatibility
+six
+
 # Linters
 pep8
 pep257
@@ -9,6 +12,7 @@ pytest-describe
 pytest-expecter
 pytest-cov
 pytest-random
+scripttest
 
 # Coverage
 coverage
