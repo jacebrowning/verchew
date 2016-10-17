@@ -85,7 +85,7 @@ def check_dependencies(config):
     success = []
 
     for name, settings in config.items():
-        show("Checking the version of {0}...".format(name), head=True)
+        show("Checking for {0}...".format(name), head=True)
         output = get_version(settings['cli'])
         if settings['version'] in output:
             show("✔ MATCHED: {0}".format(settings['version']))
