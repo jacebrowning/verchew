@@ -5,7 +5,7 @@ import unittest
 
 from click.testing import CliRunner
 
-from verchew.cli import main
+from verchew.script import main
 
 
 class TestVerchew(unittest.TestCase):

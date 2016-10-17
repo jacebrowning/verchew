@@ -54,7 +54,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
 
     entry_points={'console_scripts': [
-        'verchew = verchew.cli:main',
+        'verchew = verchew.script:main',
     ]},
 
     long_description=read_descriptions(),
