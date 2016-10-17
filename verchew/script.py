@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import os
 import sys
 import argparse
@@ -29,7 +31,7 @@ def main():
 def parse_args():
     parser = argparse.ArgumentParser()
     # TODO: add '--version' option
-    # parser.add_argument('-V', '--version', action='version', version=VERSION)
+    # parser.add_argument('--version', action='version', version=VERSION)
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help="enable verbose logging")
 
@@ -102,9 +104,11 @@ def get_version(program):
 
     show("$ {0}".format(" ".join(args)))
     try:
-        output = subprocess.check_output(args, stderr=subprocess.STDOUT)
+        raw = subprocess.check_output(args, stderr=subprocess.STDOUT)
     except OSError:
         output = "command not found"
+    else:
+        output = raw.decode('utf-8')
     log.debug("Command output: %r", output)
 
     show(output.splitlines()[0])
