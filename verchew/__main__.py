@@ -3,8 +3,8 @@
 """Package entry point."""
 
 
-from verchew.gui import main
+from verchew.script import main
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     main()

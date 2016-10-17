@@ -54,15 +54,15 @@ setuptools.setup(
     packages=setuptools.find_packages(),
 
     entry_points={'console_scripts': [
-        'verchew-cli = verchew.cli:main',
-        'verchew-gui = verchew.gui:main',
+        'verchew = verchew.script:main',
     ]},
 
     long_description=read_descriptions(),
     license='MIT',
     classifiers=[
-        # TODO: update this list to match your application: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
@@ -72,6 +72,11 @@ setuptools.setup(
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Topic :: Software Development',
+        'Topic :: Software Development :: Build Tools',
+        'Topic :: Software Development :: Testing',
+        'Topic :: System :: Installation/Setup',
+        'Topic :: Utilities',
     ],
 
     install_requires=open("requirements.txt").readlines(),
