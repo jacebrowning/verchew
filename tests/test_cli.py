@@ -1,5 +1,7 @@
 # pylint: disable=redefined-outer-name,unused-variable,expression-not-assigned
 
+from __future__ import unicode_literals
+
 import os
 import sys
 
