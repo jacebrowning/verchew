@@ -1,6 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# The MIT License (MIT)
+# Copyright © 2016, Jace Browning
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all wcopies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+
 from __future__ import unicode_literals
 
 import os
@@ -13,6 +35,7 @@ except ImportError:
 import subprocess
 import logging
 
+__version__ = '0.1'
 
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
 
@@ -30,8 +53,8 @@ def main():
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    # TODO: add '--version' option
-    # parser.add_argument('--version', action='version', version=VERSION)
+    version = "%(prog)s v" + __version__
+    parser.add_argument('--version', action='version', version=version)
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help="enable verbose logging")
 

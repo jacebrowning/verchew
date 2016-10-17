@@ -242,6 +242,7 @@ $(DIST_FILES): $(MODULES) README.rst CHANGELOG.rst
 	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 	$(PYTHON) setup.py sdist
 	$(PYTHON) setup.py bdist_wheel
+	cp $(PACKAGE)/script.py dist/$(PROJECT) && chmod a+x dist/$(PROJECT)
 
 %.rst: %.md
 	pandoc -f markdown_github -t rst -o $@ $<

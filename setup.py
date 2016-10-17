@@ -18,9 +18,9 @@ def check_python_version():
         sys.exit("Python {}.{}+ is required.".format(*MINIMUM_PYTHON_VERSION))
 
 
-def read_package_variable(key):
+def read_package_variable(key, filename='__init__.py'):
     """Read the value of a variable from the package without importing."""
-    module_path = os.path.join(PACKAGE_NAME, '__init__.py')
+    module_path = os.path.join(PACKAGE_NAME, filename)
     with open(module_path) as module:
         for line in module:
             parts = line.strip().split(' ')
@@ -43,8 +43,8 @@ def read_descriptions():
 check_python_version()
 
 setuptools.setup(
-    name=read_package_variable('__project__'),
-    version=read_package_variable('__version__'),
+    name=PACKAGE_NAME,
+    version=read_package_variable(filename='script.py', key='__version__'),
 
     description="System dependency version checker.",
     url='https://github.com/jacebrowning/verchew',
