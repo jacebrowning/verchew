@@ -44,7 +44,7 @@ def describe_parse_config():
     def with_an_empty_section(config):
         config.write("""
         [Foobar]
-        """)
+        """.replace(' ' * 8, ''))
 
         expect(parse_config(str(config))) == {
             'Foobar': {},
@@ -56,7 +56,7 @@ def describe_parse_config():
 
         cli = foobar
         version = v1.2.3
-        """)
+        """.replace(' ' * 8, ''))
 
         expect(parse_config(str(config))) == {
             'Foobar': {
