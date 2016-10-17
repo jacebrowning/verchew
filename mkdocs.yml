@@ -7,6 +7,9 @@ theme: readthedocs
 
 pages:
 - Home: index.md
+- CLI:
+  - Configuration: cli/config.md
+  - Embedded Script: cli/embedding.md
 - About:
   - Release Notes: about/changelog.md
   - Contributing: about/contributing.md
