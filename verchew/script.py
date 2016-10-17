@@ -1,6 +1,10 @@
 import os
 import argparse
 import logging
+try:
+    import configparser  # Python 3
+except ImportError:
+    import ConfigParser as configparser  # Python 2
 
 
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
@@ -12,7 +16,9 @@ log = logging.getLogger(__name__)
 def main():
     args = parse_arguments()
     configure_logging(args.verbose)
-    find_config()
+    path = find_config()
+    config = parse_config(path)
+    return config
 
 
 def parse_arguments():
@@ -51,6 +57,21 @@ def find_config(root=None, config_filenames=None):
 
     msg = "No config file found in: {0}".format(root)
     raise RuntimeError(msg)
+
+
+def parse_config(path):
+    data = {}
+
+    log.info("Parsing config file: %s", path)
+    config = configparser.ConfigParser()
+    config.read(path)
+
+    for section in config.sections():
+        data[section] = {}
+        for name, value in config.items(section):
+            data[section][name] = value
+
+    return data
 
 
 if __name__ == '__main__':  # pragma: no cover
