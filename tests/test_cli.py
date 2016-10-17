@@ -25,10 +25,14 @@ def cli(env, *args):
 
 def describe_cli():
 
-    def describe_help():
+    def it_displays_help_information(env):
+        cmd = cli(env, '--help')
 
-        def it_returns_information(env):
-            cmd = cli(env, '--help')
+        expect(cmd.returncode) == 0
+        expect(cmd.stdout).contains("usage: verchew")
 
-            expect(cmd.returncode) == 0
-            expect(cmd.stdout).contains("usage: verchew")
+    def it_displays_version_information(env):
+        cmd = cli(env, '--version')
+
+        expect(cmd.returncode) == 0
+        expect(cmd.stderr).contains("verchew v0.")
