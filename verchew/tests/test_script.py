@@ -70,4 +70,4 @@ def describe_get_version():
         expect(get_version('foobar')) == "command not found"
 
     def when_found():
-        expect(get_version('python2')).contains("Python 2.")
+        expect(get_version('python')).contains("Python ")
