@@ -1,27 +1,32 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os
+import sys
 import argparse
-import logging
 try:
     import configparser  # Python 3
 except ImportError:
     import ConfigParser as configparser  # Python 2
+import subprocess
+import logging
 
 
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
-
 
 log = logging.getLogger(__name__)
 
 
 def main():
-    args = parse_arguments()
+    args = parse_args()
     configure_logging(args.verbose)
     path = find_config()
     config = parse_config(path)
-    return config
+    if not check_dependencies(config):
+        sys.exit(1)
 
 
-def parse_arguments():
+def parse_args():
     parser = argparse.ArgumentParser()
     # TODO: add '--version' option
     # parser.add_argument('-V', '--version', action='version', version=VERSION)
@@ -72,6 +77,51 @@ def parse_config(path):
             data[section][name] = value
 
     return data
+
+
+def check_dependencies(config):
+    success = []
+
+    for name, settings in config.items():
+        show("Checking the version of {0}...".format(name), head=True)
+        output = get_version(settings['cli'])
+        if settings['version'] in output:
+            show("✔ MATCHED: {0}".format(settings['version']))
+            success.append("✔")
+        else:
+            show("✖ EXPECTED: {0}".format(settings['version']))
+            success.append("✖")
+
+    show("Results: " + " ".join(success), head=True)
+
+    return "✖" not in success
+
+
+def get_version(program):
+    args = [program, '--version']
+
+    show("$ {0}".format(" ".join(args)))
+    try:
+        output = subprocess.check_output(args, stderr=subprocess.STDOUT)
+    except OSError:
+        output = "command not found"
+    log.debug("Command output: %r", output)
+
+    show(output.splitlines()[0])
+
+    return output
+
+
+def show(text, start='', end='\n', head=False):
+    """Python 2 and 3 compatible version of print."""
+    if head:
+        start = '\n'
+        end = '\n\n'
+
+    if log.getEffectiveLevel() < logging.WARNING:
+        log.info(text)
+    else:
+        sys.stdout.write(start + text + end)
 
 
 if __name__ == '__main__':  # pragma: no cover

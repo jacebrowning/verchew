@@ -3,7 +3,7 @@
 import pytest
 from expecter import expect
 
-from verchew.script import find_config, parse_config
+from verchew.script import find_config, parse_config, get_version
 
 
 def describe_find_config():
@@ -62,3 +62,12 @@ def describe_parse_config():
                 'version': 'v1.2.3',
             },
         }
+
+
+def describe_get_version():
+
+    def when_missing():
+        expect(get_version('foobar')) == "command not found"
+
+    def when_found():
+        expect(get_version('python2')).contains("Python 2.")
