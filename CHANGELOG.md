@@ -1,6 +1,6 @@
 # Revision History
 
-## 0.2 (unreleased)
+## 0.2 (2016/10/17)
 
 - Added `--version` command.
 

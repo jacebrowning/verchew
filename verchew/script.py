@@ -35,7 +35,7 @@ except ImportError:
 import subprocess
 import logging
 
-__version__ = '0.1'
+__version__ = '0.2'
 
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
 
