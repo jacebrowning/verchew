@@ -69,7 +69,7 @@ def describe_parse_config():
 def describe_get_version():
 
     def when_missing():
-        expect(get_version('foobar')) == "command not found"
+        expect(get_version('foobar')) == "sh: command not found: foobar"
 
     def when_found():
         expect(get_version('python')).contains("Python ")
