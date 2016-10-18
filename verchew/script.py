@@ -166,7 +166,9 @@ def show(text, start='', end='\n', head=False):
     if log.getEffectiveLevel() < logging.WARNING:
         log.info(text)
     else:
-        sys.stdout.write((start + text + end).encode('utf-8'))
+        encoded = (start + text + end).encode('utf-8')
+        sys.stdout.write(encoded)
+        sys.stdout.flush()
 
 
 if __name__ == '__main__':  # pragma: no cover
