@@ -35,7 +35,7 @@ except ImportError:
 import subprocess
 import logging
 
-__version__ = '0.2'
+__version__ = '0.2.1'
 
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
 
@@ -131,7 +131,7 @@ def get_version(program):
     except OSError:
         output = "command not found"
     else:
-        output = raw.decode('utf-8')
+        output = raw.decode('utf-8').strip()
     log.debug("Command output: %r", output)
 
     show(output.splitlines()[0])
