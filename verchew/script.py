@@ -38,6 +38,7 @@ import logging
 
 __version__ = '0.2.1'
 
+PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
 
 log = logging.getLogger(__name__)
@@ -166,8 +167,10 @@ def show(text, start='', end='\n', head=False):
     if log.getEffectiveLevel() < logging.WARNING:
         log.info(text)
     else:
-        encoded = (start + text + end).encode('utf-8')
-        sys.stdout.write(encoded)
+        formatted = (start + text + end)
+        if PY2:
+            formatted = formatted.encode('utf-8')
+        sys.stdout.write(formatted)
         sys.stdout.flush()
 
 
