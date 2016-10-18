@@ -1,5 +1,7 @@
 # pylint: disable=unused-variable,unused-argument,expression-not-assigned
 
+from __future__ import unicode_literals
+
 import pytest
 from expecter import expect
 
@@ -42,7 +44,7 @@ def describe_parse_config():
     def with_an_empty_section(config):
         config.write("""
         [Foobar]
-        """)
+        """.replace(' ' * 8, ''))
 
         expect(parse_config(str(config))) == {
             'Foobar': {},
@@ -54,7 +56,7 @@ def describe_parse_config():
 
         cli = foobar
         version = v1.2.3
-        """)
+        """.replace(' ' * 8, ''))
 
         expect(parse_config(str(config))) == {
             'Foobar': {

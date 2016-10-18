@@ -242,6 +242,7 @@ $(DIST_FILES): $(MODULES) README.rst CHANGELOG.rst
 	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 	$(PYTHON) setup.py sdist
 	$(PYTHON) setup.py bdist_wheel
+	cp $(PACKAGE)/script.py dist/$(PROJECT) && chmod a+x dist/$(PROJECT)
 
 %.rst: %.md
 	pandoc -f markdown_github -t rst -o $@ $<
@@ -268,7 +269,7 @@ register: dist ## Register the project on PyPI
 
 .PHONY: upload
 upload: .git-no-changes register ## Upload the current version to PyPI
-	$(TWINE) upload dist/*
+	$(TWINE) upload dist/*.*
 	$(OPEN) https://pypi.python.org/pypi/$(PROJECT)
 
 .PHONY: .git-no-changes
