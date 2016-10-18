@@ -77,4 +77,5 @@ def describe_cli():
         cmd = cli(env, '--root', FILES)
 
         expect(cmd.returncode) == 1
+        expect(cmd.stderr) == ""
         expect(cmd.stdout) == SAMPLE_OUTPUT
