@@ -1,6 +1,6 @@
 # Revision History
 
-## 0.3 (unreleased)
+## 0.3 (2016/10/18)
 
 - Added support for detecting missing and broken programs.
 
