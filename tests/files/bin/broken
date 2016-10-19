@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "An error occurred."
+echo "Please try again."
+
+exit 1

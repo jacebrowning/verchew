@@ -1,6 +1,3 @@
-# Compatibility
-six
-
 # Linters
 pep8
 pep257
