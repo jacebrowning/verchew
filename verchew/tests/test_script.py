@@ -76,6 +76,9 @@ def describe_get_version():
     def when_found():
         expect(get_version('python')).contains("Python ")
 
+    def with_custom_argument():
+        expect(get_version('python', argument='-V')).contains("Python ")
+
 
 def describe_format():
 
