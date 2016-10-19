@@ -40,6 +40,15 @@ __version__ = '0.2.1'
 
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
+STYLE = {
+    "x": "✖",
+    "~": "✔"
+}
+COLOR = {
+    "x": "\033[91m",  # red
+    "~": "\033[92m",  # green
+    None: "\033[0m",  # reset
+}
 
 log = logging.getLogger(__name__)
 
@@ -123,15 +132,15 @@ def check_dependencies(config):
         show("Checking for {0}...".format(name), head=True)
         output = get_version(settings['cli'])
         if settings['version'] in output:
-            show("✔ MATCHED: {0}".format(settings['version']))
-            success.append("✔")
+            show(_("~") + " MATCHED: {0}".format(settings['version']))
+            success.append(_("~"))
         else:
-            show("✖ EXPECTED: {0}".format(settings['version']))
-            success.append("✖")
+            show(_("x") + " EXPECTED: {0}".format(settings['version']))
+            success.append(_("x"))
 
     show("Results: " + " ".join(success), head=True)
 
-    return "✖" not in success
+    return _("x") not in success
 
 
 def get_version(program):
@@ -172,6 +181,23 @@ def show(text, start='', end='\n', head=False):
             formatted = formatted.encode('utf-8')
         sys.stdout.write(formatted)
         sys.stdout.flush()
+
+
+def _(word):
+    """Format and colorize a word based on available encoding."""
+    formatted = word
+
+    style_support = sys.stdout.encoding == 'UTF-8'
+    color_support = sys.stdout.isatty()
+
+    if style_support:
+        formatted = STYLE.get(word, word)
+
+    if color_support:
+        color = COLOR.get(word, '')
+        formatted = color + formatted + (COLOR[None] if color else '')
+
+    return formatted
 
 
 if __name__ == '__main__':  # pragma: no cover
