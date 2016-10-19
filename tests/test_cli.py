@@ -16,7 +16,7 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 FILES = os.path.join(ROOT, "files")
 BIN = os.path.join(FILES, "bin")
 
-SAMPLE_OUTPUT = """
+SAMPLE_OUTPUT_UNIX = """
 Checking for Valid Program...
 
 $ working --version
@@ -42,6 +42,35 @@ sh: command not found: missing
 x EXPECTED: 1.2.3
 
 Results: ~ x x x
+
+"""
+
+SAMPLE_OUTPUT_WINDOWS = """
+Checking for Valid Program...
+
+$ working --version
+sh: command not found: working
+x EXPECTED: 1.2.
+
+Checking for Invalid Program...
+
+$ working --version
+sh: command not found: working
+x EXPECTED: 4.
+
+Checking for Broken Program...
+
+$ broken --version
+sh: command not found: broken
+x EXPECTED: 1.2.3
+
+Checking for Missing Program...
+
+$ missing --version
+sh: command not found: missing
+x EXPECTED: 1.2.3
+
+Results: x x x x
 
 """
 
@@ -82,9 +111,18 @@ def describe_cli():
         expect(cmd.returncode) == 0
         expect(cmd.stdout or cmd.stderr).contains("verchew v0.")
 
-    def it_displays_results_when_run(env_with_bin):
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
+    def it_displays_results_when_run_on_unix(env_with_bin):
         cmd = cli(env_with_bin, '--root', FILES)
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
-        expect(cmd.stdout) == SAMPLE_OUTPUT
+        expect(cmd.stdout) == SAMPLE_OUTPUT_UNIX
+
+    @pytest.mark.skipif(sys.platform != 'win32', reason="windows-only")
+    def it_displays_results_when_run_on_windows(env_with_bin):
+        cmd = cli(env_with_bin, '--root', FILES)
+
+        expect(cmd.returncode) == 1
+        expect(cmd.stderr) == ""
+        expect(cmd.stdout) == SAMPLE_OUTPUT_WINDOWS
