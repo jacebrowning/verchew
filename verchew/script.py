@@ -32,12 +32,23 @@ try:
     import configparser  # Python 3
 except ImportError:
     import ConfigParser as configparser  # Python 2
-import subprocess
+from collections import OrderedDict
+from subprocess import Popen, PIPE, STDOUT
 import logging
 
 __version__ = '0.2.1'
 
+PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
+STYLE = {
+    "x": "✖",
+    "~": "✔"
+}
+COLOR = {
+    "x": "\033[91m",  # red
+    "~": "\033[92m",  # green
+    None: "\033[0m",  # reset
+}
 
 log = logging.getLogger(__name__)
 
@@ -45,20 +56,30 @@ log = logging.getLogger(__name__)
 def main():
     args = parse_args()
     configure_logging(args.verbose)
-    path = find_config()
+
+    log.debug("PWD: %s", os.getenv('PWD'))
+    log.debug("PATH: %s", os.getenv('PATH'))
+
+    path = find_config(args.root)
     config = parse_config(path)
+
     if not check_dependencies(config):
         sys.exit(1)
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
+
     version = "%(prog)s v" + __version__
     parser.add_argument('--version', action='version', version=version)
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help="enable verbose logging")
+    parser.add_argument('-r', '--root', metavar='PATH',
+                        help="use a custom project root")
 
-    return parser.parse_args()
+    args = parser.parse_args()
+
+    return args
 
 
 def configure_logging(count=0):
@@ -90,14 +111,14 @@ def find_config(root=None, config_filenames=None):
 
 
 def parse_config(path):
-    data = {}
+    data = OrderedDict()
 
     log.info("Parsing config file: %s", path)
     config = configparser.ConfigParser()
     config.read(path)
 
     for section in config.sections():
-        data[section] = {}
+        data[section] = OrderedDict()
         for name, value in config.items(section):
             data[section][name] = value
 
@@ -111,30 +132,37 @@ def check_dependencies(config):
         show("Checking for {0}...".format(name), head=True)
         output = get_version(settings['cli'])
         if settings['version'] in output:
-            show("✔ MATCHED: {0}".format(settings['version']))
-            success.append("✔")
+            show(_("~") + " MATCHED: {0}".format(settings['version']))
+            success.append(_("~"))
         else:
-            show("✖ EXPECTED: {0}".format(settings['version']))
-            success.append("✖")
+            show(_("x") + " EXPECTED: {0}".format(settings['version']))
+            success.append(_("x"))
 
     show("Results: " + " ".join(success), head=True)
 
-    return "✖" not in success
+    return _("x") not in success
 
 
 def get_version(program):
     args = [program, '--version']
 
     show("$ {0}".format(" ".join(args)))
-    try:
-        raw = subprocess.check_output(args, stderr=subprocess.STDOUT)
-    except OSError:
-        output = "command not found"
-    else:
-        output = raw.decode('utf-8').strip()
-    log.debug("Command output: %r", output)
-
+    output = call(args)
     show(output.splitlines()[0])
+
+    return output
+
+
+def call(args):
+    try:
+        process = Popen(args, stdout=PIPE, stderr=STDOUT)
+    except OSError:
+        log.debug("Command not found: %s", args[0])
+        output = "sh: command not found: {0}".format(args[0])
+    else:
+        raw = process.communicate()[0]
+        output = raw.decode('utf-8').strip()
+        log.debug("Command output: %r", output)
 
     return output
 
@@ -148,7 +176,27 @@ def show(text, start='', end='\n', head=False):
     if log.getEffectiveLevel() < logging.WARNING:
         log.info(text)
     else:
-        sys.stdout.write(start + text + end)
+        formatted = (start + text + end)
+        if PY2:
+            formatted = formatted.encode('utf-8')
+        sys.stdout.write(formatted)
+        sys.stdout.flush()
+
+
+def _(word, utf8=None, tty=None):
+    """Format and colorize a word based on available encoding."""
+    formatted = word
+
+    style_support = sys.stdout.encoding == 'UTF-8' if utf8 is None else utf8
+    color_support = sys.stdout.isatty() if tty is None else tty
+
+    if style_support:
+        formatted = STYLE.get(word, word)
+
+    if color_support and COLOR.get(word):
+        formatted = COLOR[word] + formatted + COLOR[None]
+
+    return formatted
 
 
 if __name__ == '__main__':  # pragma: no cover
