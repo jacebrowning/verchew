@@ -41,7 +41,7 @@ __version__ = '0.4.dev1'
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
 STYLE = {
-    "x": "✖",
+    "x": "✘",
     "~": "✔"
 }
 COLOR = {

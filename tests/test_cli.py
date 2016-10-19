@@ -28,21 +28,21 @@ Checking for Invalid Program...
 
 $ working --version
 1.2.3
-✖ EXPECTED: 4.
+✘ EXPECTED: 4.
 
 Checking for Broken Program...
 
 $ broken --version
 An error occurred.
-✖ EXPECTED: 1.2.3
+✘ EXPECTED: 1.2.3
 
 Checking for Missing Program...
 
 $ missing --version
 sh: command not found: missing
-✖ EXPECTED: 1.2.3
+✘ EXPECTED: 1.2.3
 
-Results: ✔ ✖ ✖ ✖
+Results: ✔ ✘ ✘ ✘
 
 """
 
