@@ -183,19 +183,18 @@ def show(text, start='', end='\n', head=False):
         sys.stdout.flush()
 
 
-def _(word):
+def _(word, utf8=None, tty=None):
     """Format and colorize a word based on available encoding."""
     formatted = word
 
-    style_support = sys.stdout.encoding == 'UTF-8'
-    color_support = sys.stdout.isatty()
+    style_support = sys.stdout.encoding == 'UTF-8' if utf8 is None else utf8
+    color_support = sys.stdout.isatty() if tty is None else tty
 
     if style_support:
         formatted = STYLE.get(word, word)
 
-    if color_support:
-        color = COLOR.get(word, '')
-        formatted = color + formatted + (COLOR[None] if color else '')
+    if color_support and COLOR.get(word):
+        formatted = COLOR[word] + formatted + COLOR[None]
 
     return formatted
 

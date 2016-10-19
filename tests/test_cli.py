@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # pylint: disable=redefined-outer-name,unused-variable,expression-not-assigned
 
 from __future__ import unicode_literals
@@ -16,7 +17,36 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 FILES = os.path.join(ROOT, "files")
 BIN = os.path.join(FILES, "bin")
 
-SAMPLE_OUTPUT_UNIX = """
+SAMPLE_OUTPUT = """
+Checking for Valid Program...
+
+$ working --version
+1.2.3
+✔ MATCHED: 1.2.
+
+Checking for Invalid Program...
+
+$ working --version
+1.2.3
+✖ EXPECTED: 4.
+
+Checking for Broken Program...
+
+$ broken --version
+An error occurred.
+✖ EXPECTED: 1.2.3
+
+Checking for Missing Program...
+
+$ missing --version
+sh: command not found: missing
+✖ EXPECTED: 1.2.3
+
+Results: ✔ ✖ ✖ ✖
+
+"""
+
+SAMPLE_OUTPUT_PYTHON_2 = """
 Checking for Valid Program...
 
 $ working --version
@@ -112,15 +142,25 @@ def describe_cli():
         expect(cmd.stdout or cmd.stderr).contains("verchew v0.")
 
     @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
-    def it_displays_results_when_run_on_unix(env_with_bin):
+    @pytest.mark.skipif(sys.version_info[0] == 2, reason="python3-only")
+    def it_displays_results_on_unix_python_3(env_with_bin):
         cmd = cli(env_with_bin, '--root', FILES)
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
-        expect(cmd.stdout) == SAMPLE_OUTPUT_UNIX
+        expect(cmd.stdout) == SAMPLE_OUTPUT
+
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
+    @pytest.mark.skipif(sys.version_info[0] == 3, reason="python2-only")
+    def it_displays_results_on_unix_python_2(env_with_bin):
+        cmd = cli(env_with_bin, '--root', FILES)
+
+        expect(cmd.returncode) == 1
+        expect(cmd.stderr) == ""
+        expect(cmd.stdout) == SAMPLE_OUTPUT_PYTHON_2
 
     @pytest.mark.skipif(sys.platform != 'win32', reason="windows-only")
-    def it_displays_results_when_run_on_windows(env_with_bin):
+    def it_displays_results_on_windows(env_with_bin):
         cmd = cli(env_with_bin, '--root', FILES)
 
         expect(cmd.returncode) == 1
