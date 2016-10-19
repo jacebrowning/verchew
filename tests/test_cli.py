@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 import os
 import sys
+import logging
 
 import pytest
 import scripttest
@@ -44,11 +45,20 @@ Results: ✔ ✖ ✖ ✖
 
 """
 
+log = logging.getLogger(__name__)
+
 
 @pytest.fixture
 def env(tmpdir):
     path = str(tmpdir.join("test"))
     env = scripttest.TestFileEnvironment(path)
+    return env
+
+
+@pytest.fixture
+def env_with_bin(env):
+    env.environ['PATH'] = BIN
+    log.debug("ENV: %s", env.environ)
     return env
 
 
@@ -72,9 +82,8 @@ def describe_cli():
         expect(cmd.returncode) == 0
         expect(cmd.stdout or cmd.stderr).contains("verchew v0.")
 
-    def it_displays_results_when_run(env):
-        env.environ['PATH'] = BIN
-        cmd = cli(env, '--root', FILES)
+    def it_displays_results_when_run(env_with_bin):
+        cmd = cli(env_with_bin, '--root', FILES)
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
