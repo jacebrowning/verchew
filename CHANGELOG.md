@@ -1,5 +1,9 @@
 # Revision History
 
+## 0.4 (unreleased)
+
+- Added support for custom version arguments.
+
 ## 0.3 (2016/10/18)
 
 - Added support for detecting missing and broken programs.

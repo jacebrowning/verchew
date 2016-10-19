@@ -130,7 +130,7 @@ def check_dependencies(config):
 
     for name, settings in config.items():
         show("Checking for {0}...".format(name), head=True)
-        output = get_version(settings['cli'])
+        output = get_version(settings['cli'], settings.get('cli_version_arg'))
         if settings['version'] in output:
             show(_("~") + " MATCHED: {0}".format(settings['version']))
             success.append(_("~"))
@@ -143,8 +143,9 @@ def check_dependencies(config):
     return _("x") not in success
 
 
-def get_version(program):
-    args = [program, '--version']
+def get_version(program, argument=None):
+    argument = argument or '--version'
+    args = [program, argument]
 
     show("$ {0}".format(" ".join(args)))
     output = call(args)
