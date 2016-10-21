@@ -1,6 +1,6 @@
 # Revision History
 
-## 0.4 (unreleased)
+## 0.4 (2016/10/20)
 
 - Added support for custom version arguments.
 - Fixed handling of internal versions matches.
