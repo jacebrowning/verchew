@@ -12,92 +12,65 @@ import pytest
 import scripttest
 from expecter import expect
 
+TESTS_DIR = os.path.abspath(os.path.dirname(__file__))
+ROOT_DIR = os.path.join(TESTS_DIR, "..")
+EXAMPLES_DIR = os.path.join(ROOT_DIR, "examples")
+BIN_DIR = os.path.join(EXAMPLES_DIR, "bin")
 
-ROOT = os.path.abspath(os.path.dirname(__file__))
-FILES = os.path.join(ROOT, "files")
-BIN = os.path.join(FILES, "bin")
+STYLED_OUTPUT = """
+Checking for Working Program...
 
-SAMPLE_OUTPUT = """
-Checking for Valid Program...
-
-$ working --version
+$ working-program --version
 1.2.3
 ✔ MATCHED: 1.2.
 
-Checking for Invalid Program...
+Checking for Newer Working Program...
 
-$ working --version
+$ working-program --version
 1.2.3
-✖ EXPECTED: 4.
+✘ EXPECTED: 4.
 
 Checking for Broken Program...
 
-$ broken --version
+$ broken-program --version
 An error occurred.
-✖ EXPECTED: 1.2.3
+✘ EXPECTED: 1.2.3
 
 Checking for Missing Program...
 
-$ missing --version
-sh: command not found: missing
-✖ EXPECTED: 1.2.3
+$ missing-program --version
+sh: command not found: missing-program
+✘ EXPECTED: 1.2.3
 
-Results: ✔ ✖ ✖ ✖
-
-"""
-
-SAMPLE_OUTPUT_PYTHON_2 = """
-Checking for Valid Program...
-
-$ working --version
-1.2.3
-~ MATCHED: 1.2.
-
-Checking for Invalid Program...
-
-$ working --version
-1.2.3
-x EXPECTED: 4.
-
-Checking for Broken Program...
-
-$ broken --version
-An error occurred.
-x EXPECTED: 1.2.3
-
-Checking for Missing Program...
-
-$ missing --version
-sh: command not found: missing
-x EXPECTED: 1.2.3
-
-Results: ~ x x x
+Results: ✔ ✘ ✘ ✘
 
 """
 
-SAMPLE_OUTPUT_WINDOWS = """
-Checking for Valid Program...
+UNSTYLED_OUTPUT = STYLED_OUTPUT.replace('✔', '~').replace('✘', 'x')
 
-$ working --version
-sh: command not found: working
+UNSTYLED_OUTPUT_WINDOWS = """
+Checking for Working Program...
+
+$ working-program --version
+sh: command not found: working-program
 x EXPECTED: 1.2.
 
-Checking for Invalid Program...
+Checking for Newer Working Program...
 
-$ working --version
-sh: command not found: working
+$ working-program --version
+sh: command not found: working-program
 x EXPECTED: 4.
 
 Checking for Broken Program...
 
-$ broken --version
-sh: command not found: broken
+$ broken-program --version
+sh: command not found: broken-program
 x EXPECTED: 1.2.3
 
 Checking for Missing Program...
 
-$ missing --version
-sh: command not found: missing
+$ missing-program --version
+sh: command not found: missing-program
 x EXPECTED: 1.2.3
 
 Results: x x x x
@@ -116,7 +89,7 @@ def env(tmpdir):
 
 @pytest.fixture
 def env_with_bin(env):
-    env.environ['PATH'] = BIN
+    env.environ['PATH'] = BIN_DIR
     log.debug("ENV: %s", env.environ)
     return env
 
@@ -144,25 +117,25 @@ def describe_cli():
     @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
     @pytest.mark.skipif(sys.version_info[0] == 2, reason="python3-only")
     def it_displays_results_on_unix_python_3(env_with_bin):
-        cmd = cli(env_with_bin, '--root', FILES)
+        cmd = cli(env_with_bin, '--root', EXAMPLES_DIR)
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
-        expect(cmd.stdout) == SAMPLE_OUTPUT
+        expect(cmd.stdout) == STYLED_OUTPUT
 
     @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
     @pytest.mark.skipif(sys.version_info[0] == 3, reason="python2-only")
     def it_displays_results_on_unix_python_2(env_with_bin):
-        cmd = cli(env_with_bin, '--root', FILES)
+        cmd = cli(env_with_bin, '--root', EXAMPLES_DIR)
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
-        expect(cmd.stdout) == SAMPLE_OUTPUT_PYTHON_2
+        expect(cmd.stdout) == UNSTYLED_OUTPUT
 
     @pytest.mark.skipif(sys.platform != 'win32', reason="windows-only")
     def it_displays_results_on_windows(env_with_bin):
-        cmd = cli(env_with_bin, '--root', FILES)
+        cmd = cli(env_with_bin, '--root', EXAMPLES_DIR)
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
-        expect(cmd.stdout) == SAMPLE_OUTPUT_WINDOWS
+        expect(cmd.stdout) == UNSTYLED_OUTPUT_WINDOWS

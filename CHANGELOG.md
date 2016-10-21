@@ -1,5 +1,10 @@
 # Revision History
 
+## 0.4 (2016/10/20)
+
+- Added support for custom version arguments.
+- Fixed handling of internal versions matches.
+
 ## 0.3 (2016/10/18)
 
 - Added support for detecting missing and broken programs.

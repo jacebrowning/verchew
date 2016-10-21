@@ -36,12 +36,12 @@ from collections import OrderedDict
 from subprocess import Popen, PIPE, STDOUT
 import logging
 
-__version__ = '0.3'
+__version__ = '0.4'
 
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
 STYLE = {
-    "x": "✖",
+    "x": "✘",
     "~": "✔"
 }
 COLOR = {
@@ -130,8 +130,8 @@ def check_dependencies(config):
 
     for name, settings in config.items():
         show("Checking for {0}...".format(name), head=True)
-        output = get_version(settings['cli'])
-        if settings['version'] in output:
+        output = get_version(settings['cli'], settings.get('cli_version_arg'))
+        if match_version(settings['version'], output):
             show(_("~") + " MATCHED: {0}".format(settings['version']))
             success.append(_("~"))
         else:
@@ -143,14 +143,19 @@ def check_dependencies(config):
     return _("x") not in success
 
 
-def get_version(program):
-    args = [program, '--version']
+def get_version(program, argument=None):
+    argument = argument or '--version'
+    args = [program, argument]
 
     show("$ {0}".format(" ".join(args)))
     output = call(args)
     show(output.splitlines()[0])
 
     return output
+
+
+def match_version(pattern, output):
+    return output.startswith(pattern) or " " + pattern in output
 
 
 def call(args):

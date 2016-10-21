@@ -80,7 +80,7 @@ run: install
 
 .PHONY: doctor
 doctor:  ## Confirm system dependencies are available
-	@ verchew/script.py
+	verchew/script.py
 
 # PROJECT DEPENDENCIES #########################################################
 
