@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
-# pylint: disable=unused-variable,unused-argument,expression-not-assigned
+# pylint: disable=unused-variable,unused-argument,expression-not-assigned,singleton-comparison
 
 from __future__ import unicode_literals
 
 import pytest
 from expecter import expect
 
-from verchew.script import find_config, parse_config, get_version, _
+from verchew.script import (find_config, parse_config, get_version,
+                            match_version, _)
 
 
 def describe_find_config():
@@ -78,6 +79,24 @@ def describe_get_version():
 
     def with_custom_argument():
         expect(get_version('python', argument='-V')).contains("Python ")
+
+
+def describe_match_version():
+
+    def when_exact():
+        expect(match_version("1.2.3", "1.2.3")) == True
+
+    def when_partial():
+        expect(match_version("1.2.", "1.2.3")) == True
+
+    def when_mismatch():
+        expect(match_version("1.", "2.0")) == False
+
+    def when_match_inside():
+        expect(match_version("1.", "Foobar 1.2.3")) == True
+
+    def when_mismatch_inside():
+        expect(match_version("2.", "Foobar 1.2.3")) == False
 
 
 def describe_format():
