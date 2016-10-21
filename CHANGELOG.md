@@ -3,6 +3,7 @@
 ## 0.4 (unreleased)
 
 - Added support for custom version arguments.
+- Fixed handling of internal versions matches.
 
 ## 0.3 (2016/10/18)
 
