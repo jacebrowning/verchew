@@ -12,10 +12,10 @@ import pytest
 import scripttest
 from expecter import expect
 
-
-ROOT = os.path.abspath(os.path.dirname(__file__))
-FILES = os.path.join(ROOT, "files")
-BIN = os.path.join(FILES, "bin")
+TESTS_DIR = os.path.abspath(os.path.dirname(__file__))
+ROOT_DIR = os.path.join(TESTS_DIR, "..")
+EXAMPLES_DIR = os.path.join(ROOT_DIR, "examples")
+BIN_DIR = os.path.join(EXAMPLES_DIR, "bin")
 
 SAMPLE_OUTPUT = """
 Checking for Valid Program...
@@ -116,7 +116,7 @@ def env(tmpdir):
 
 @pytest.fixture
 def env_with_bin(env):
-    env.environ['PATH'] = BIN
+    env.environ['PATH'] = BIN_DIR
     log.debug("ENV: %s", env.environ)
     return env
 
@@ -144,7 +144,7 @@ def describe_cli():
     @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
     @pytest.mark.skipif(sys.version_info[0] == 2, reason="python3-only")
     def it_displays_results_on_unix_python_3(env_with_bin):
-        cmd = cli(env_with_bin, '--root', FILES)
+        cmd = cli(env_with_bin, '--root', EXAMPLES_DIR)
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
@@ -153,7 +153,7 @@ def describe_cli():
     @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
     @pytest.mark.skipif(sys.version_info[0] == 3, reason="python2-only")
     def it_displays_results_on_unix_python_2(env_with_bin):
-        cmd = cli(env_with_bin, '--root', FILES)
+        cmd = cli(env_with_bin, '--root', EXAMPLES_DIR)
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
@@ -161,7 +161,7 @@ def describe_cli():
 
     @pytest.mark.skipif(sys.platform != 'win32', reason="windows-only")
     def it_displays_results_on_windows(env_with_bin):
-        cmd = cli(env_with_bin, '--root', FILES)
+        cmd = cli(env_with_bin, '--root', EXAMPLES_DIR)
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
