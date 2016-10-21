@@ -31,20 +31,25 @@ $ python setup.py install
 Create a configuration file (`.verchew`) with your project's system dependencies:
 
 ```ini
-[Python]
+[Working Program]
 
-cli = python
-version = Python 3.5.
+cli = working-program
+version = 1.2.
 
-[R]
+[Newer Working Program]
 
-cli = R
-version = R version 3.
+cli = working-program
+version =  4.
 
-[Redis]
+[Broken Program]
 
-cli = redis-server
-version = Redis server v=3.2.
+cli = broken-program
+version = 1.2.3
+
+[Missing Program]
+
+cli = missing-program
+version = 1.2.3
 ```
 
 Run `verchew` to see if you have the right versions installed:
@@ -52,23 +57,29 @@ Run `verchew` to see if you have the right versions installed:
 ```sh
 $ verchew
 
-Checking for Python...
+Checking for Working Program...
 
-$ python --version
-Python 3.5.0
-✔ MATCHED: Python 3.5.
+$ working-program --version
+1.2.3
+✔ MATCHED: 1.2.
 
-Checking for R...
+Checking for Newer Working Program...
 
-$ R --version
-R version 3.3.1 (2016-06-21)
-✔ MATCHED: R version 3.
+$ working-program --version
+1.2.3
+✘ EXPECTED: 4.
 
-Checking for Redis...
+Checking for Broken Program...
 
-$ redis-server --version
-Redis server v=3.2.1 sha=00000000:0 malloc=libc bits=64 build=62a67eec83b28403
-✔ MATCHED: Redis server v=3.2.
+$ broken-program --version
+An error occurred.
+✘ EXPECTED: 1.2.3
 
-Results: ✔ ✔ ✔
+Checking for Missing Program...
+
+$ missing-program --version
+sh: command not found: missing-program
+✘ EXPECTED: 1.2.3
+
+Results: ✔ ✘ ✘ ✘
 ```

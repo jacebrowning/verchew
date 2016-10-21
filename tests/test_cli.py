@@ -17,87 +17,60 @@ ROOT_DIR = os.path.join(TESTS_DIR, "..")
 EXAMPLES_DIR = os.path.join(ROOT_DIR, "examples")
 BIN_DIR = os.path.join(EXAMPLES_DIR, "bin")
 
-SAMPLE_OUTPUT = """
-Checking for Valid Program...
+STYLED_OUTPUT = """
+Checking for Working Program...
 
-$ working --version
+$ working-program --version
 1.2.3
 ✔ MATCHED: 1.2.
 
-Checking for Invalid Program...
+Checking for Newer Working Program...
 
-$ working --version
+$ working-program --version
 1.2.3
 ✘ EXPECTED: 4.
 
 Checking for Broken Program...
 
-$ broken --version
+$ broken-program --version
 An error occurred.
 ✘ EXPECTED: 1.2.3
 
 Checking for Missing Program...
 
-$ missing --version
-sh: command not found: missing
+$ missing-program --version
+sh: command not found: missing-program
 ✘ EXPECTED: 1.2.3
 
 Results: ✔ ✘ ✘ ✘
 
 """
 
-SAMPLE_OUTPUT_PYTHON_2 = """
-Checking for Valid Program...
+UNSTYLED_OUTPUT = STYLED_OUTPUT.replace('✔', '~').replace('✘', 'x')
 
-$ working --version
-1.2.3
-~ MATCHED: 1.2.
+UNSTYLED_OUTPUT_WINDOWS = """
+Checking for Working Program...
 
-Checking for Invalid Program...
-
-$ working --version
-1.2.3
-x EXPECTED: 4.
-
-Checking for Broken Program...
-
-$ broken --version
-An error occurred.
-x EXPECTED: 1.2.3
-
-Checking for Missing Program...
-
-$ missing --version
-sh: command not found: missing
-x EXPECTED: 1.2.3
-
-Results: ~ x x x
-
-"""
-
-SAMPLE_OUTPUT_WINDOWS = """
-Checking for Valid Program...
-
-$ working --version
-sh: command not found: working
+$ working-program --version
+sh: command not found: working-program
 x EXPECTED: 1.2.
 
-Checking for Invalid Program...
+Checking for Newer Working Program...
 
-$ working --version
-sh: command not found: working
+$ working-program --version
+sh: command not found: working-program
 x EXPECTED: 4.
 
 Checking for Broken Program...
 
-$ broken --version
-sh: command not found: broken
+$ broken-program --version
+sh: command not found: broken-program
 x EXPECTED: 1.2.3
 
 Checking for Missing Program...
 
-$ missing --version
-sh: command not found: missing
+$ missing-program --version
+sh: command not found: missing-program
 x EXPECTED: 1.2.3
 
 Results: x x x x
@@ -148,7 +121,7 @@ def describe_cli():
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
-        expect(cmd.stdout) == SAMPLE_OUTPUT
+        expect(cmd.stdout) == STYLED_OUTPUT
 
     @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
     @pytest.mark.skipif(sys.version_info[0] == 3, reason="python2-only")
@@ -157,7 +130,7 @@ def describe_cli():
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
-        expect(cmd.stdout) == SAMPLE_OUTPUT_PYTHON_2
+        expect(cmd.stdout) == UNSTYLED_OUTPUT
 
     @pytest.mark.skipif(sys.platform != 'win32', reason="windows-only")
     def it_displays_results_on_windows(env_with_bin):
@@ -165,4 +138,4 @@ def describe_cli():
 
         expect(cmd.returncode) == 1
         expect(cmd.stderr) == ""
-        expect(cmd.stdout) == SAMPLE_OUTPUT_WINDOWS
+        expect(cmd.stdout) == UNSTYLED_OUTPUT_WINDOWS
