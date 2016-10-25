@@ -63,7 +63,7 @@ def main():
     path = find_config(args.root)
     config = parse_config(path)
 
-    if not check_dependencies(config):
+    if not check_dependencies(config) and args.exit_code:
         sys.exit(1)
 
 
@@ -75,7 +75,9 @@ def parse_args():
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help="enable verbose logging")
     parser.add_argument('-r', '--root', metavar='PATH',
-                        help="use a custom project root")
+                        help="specify a custom project root directory")
+    parser.add_argument('--exit-code', action='store_true',
+                        help="return a non-zero exit code on failure")
 
     args = parser.parse_args()
 
