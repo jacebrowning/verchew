@@ -1,6 +1,6 @@
 # Revision History
 
-## 0.5 (unreleased)
+## 0.5 (2016/11/02)
 
 - Added `--exit-code` option to return non-zero exit codes on failure.
 
