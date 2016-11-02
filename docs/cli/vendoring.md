@@ -23,3 +23,5 @@ In your project:
 1. Create a `bin/` directory: `$ mkdir -p bin`
 2. Copy the script: `$ cp ../verchew/dist/verchew bin/verchew`
 3. Ensure the script is executable: `$ chmod a+x bin/verchew`
+
+An example of this can be seen [here](https://github.com/jacebrowning/template-python-demo).

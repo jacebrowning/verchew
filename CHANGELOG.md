@@ -1,5 +1,9 @@
 # Revision History
 
+## 0.5 (2016/11/02)
+
+- Added `--exit-code` option to return non-zero exit codes on failure.
+
 ## 0.4 (2016/10/20)
 
 - Added support for custom version arguments.

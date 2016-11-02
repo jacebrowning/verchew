@@ -1,8 +1,10 @@
+> ...chews through your system dependencies, spitting out incompatible versions.
+
 Unix: [![Unix Build Status](https://img.shields.io/travis/jacebrowning/verchew/develop.svg)](https://travis-ci.org/jacebrowning/verchew) Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/verchew/develop.svg)](https://ci.appveyor.com/project/jacebrowning/verchew)<br>Metrics: [![Coverage Status](https://img.shields.io/coveralls/jacebrowning/verchew/develop.svg)](https://coveralls.io/r/jacebrowning/verchew) [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/jacebrowning/verchew.svg)](https://scrutinizer-ci.com/g/jacebrowning/verchew/?branch=develop)<br>Usage: [![PyPI Version](https://img.shields.io/pypi/v/verchew.svg)](https://pypi.python.org/pypi/verchew) [![PyPI Downloads](https://img.shields.io/pypi/dm/verchew.svg)](https://pypi.python.org/pypi/verchew)
 
 # Overview
 
-Verchew is an embeddable Python script to check the versions of your project's system dependencies. Its only external dependency is a Python interpreter, available on macOS and most linux-based operating systems.
+Verchew is an embeddable Python script to check the versions of your project's system dependencies. Its only external dependency is any Python interpreter, which should already be installed on macOS and most Linux-based operating systems.
 
 # Setup
 
@@ -25,6 +27,8 @@ $ git clone https://github.com/jacebrowning/verchew.git
 $ cd verchew
 $ python setup.py install
 ```
+
+or embedded the script in your project using [this guide](cli/vendoring).
 
 # Usage
 

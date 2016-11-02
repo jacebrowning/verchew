@@ -29,3 +29,11 @@ cli_version_arg = -V
 version = 2.
 
 ```
+
+# Exit Codes
+
+When `verchew` runs, it will always return an exit code of 0 to avoid interrupting continuous integration. To force a non-zero exit code on failure, use the `--exit-code` option:
+
+```sh
+$ verchew --exit-code
+```
