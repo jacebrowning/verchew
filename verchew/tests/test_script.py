@@ -101,11 +101,22 @@ def describe_match_version():
 
 def describe_format():
 
-    def when_utf8():
-        expect(_('~', utf8=True)) == "✔"
+    def default():
+        expect(_('~')) == "~"
 
-    def when_tty():
-        expect(_('~', tty=True)) == "\033[92m~\033[0m"
+    @pytest.mark.parametrize("is_tty,supports_utf8,supports_ansi,formatted", [
+        (0, 0, 0, "~"),
+        (0, 0, 1, "~"),
+        (0, 1, 0, "✔"),
+        (0, 1, 1, "✔"),
+        (1, 0, 0, "~"),
+        (1, 0, 1, "\033[92m~\033[0m"),
+        (1, 1, 0, "✔"),
+        (1, 1, 1, "\033[92m✔\033[0m"),
+    ])
+    def with_options(is_tty, supports_utf8, supports_ansi, formatted):
+        options = dict(is_tty=is_tty,
+                       supports_utf8=supports_utf8,
+                       supports_ansi=supports_ansi)
 
-    def when_utf8_and_tty():
-        expect(_('~', utf8=True, tty=True)) == "\033[92m✔\033[0m"
+        expect(_('~', **options)) == formatted
