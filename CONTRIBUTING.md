@@ -12,6 +12,12 @@
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
 
+To confirm these system dependencies are configured correctly:
+
+```sh
+$ make doctor
+```
+
 ### Installation
 
 Install project dependencies into a virtual environment:
