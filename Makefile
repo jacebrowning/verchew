@@ -2,9 +2,11 @@
 PROJECT := verchew
 PACKAGE := verchew
 REPOSITORY := jacebrowning/verchew
+
+# Project paths
 PACKAGES := $(PACKAGE) tests
-CONFIG := $(shell ls *.py)
-MODULES := $(shell find $(PACKAGES) -name '*.py') $(CONFIG)
+CONFIG := $(wildcard *.py)
+MODULES := $(wildcard $(PACKAGE)/*.py)
 
 # Python settings
 ifndef TRAVIS
@@ -35,7 +37,11 @@ else
 endif
 
 # Virtual environment paths
-ENV := env
+ifdef TRAVIS
+	ENV := $(shell dirname $(shell dirname $(shell which $(SYS_PYTHON))))/
+else
+	ENV := env
+endif
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
 	ACTIVATE := $(BIN)/activate.bat
@@ -51,19 +57,16 @@ else
 endif
 
 # Virtual environment executables
-ifndef TRAVIS
-	BIN_ := $(BIN)/
-endif
-PYTHON := $(BIN_)python
-PIP := $(BIN_)pip
-EASY_INSTALL := $(BIN_)easy_install
-SNIFFER := $(BIN_)sniffer
-HONCHO := $(ACTIVATE) && $(BIN_)honcho
+PYTHON := $(BIN)/python
+PIP := $(BIN)/pip
+EASY_INSTALL := $(BIN)/easy_install
+SNIFFER := $(BIN)/sniffer
+HONCHO := $(ACTIVATE) && $(BIN)/honcho
 
 # MAIN TASKS ###################################################################
 
 .PHONY: all
-all: doc
+all: install
 
 .PHONY: ci
 ci: check test ## Run all tasks that determine CI status
@@ -119,39 +122,34 @@ $(PYTHON):
 
 # CHECKS #######################################################################
 
-PEP8 := $(BIN_)pep8
-PEP8RADIUS := $(BIN_)pep8radius
-PEP257 := $(BIN_)pep257
-PYLINT := $(BIN_)pylint
+PYLINT := $(BIN)/pylint
+PYCODESTYLE := $(BIN)/pycodestyle
+PYDOCSTYLE := $(BIN)/pydocstyle
 
 .PHONY: check
-check: pep8 pep257 pylint ## Run linters and static analysis
-
-.PHONY: pep8
-pep8: install ## Check for convention issues
-	$(PEP8) $(PACKAGES) $(CONFIG) --config=.pep8rc
-
-.PHONY: pep257
-pep257: install ## Check for docstring issues
-	$(PEP257) $(PACKAGES) $(CONFIG)
+check: pylint pycodestyle pydocstyle ## Run linters and static analysis
 
 .PHONY: pylint
 pylint: install ## Check for code issues
-	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylintrc
+	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylint.ini
 
-.PHONY: fix
-fix: install
-	$(PEP8RADIUS) --docformatter --in-place
+.PHONY: pycodestyle
+pycodestyle: install ## Check for code conventions
+	$(PYCODESTYLE) $(PACKAGES) $(CONFIG) --config=.pycodestyle.ini
+
+.PHONY: pydocstyle
+pydocstyle: install ## Check for docstring conventions
+	$(PYDOCSTYLE) $(PACKAGES) $(CONFIG)
 
 # TESTS ########################################################################
 
-PYTEST := $(BIN_)py.test
-COVERAGE := $(BIN_)coverage
-COVERAGE_SPACE := $(BIN_)coverage.space
+PYTEST := $(BIN)/py.test
+COVERAGE := $(BIN)/coverage
+COVERAGE_SPACE := $(BIN)/coverage.space
 
 RANDOM_SEED ?= $(shell date +%s)
 
-PYTEST_CORE_OPTS := --doctest-modules -r xXw -vv
+PYTEST_CORE_OPTS := --doctest-modules -ra -vv
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing --cov-report=html
 PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
@@ -174,12 +172,14 @@ test-unit: install ## Run the unit tests
 .PHONY: test-int
 test-int: install ## Run the integration tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
+	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PYTEST_OPTS) tests --junitxml=$(REPORTS)/integration.xml
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
 
 .PHONY: test-all
 test-all: install ## Run all the tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGES); fi
+	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES) --junitxml=$(REPORTS)/overall.xml
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
 
@@ -189,9 +189,9 @@ read-coverage:
 
 # DOCUMENTATION ################################################################
 
-PYREVERSE := $(BIN_)pyreverse
-PDOC := $(PYTHON) $(BIN_)pdoc
-MKDOCS := $(BIN_)mkdocs
+PYREVERSE := $(BIN)/pyreverse
+PDOC := $(PYTHON) $(BIN)/pdoc
+MKDOCS := $(BIN)/mkdocs
 
 PDOC_INDEX := docs/apidocs/$(PACKAGE)/index.html
 MKDOCS_INDEX := site/index.html
@@ -228,8 +228,8 @@ mkdocs-live: mkdocs ## Launch and continuously rebuild the mkdocs site
 
 # BUILD ########################################################################
 
-PYINSTALLER := $(BIN_)pyinstaller
-PYINSTALLER_MAKESPEC := $(BIN_)pyi-makespec
+PYINSTALLER := $(BIN)/pyinstaller
+PYINSTALLER_MAKESPEC := $(BIN)/pyi-makespec
 
 DIST_FILES := dist/*.tar.gz dist/*.whl
 EXE_FILES := dist/$(PROJECT).*
@@ -257,7 +257,7 @@ $(PROJECT).spec:
 
 # RELEASE ######################################################################
 
-TWINE := $(BIN_)twine
+TWINE := $(BIN)/twine
 
 .PHONY: register
 register: dist ## Register the project on PyPI
@@ -268,7 +268,7 @@ register: dist ## Register the project on PyPI
 
 .PHONY: upload
 upload: .git-no-changes register ## Upload the current version to PyPI
-	$(TWINE) upload dist/*.*
+	$(TWINE) upload dist/*
 	$(OPEN) https://pypi.python.org/pypi/$(PROJECT)
 
 .PHONY: .git-no-changes

@@ -7,7 +7,6 @@ mkdocs
 pygments
 
 # Tooling
-pep8radius
 sniffer
 
 # Runner
