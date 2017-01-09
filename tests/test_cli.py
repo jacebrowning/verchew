@@ -107,7 +107,7 @@ def describe_cli():
         cmd = cli('--version')
 
         expect(cmd.returncode) == 0
-        expect(cmd.stdout or cmd.stderr).contains("verchew v0.")
+        expect(cmd.stdout or cmd.stderr).contains("verchew v1.")
 
     @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
     @pytest.mark.skipif(sys.version_info[0] == 2, reason="python3-only")

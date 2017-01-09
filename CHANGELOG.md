@@ -1,5 +1,9 @@
 # Revision History
 
+## 1.0 (2017/01/09)
+
+- Initial stable release.
+
 ## 0.5 (2016/11/02)
 
 - Added `--exit-code` option to return non-zero exit codes on failure.
