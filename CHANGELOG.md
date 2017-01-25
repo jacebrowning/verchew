@@ -1,5 +1,9 @@
 # Revision History
 
+## 1.1 (unreleased)
+
+- Added `--init` command to generate a sample configuration file.
+
 ## 1.0 (2017/01/09)
 
 - Initial stable release.

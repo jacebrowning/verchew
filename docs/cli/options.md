@@ -2,10 +2,10 @@
 
 Any of the following can be used as the `verchew` configuration filename:
 
+* `.verchew.ini`
+* `verchew.ini`
 * `.verchew`
 * `.verchewrc`
-* `verchew.ini`
-* `.verchew.ini`
 
 # Custom Project Root
 
@@ -13,6 +13,14 @@ To call `verchew` from an arbitrary directory, pass it the path to the root of y
 
 ```sh
 $ verchew --root=<path/to/project>
+```
+
+# Configuration Generation
+
+In a new project, a sample configuration file can be generated:
+
+```sh
+$ verchew --init
 ```
 
 # Custom Version Arguments
