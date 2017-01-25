@@ -32,7 +32,7 @@ or embedded the script in your project using [this guide](cli/vendoring).
 
 # Usage
 
-Create a configuration file (`.verchew`) with your project's system dependencies:
+Create a configuration file (`.verchew.ini`) with your project's system dependencies:
 
 ```ini
 [Working Program]

@@ -24,8 +24,14 @@ def describe_find_config():
         with expect.raises(RuntimeError):
             find_config()
 
+    def when_missing_and_generate(config):
+        path = find_config(generate=True)
+
+        generated_path = str(config).replace("foo.bar", ".verchew.ini")
+        expect(path) == generated_path
+
     def when_found(config):
-        path = find_config(config_filenames=["foo.bar"])
+        path = find_config(filenames=["foo.bar"])
 
         expect(path) == config
 
