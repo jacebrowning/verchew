@@ -122,8 +122,8 @@ def describe_cli():
         expect(cmd.stderr) == ""
         expect(cmd.stdout).contains("Checking for Make")
 
-    @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
-    @pytest.mark.skipif(sys.version_info[0] == 2, reason="python3-only")
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    @pytest.mark.skipif(sys.version_info[0] == 2, reason="python3 only")
     def it_displays_results_on_unix_python_3(cli):
         cmd = cli('--root', EXAMPLES_DIR)
 
@@ -131,8 +131,8 @@ def describe_cli():
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == STYLED_OUTPUT
 
-    @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
-    @pytest.mark.skipif(sys.version_info[0] == 3, reason="python2-only")
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    @pytest.mark.skipif(sys.version_info[0] == 3, reason="python2 only")
     def it_displays_results_on_unix_python_2(cli):
         cmd = cli('--root', EXAMPLES_DIR)
 
@@ -140,7 +140,7 @@ def describe_cli():
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == UNSTYLED_OUTPUT
 
-    @pytest.mark.skipif(sys.platform != 'win32', reason="windows-only")
+    @pytest.mark.skipif(sys.platform != 'win32', reason="windows only")
     def it_displays_results_on_windows(cli):
         cmd = cli('--root', EXAMPLES_DIR)
 
