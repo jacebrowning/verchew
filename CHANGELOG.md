@@ -1,6 +1,6 @@
 # Revision History
 
-## 1.1 (unreleased)
+## 1.1 (2017/05/17)
 
 - Added `--init` command to generate a sample configuration file.
 

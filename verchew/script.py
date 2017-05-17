@@ -40,7 +40,7 @@ from collections import OrderedDict
 from subprocess import Popen, PIPE, STDOUT
 import logging
 
-__version__ = '1.1b1'
+__version__ = '1.1'
 
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = ['.verchew.ini', 'verchew.ini', '.verchew', '.verchewrc']
