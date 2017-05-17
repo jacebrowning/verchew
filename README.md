@@ -28,7 +28,7 @@ $ cd verchew
 $ python setup.py install
 ```
 
-or embedded the script in your project using [this guide](cli/vendoring).
+or embedded the script in your project using [this guide](https://github.com/jacebrowning/verchew/blob/develop/docs/cli/vendoring.md).
 
 # Usage
 
