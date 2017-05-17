@@ -32,7 +32,7 @@ or embedded the script in your project using [this guide](https://github.com/jac
 
 # Usage
 
-Create a configuration file (`.verchew.ini`) with your project's system dependencies:
+Create a configuration file (`.verchew.ini`) containing your project's system dependencies:
 
 ```ini
 [Working Program]
@@ -56,7 +56,7 @@ cli = missing-program
 version = 1.2.3
 ```
 
-Run `verchew` to see if you have the right versions installed:
+Run `verchew` to see if you have the expected versions installed:
 
 ```sh
 $ verchew
