@@ -4,7 +4,7 @@ Unix: [![Unix Build Status](https://img.shields.io/travis/jacebrowning/verchew/d
 
 # Overview
 
-Verchew is an embeddable Python script to check the versions of your project's system dependencies. Its only external dependency is any Python interpreter, which should already be installed on macOS and most Linux-based operating systems.
+When onboarding new team members, ensuring their computer has everything needed to work on the project can be painful. Verchew is a command-line program and embeddable Python script to check the versions of your project's system dependencies. Its only external dependency is any Python interpreter, which should already be installed on macOS and most Linux-based operating systems.
 
 # Setup
 
