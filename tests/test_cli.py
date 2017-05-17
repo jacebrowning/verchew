@@ -84,6 +84,7 @@ log = logging.getLogger(__name__)
 def env(tmpdir):
     path = str(tmpdir.join("test"))
     env = scripttest.TestFileEnvironment(path)
+    os.chdir(path)
     env.environ['PATH'] = BIN_DIR
     log.debug("ENV: %s", env.environ)
     return env
@@ -92,7 +93,12 @@ def env(tmpdir):
 @pytest.fixture
 def cli(env):
     path = os.path.join(os.path.dirname(sys.executable), "verchew")
-    return lambda *args: env.run(path, *args, expect_error=True)
+    return lambda *args: call(env, path, *args)
+
+
+def call(env, path, *args):
+    log.info("$ %s %s", path, ' '.join(args))
+    return env.run(path, *args, expect_error=True)
 
 
 def describe_cli():
@@ -109,8 +115,15 @@ def describe_cli():
         expect(cmd.returncode) == 0
         expect(cmd.stdout or cmd.stderr).contains("verchew v1.")
 
-    @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
-    @pytest.mark.skipif(sys.version_info[0] == 2, reason="python3-only")
+    def it_generates_a_sample_config(cli):
+        cmd = cli('--init')
+
+        expect(cmd.returncode) == 0
+        expect(cmd.stderr) == ""
+        expect(cmd.stdout).contains("Checking for Make")
+
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    @pytest.mark.skipif(sys.version_info[0] == 2, reason="python3 only")
     def it_displays_results_on_unix_python_3(cli):
         cmd = cli('--root', EXAMPLES_DIR)
 
@@ -118,8 +131,8 @@ def describe_cli():
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == STYLED_OUTPUT
 
-    @pytest.mark.skipif(sys.platform == 'win32', reason="unix-only")
-    @pytest.mark.skipif(sys.version_info[0] == 3, reason="python2-only")
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    @pytest.mark.skipif(sys.version_info[0] == 3, reason="python2 only")
     def it_displays_results_on_unix_python_2(cli):
         cmd = cli('--root', EXAMPLES_DIR)
 
@@ -127,7 +140,7 @@ def describe_cli():
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == UNSTYLED_OUTPUT
 
-    @pytest.mark.skipif(sys.platform != 'win32', reason="windows-only")
+    @pytest.mark.skipif(sys.platform != 'win32', reason="windows only")
     def it_displays_results_on_windows(cli):
         cmd = cli('--root', EXAMPLES_DIR)
 

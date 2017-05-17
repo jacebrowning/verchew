@@ -4,7 +4,7 @@ Unix: [![Unix Build Status](https://img.shields.io/travis/jacebrowning/verchew/d
 
 # Overview
 
-Verchew is an embeddable Python script to check the versions of your project's system dependencies. Its only external dependency is any Python interpreter, which should already be installed on macOS and most Linux-based operating systems.
+When onboarding new team members, ensuring their computer has everything needed to work on the project can be painful. Verchew is a command-line program and embeddable Python script to check the versions of your project's system dependencies. Its only external dependency is any Python interpreter, which should already be installed on macOS and most Linux-based operating systems.
 
 # Setup
 
@@ -28,11 +28,11 @@ $ cd verchew
 $ python setup.py install
 ```
 
-or embedded the script in your project using [this guide](cli/vendoring).
+or embedded the script in your project using [this guide](https://github.com/jacebrowning/verchew/blob/develop/docs/cli/vendoring.md).
 
 # Usage
 
-Create a configuration file (`.verchew`) with your project's system dependencies:
+Create a configuration file (`.verchew.ini`) containing your project's system dependencies:
 
 ```ini
 [Working Program]
@@ -56,7 +56,7 @@ cli = missing-program
 version = 1.2.3
 ```
 
-Run `verchew` to see if you have the right versions installed:
+Run `verchew` to see if you have the expected versions installed:
 
 ```sh
 $ verchew
