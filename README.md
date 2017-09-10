@@ -50,6 +50,12 @@ version =  4.
 cli = broken-program
 version = 1.2.3
 
+[Optional Missing Program]
+
+cli = missing-program
+version = 1.2.3
+optional = true
+
 [Missing Program]
 
 cli = missing-program
@@ -79,11 +85,17 @@ $ broken-program --version
 An error occurred.
 ✘ EXPECTED: 1.2.3
 
+Checking for Optional Missing Program...
+
+$ missing-program --version
+sh: command not found: missing-program
+⚠ EXPECTED: 1.2.3
+
 Checking for Missing Program...
 
 $ missing-program --version
 sh: command not found: missing-program
 ✘ EXPECTED: 1.2.3
 
-Results: ✔ ✘ ✘ ✘
+Results: ✔ ✘ ✘ ⚠ ✘
 ```

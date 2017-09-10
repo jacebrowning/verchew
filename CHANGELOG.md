@@ -1,5 +1,9 @@
 # Revision History
 
+## 1.2 (unreleased)
+
+- Added `optional = true` settings to downgrade errors to warnings.
+
 ## 1.1 (2017/05/17)
 
 - Added `--init` command to generate a sample configuration file.
