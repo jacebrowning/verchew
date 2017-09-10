@@ -40,7 +40,7 @@ from collections import OrderedDict
 from subprocess import Popen, PIPE, STDOUT
 import logging
 
-__version__ = '1.1'
+__version__ = '1.2b1'
 
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = ['.verchew.ini', 'verchew.ini', '.verchew', '.verchewrc']
@@ -74,12 +74,14 @@ version = Python 3.
 
 """.strip()
 STYLE = {
+    "~": "✔",
+    "?": "⚠",
     "x": "✘",
-    "~": "✔"
 }
 COLOR = {
     "x": "\033[91m",  # red
     "~": "\033[92m",  # green
+    "?": "\033[93m",  # yellow
     None: "\033[0m",  # reset
 }
 
@@ -188,6 +190,9 @@ def check_dependencies(config):
         if match_version(settings['version'], output):
             show(_("~") + " MATCHED: {0}".format(settings['version']))
             success.append(_("~"))
+        elif settings.get('optional'):
+            show(_("?") + " EXPECTED: {0}".format(settings['version']))
+            success.append(_("?"))
         else:
             show(_("x") + " EXPECTED: {0}".format(settings['version']))
             success.append(_("x"))
