@@ -9,13 +9,15 @@ python:
 cache:
   pip: true
   directories:
-    - env
+    - .venv
 
 env:
   global:
     - RANDOM_SEED=0
+    - PIPENV_NOSPIN=true
 
 before_install:
+  - pip install pipenv==6.2.9
   - make doctor
 
 install:
