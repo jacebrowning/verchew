@@ -1,6 +1,7 @@
 environment:
   global:
     RANDOM_SEED: 0
+    PIPENV_NOSPIN: true
   matrix:
     - PYTHON_MAJOR: 2
       PYTHON_MINOR: 7
@@ -12,7 +13,7 @@ environment:
       PYTHON_MINOR: 5
 
 cache:
-  - env
+  - .venv -> Makefile
 
 install:
   # Export build paths
