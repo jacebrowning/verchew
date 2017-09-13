@@ -44,6 +44,7 @@ version = 1.2.
 
 cli = working-program
 version =  4.
+message = Version 4 is required to get the special features
 
 [Broken Program]
 

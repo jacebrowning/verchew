@@ -40,7 +40,7 @@ from collections import OrderedDict
 from subprocess import Popen, PIPE, STDOUT
 import logging
 
-__version__ = '1.2b1'
+__version__ = '1.2b2'
 
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = ['.verchew.ini', 'verchew.ini', '.verchew', '.verchewrc']
@@ -48,33 +48,31 @@ SAMPLE_CONFIG = """
 [Make]
 
 cli = make
-
 version = GNU Make
-
+message =
 
 [Python 2]
 
 cli = python2
-
 version = Python 2.7.
-
+message =
 
 [virtualenv]
 
 cli = virtualenv
-
 version = 15.
-
+message =
 
 [Python 3]
 
 cli = python
-
 version = Python 3.
+message =
 
 """.strip()
 STYLE = {
     "~": "✔",
+    "*": "⭑",
     "?": "⚠",
     "x": "✘",
 }
@@ -82,6 +80,7 @@ COLOR = {
     "x": "\033[91m",  # red
     "~": "\033[92m",  # green
     "?": "\033[93m",  # yellow
+    "*": "\033[94m",  # cyan
     None: "\033[0m",  # reset
 }
 
@@ -190,12 +189,15 @@ def check_dependencies(config):
         if match_version(settings['version'], output):
             show(_("~") + " MATCHED: {0}".format(settings['version']))
             success.append(_("~"))
-        elif settings.get('optional'):
-            show(_("?") + " EXPECTED: {0}".format(settings['version']))
-            success.append(_("?"))
         else:
-            show(_("x") + " EXPECTED: {0}".format(settings['version']))
-            success.append(_("x"))
+            if settings.get('optional'):
+                show(_("?") + " EXPECTED: {0}".format(settings['version']))
+                success.append(_("?"))
+            else:
+                show(_("x") + " EXPECTED: {0}".format(settings['version']))
+                success.append(_("x"))
+            if settings.get('message'):
+                show(_("*") + " MESSAGE: {0}".format(settings['message']))
 
     show("Results: " + " ".join(success), head=True)
 

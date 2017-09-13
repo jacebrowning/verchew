@@ -3,6 +3,7 @@
 ## 1.2 (unreleased)
 
 - Added `optional = true` settings to downgrade errors to warnings.
+- Added `message` setting to display optional message for missing programs.
 
 ## 1.1 (2017/05/17)
 

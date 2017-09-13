@@ -79,6 +79,10 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 run: install
 	$(PYTHON) $(PACKAGE)/__main__.py
 
+.PHONY: demo ## Run the example
+demo: install
+	make doctor -C examples
+
 # SYSTEM DEPENDENCIES ##########################################################
 
 .PHONY: doctor

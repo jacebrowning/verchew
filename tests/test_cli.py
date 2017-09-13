@@ -29,6 +29,7 @@ Checking for Newer Working Program...
 $ working-program --version
 1.2.3
 ✘ EXPECTED: 4.
+⭑ MESSAGE: This version includes the special features
 
 Checking for Broken Program...
 
@@ -53,7 +54,7 @@ Results: ✔ ✘ ✘ ⚠ ✘
 """
 
 UNSTYLED_OUTPUT = STYLED_OUTPUT \
-    .replace('✔', '~').replace('⚠', '?').replace('✘', 'x')
+    .replace('✔', '~').replace('⭑', '*').replace('⚠', '?').replace('✘', 'x')
 
 UNSTYLED_OUTPUT_WINDOWS = """
 Checking for Working Program...
@@ -67,6 +68,7 @@ Checking for Newer Working Program...
 $ working-program --version
 sh: command not found: working-program
 x EXPECTED: 4.
+* MESSAGE: This version includes the special features
 
 Checking for Broken Program...
 
