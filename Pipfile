@@ -7,13 +7,6 @@ verify_ssl = true
 
 # Linters
 pylint = "*"
-###############################################################################
-# TODO: Find workaround for https://github.com/kennethreitz/pipenv/issues/541
-"backports.functools-lru-cache" = "*"
-enum34 = "*"
-singledispatch = "*"
-configparser = "*"
-###############################################################################
 pycodestyle = "*"
 pydocstyle = "*"
 
@@ -44,3 +37,6 @@ twine = "*"
 
 # Tooling
 sniffer = "*"
+
+[requires]
+python_version = "2.7"
