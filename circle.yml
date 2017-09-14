@@ -7,7 +7,7 @@ machine:
 
 dependencies:
   pre:
-    - pip install pipenv==7.0.2
+    - pip install https://github.com/kennethreitz/pipenv/archive/290366b1ee46991ea662a646c43fc1e49eef5e12.zip
     - make doctor
   override:
     - make install
