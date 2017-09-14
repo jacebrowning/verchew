@@ -91,6 +91,8 @@ METADATA := *.egg-info
 
 .PHONY: install
 install: $(DEPENDENCIES) $(METADATA)
+	# TODO: Temporary debugging for https://github.com/kennethreitz/pipenv/issues/541
+	cat Pipfile.lock
 
 $(DEPENDENCIES): $(PIP) Pipfile*
 	pipenv install --dev
