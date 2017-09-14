@@ -9,8 +9,10 @@ CONFIG := $(wildcard *.py)
 MODULES := $(wildcard $(PACKAGE)/*.py)
 
 # Python settings
+ifndef TRAVIS
 PYTHON_MAJOR ?= 2
 PYTHON_MINOR ?= 7
+endif
 
 # System paths
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
