@@ -1,5 +1,10 @@
 # Revision History
 
+## 1.2 (2017/09/13)
+
+- Added `optional = true` settings to downgrade errors to warnings.
+- Added `message` setting to display optional message for missing programs.
+
 ## 1.1 (2017/05/17)
 
 - Added `--init` command to generate a sample configuration file.

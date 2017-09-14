@@ -29,6 +29,7 @@ Checking for Newer Working Program...
 $ working-program --version
 1.2.3
 ✘ EXPECTED: 4.
+⭑ MESSAGE: This version includes the special features
 
 Checking for Broken Program...
 
@@ -36,17 +37,24 @@ $ broken-program --version
 An error occurred.
 ✘ EXPECTED: 1.2.3
 
+Checking for Optional Missing Program...
+
+$ missing-program --version
+sh: command not found: missing-program
+⚠ EXPECTED: 1.2.3
+
 Checking for Missing Program...
 
 $ missing-program --version
 sh: command not found: missing-program
 ✘ EXPECTED: 1.2.3
 
-Results: ✔ ✘ ✘ ✘
+Results: ✔ ✘ ✘ ⚠ ✘
 
 """
 
-UNSTYLED_OUTPUT = STYLED_OUTPUT.replace('✔', '~').replace('✘', 'x')
+UNSTYLED_OUTPUT = STYLED_OUTPUT \
+    .replace('✔', '~').replace('⭑', '*').replace('⚠', '?').replace('✘', 'x')
 
 UNSTYLED_OUTPUT_WINDOWS = """
 Checking for Working Program...
@@ -60,6 +68,7 @@ Checking for Newer Working Program...
 $ working-program --version
 sh: command not found: working-program
 x EXPECTED: 4.
+* MESSAGE: This version includes the special features
 
 Checking for Broken Program...
 
@@ -67,13 +76,19 @@ $ broken-program --version
 sh: command not found: broken-program
 x EXPECTED: 1.2.3
 
+Checking for Optional Missing Program...
+
+$ missing-program --version
+sh: command not found: missing-program
+? EXPECTED: 1.2.3
+
 Checking for Missing Program...
 
 $ missing-program --version
 sh: command not found: missing-program
 x EXPECTED: 1.2.3
 
-Results: x x x x
+Results: x x x ? x
 
 """
 

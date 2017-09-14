@@ -1,0 +1,46 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+# Linters
+pylint = "*"
+###############################################################################
+# TODO: Find workaround for https://github.com/kennethreitz/pipenv/issues/541
+"backports.functools-lru-cache" = "*"
+enum34 = "*"
+singledispatch = "*"
+configparser = "*"
+###############################################################################
+pycodestyle = "*"
+pydocstyle = "*"
+
+# Testing
+pytest = "~=3.0.7"
+pytest-describe = "==0.11.0"
+pytest-expecter = "==0.2.2.post6"
+pytest-cov = "*"
+pytest-random = "*"
+pytest-catchlog = "*"
+scripttest = "*"
+
+# Coverage
+coverage = "~=4.0"
+"coverage.space" = "~=0.8"
+
+# Documentation
+mkdocs = "*"
+docutils = "*"
+pygments = "*"
+
+# Build
+wheel = "*"
+pyinstaller = "*"
+
+# Release
+twine = "*"
+
+# Tooling
+sniffer = "*"

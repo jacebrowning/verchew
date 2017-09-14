@@ -44,11 +44,18 @@ version = 1.2.
 
 cli = working-program
 version =  4.
+message = Version 4 is required to get the special features
 
 [Broken Program]
 
 cli = broken-program
 version = 1.2.3
+
+[Optional Missing Program]
+
+cli = missing-program
+version = 1.2.3
+optional = true
 
 [Missing Program]
 
@@ -79,11 +86,17 @@ $ broken-program --version
 An error occurred.
 ✘ EXPECTED: 1.2.3
 
+Checking for Optional Missing Program...
+
+$ missing-program --version
+sh: command not found: missing-program
+⚠ EXPECTED: 1.2.3
+
 Checking for Missing Program...
 
 $ missing-program --version
 sh: command not found: missing-program
 ✘ EXPECTED: 1.2.3
 
-Results: ✔ ✘ ✘ ✘
+Results: ✔ ✘ ✘ ⚠ ✘
 ```
