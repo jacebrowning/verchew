@@ -3,7 +3,6 @@
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 
-
 [requires]
 
 python_version = "2.7"
@@ -14,6 +13,7 @@ python_version = "2.7"
 pylint = "*"
 pycodestyle = "*"
 pydocstyle = "*"
+configparser = "*"
 
 # Testing
 pytest = "~=3.0.7"
