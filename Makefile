@@ -175,7 +175,7 @@ $(DIST_FILES): $(MODULES) README.rst CHANGELOG.rst
 	rm -f $(DIST_FILES)
 	pipenv run python setup.py check --restructuredtext --strict --metadata
 	pipenv run python setup.py sdist
-	pipenv run python setup.py bdist_wheel
+	pipenv run python setup.py bdist_wheel --universal
 
 %.rst: %.md
 	pandoc -f markdown_github -t rst -o $@ $<
