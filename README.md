@@ -45,8 +45,8 @@ version = 1.2.
 [Newer Working Program]
 
 cli = working-program
-version =  4.
-message = Version 4 is required to get the special features
+versions =  4.1. | 4.2.
+message = Version 4.x is required to get the special features.
 
 [Broken Program]
 
@@ -80,7 +80,8 @@ Checking for Newer Working Program...
 
 $ working-program --version
 1.2.3
-✘ EXPECTED: 4.
+✘ EXPECTED: 4.1. | 4.2.
+⭑ MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...
 

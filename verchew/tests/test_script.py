@@ -11,6 +11,10 @@ from verchew.script import (find_config, parse_config, get_version,
                             match_version, _)
 
 
+def write(config, text, indent=8):
+    config.write(text.replace(' ' * indent, ''))
+
+
 def describe_find_config():
 
     @pytest.fixture
@@ -51,26 +55,45 @@ def describe_parse_config():
         expect(parse_config(str(config))) == {}
 
     def with_an_empty_section(config):
-        config.write("""
+        write(config, """
         [Foobar]
-        """.replace(' ' * 8, ''))
+        """)
 
         expect(parse_config(str(config))) == {
-            'Foobar': {},
+            'Foobar': {
+                'versions': '',
+                'patterns': [''],
+            },
         }
 
     def with_a_filled_section(config):
-        config.write("""
+        write(config, """
         [Foobar]
 
         cli = foobar
         version = v1.2.3
-        """.replace(' ' * 8, ''))
+        """)
 
         expect(parse_config(str(config))) == {
             'Foobar': {
                 'cli': 'foobar',
-                'version': 'v1.2.3',
+                'versions': 'v1.2.3',
+                'patterns': ['v1.2.3'],
+            },
+        }
+
+    def with_multiple_versions(config):
+        write(config, """
+        [Foobar]
+
+        version = 1
+        versions = 2 | 3 |     4
+        """)
+
+        expect(parse_config(str(config))) == {
+            'Foobar': {
+                'versions': '2 | 3 |     4',
+                'patterns': ['2', '3', '4'],
             },
         }
 
