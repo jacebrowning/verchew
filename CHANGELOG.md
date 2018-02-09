@@ -1,6 +1,6 @@
 # Revision History
 
-## 1.3 (unreleased)
+## 1.3 (2018/02/08)
 
 - Added support for checking for multiple versions of programs.
 
