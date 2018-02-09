@@ -8,20 +8,33 @@ Normally, `verchew` is installed using `pip`, but given the variety of environme
 
 For this reason, `verchew` can also be embedded into your project as a standalone Python script.
 
-## Building
+## Setup
 
-After cloning this repository, build the script for distribution:
+Create a `bin/` directory in your project:
 
 ```
-$ make dist
+$ mkdir -p bin
 ```
 
-## Copying
+Download the standalone script:
 
-In your project:
+```
+$ wget https://raw.githubusercontent.com/jacebrowning/verchew/master/verchew/script.py
+$ mv script.py bin/verchew
+```
 
-1. Create a `bin/` directory: `$ mkdir -p bin`
-2. Copy the script: `$ cp ../verchew/dist/verchew bin/verchew`
-3. Ensure the script is executable: `$ chmod a+x bin/verchew`
+Ensure the script has executable permissions:
 
-An example of this can be seen [here](https://github.com/jacebrowning/template-python-demo).
+```
+$ chmod a+x bin/verchew
+```
+
+## Usage
+
+To check the versions of your system dependencies simply run:
+
+```
+$ bin/verchew
+```
+
+An example of a project configured this way can be found [here](https://github.com/jacebrowning/template-python-demo).

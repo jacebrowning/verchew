@@ -1,5 +1,9 @@
 # Revision History
 
+## 1.3 (2018/02/08)
+
+- Added support for checking for multiple versions of programs.
+
 ## 1.2 (2017/09/13)
 
 - Added `optional = true` settings to downgrade errors to warnings.
