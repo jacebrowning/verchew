@@ -8,6 +8,7 @@ theme: readthedocs
 pages:
 - Home: index.md
 - CLI:
+  - Configuration: cli/configuration.md
   - Options: cli/options.md
   - Vendoring: cli/vendoring.md
 - About:

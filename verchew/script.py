@@ -45,29 +45,27 @@ __version__ = '1.2'
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = ['.verchew.ini', 'verchew.ini', '.verchew', '.verchewrc']
 SAMPLE_CONFIG = """
-[Make]
+[Python]
 
-cli = make
-version = GNU Make
-message =
+cli = python
+versions = Python 3.5 | Python 3.6
 
-[Python 2]
+[Legacy Python]
 
 cli = python2
-version = Python 2.7.
-message =
+version = Python 2.7
 
 [virtualenv]
 
 cli = virtualenv
 version = 15.
-message =
+message = Only required with Python 2.
 
-[Python 3]
+[Make]
 
-cli = python
-version = Python 3.
-message =
+cli = make
+version = GNU Make
+optional = true
 
 """.strip()
 STYLE = {
@@ -177,6 +175,11 @@ def parse_config(path):
         for name, value in config.items(section):
             data[section][name] = value
 
+    for name in data:
+        versions = data[name].get('versions', data[name].pop('version', ""))
+        data[name]['versions'] = versions
+        data[name]['patterns'] = [v.strip() for v in versions.split('|')]
+
     return data
 
 
@@ -186,15 +189,18 @@ def check_dependencies(config):
     for name, settings in config.items():
         show("Checking for {0}...".format(name), head=True)
         output = get_version(settings['cli'], settings.get('cli_version_arg'))
-        if match_version(settings['version'], output):
-            show(_("~") + " MATCHED: {0}".format(settings['version']))
-            success.append(_("~"))
+
+        for pattern in settings['patterns']:
+            if match_version(pattern, output):
+                show(_("~") + " MATCHED: {0}".format(pattern))
+                success.append(_("~"))
+                break
         else:
             if settings.get('optional'):
-                show(_("?") + " EXPECTED: {0}".format(settings['version']))
+                show(_("?") + " EXPECTED: {0}".format(settings['versions']))
                 success.append(_("?"))
             else:
-                show(_("x") + " EXPECTED: {0}".format(settings['version']))
+                show(_("x") + " EXPECTED: {0}".format(settings['versions']))
                 success.append(_("x"))
             if settings.get('message'):
                 show(_("*") + " MESSAGE: {0}".format(settings['message']))
