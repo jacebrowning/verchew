@@ -34,7 +34,7 @@ or embedded the script in your project using [this guide](https://verchew.readth
 
 Run `verchew init` to generate a sample configuration file.
 
-Update this file (`.verchew.ini`) to include your project's system dependencies:
+Update this file (`verchew.ini`) to include your project's system dependencies:
 
 ```ini
 [Working Program]
