@@ -1,5 +1,9 @@
 # Revision History
 
+## 1.4 (unreleased)
+
+- Updated `cli_version_arg` to be blank for programs with no version argument.
+
 ## 1.3 (2018/02/08)
 
 - Added support for checking for multiple versions of programs.

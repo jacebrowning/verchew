@@ -216,8 +216,12 @@ def check_dependencies(config):
 
 
 def get_version(program, argument=None):
-    argument = argument or '--version'
-    args = [program, argument]
+    if argument is None:
+        args = [program, '--version']
+    elif argument:
+        args = [program, argument]
+    else:
+        args = [program]
 
     show("$ {0}".format(" ".join(args)))
     output = call(args)
