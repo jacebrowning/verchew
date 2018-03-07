@@ -40,7 +40,7 @@ from collections import OrderedDict
 from subprocess import Popen, PIPE, STDOUT
 import logging
 
-__version__ = '1.3'
+__version__ = '1.4'
 
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = [

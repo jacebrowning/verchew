@@ -1,6 +1,6 @@
 # Revision History
 
-## 1.4 (unreleased)
+## 1.4 (2018/03/06)
 
 - Updated `cli_version_arg` to be blank for programs with no version argument.
 
