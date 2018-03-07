@@ -19,6 +19,16 @@ cli_version_arg = -V
 version = 2.
 ```
 
+If the program lacks a specific argument to display its version, but contains version information in the default output, include an empty `cli_version_arg` setting:
+
+```ini
+[7-Zip]
+
+cli = 7z
+cli_version_arg = 
+version = 16.
+```
+
 # Multiple Versions
 
 If your project can use multiple versions of a system dependency, use the `versions` setting and separate versions with the pipe character (`|`):

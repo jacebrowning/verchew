@@ -9,6 +9,7 @@ Icon*
 
 # Temporary virtual environment files
 /.cache/
+.pytest_cache/
 /.venv/
 
 # Temporary server files
@@ -30,7 +31,7 @@ Icon*
 *.gdraw
 
 # Testing and coverage results
-/.pytest/
+/.pytest_cache/
 /.coverage
 /.coverage.*
 /htmlcov/

@@ -40,10 +40,15 @@ from collections import OrderedDict
 from subprocess import Popen, PIPE, STDOUT
 import logging
 
-__version__ = '1.3'
+__version__ = '1.4'
 
 PY2 = sys.version_info[0] == 2
-CONFIG_FILENAMES = ['.verchew.ini', 'verchew.ini', '.verchew', '.verchewrc']
+CONFIG_FILENAMES = [
+    'verchew.ini',
+    '.verchew.ini',
+    '.verchewrc',
+    '.verchew',
+]
 SAMPLE_CONFIG = """
 [Python]
 
@@ -211,8 +216,12 @@ def check_dependencies(config):
 
 
 def get_version(program, argument=None):
-    argument = argument or '--version'
-    args = [program, argument]
+    if argument is None:
+        args = [program, '--version']
+    elif argument:
+        args = [program, argument]
+    else:
+        args = [program]
 
     show("$ {0}".format(" ".join(args)))
     output = call(args)
