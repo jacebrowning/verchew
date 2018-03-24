@@ -24,7 +24,7 @@ pytest-cov = "*"
 scripttest = "*"
 
 # Reports
-"coverage.space" = "*"
+coverage-space = "*"
 
 # Documentation
 mkdocs = "*"
