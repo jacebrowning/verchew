@@ -9,12 +9,11 @@ CONFIG := $(wildcard *.py)
 MODULES := $(wildcard $(PACKAGE)/*.py)
 
 # Virtual environment paths
-export PIPENV_SHELL_COMPAT=true
 export PIPENV_VENV_IN_PROJECT=true
 export PIPENV_IGNORE_VIRTUALENVS=true
-ENV := .venv
+VENV := .venv
 
-# MAIN TASKS ###################################################################
+# MAIN TASKS ##################################################################
 
 SNIFFER := pipenv run sniffer
 
@@ -44,18 +43,14 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES #########################################################
 
-DEPENDENCIES := $(ENV)/.pipenv-$(shell bin/checksum Pipfile*)
-METADATA := *.egg-info
+DEPENDENCIES := $(VENV)/.pipenv-$(shell bin/checksum Pipfile* setup.py)
 
 .PHONY: install
-install: $(DEPENDENCIES) $(METADATA)
+install: $(DEPENDENCIES)
 
 $(DEPENDENCIES):
-	pipenv install --dev
-	@ touch $@
-
-$(METADATA): setup.py
 	pipenv run python setup.py develop
+	pipenv install --dev
 	@ touch $@
 
 # CHECKS ######################################################################
@@ -104,9 +99,9 @@ test: test-all ## Run unit and integration tests
 
 .PHONY: test-unit
 test-unit: install
-	@- mv $(FAILURES) $(FAILURES).bak
+	@ ( mv $(FAILURES) $(FAILURES).bak || true ) > /dev/null 2>&1
 	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGE) --junitxml=$(REPORTS)/unit.xml
-	@- mv $(FAILURES).bak $(FAILURES)
+	@ ( mv $(FAILURES).bak $(FAILURES) || true ) > /dev/null 2>&1
 	$(COVERAGE_SPACE) $(REPOSITORY) unit
 
 .PHONY: test-int
@@ -175,7 +170,7 @@ $(DIST_FILES): $(MODULES) README.rst CHANGELOG.rst
 	rm -f $(DIST_FILES)
 	pipenv run python setup.py check --restructuredtext --strict --metadata
 	pipenv run python setup.py sdist
-	pipenv run python setup.py bdist_wheel --universal
+	pipenv run python setup.py bdist_wheel
 
 %.rst: %.md
 	pandoc -f markdown_github -t rst -o $@ $<
@@ -206,7 +201,7 @@ clean: .clean-build .clean-docs .clean-test .clean-install ## Delete all generat
 
 .PHONY: clean-all
 clean-all: clean
-	rm -rf $(ENV)
+	rm -rf $(VENV)
 
 .PHONY: .clean-install
 .clean-install:

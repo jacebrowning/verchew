@@ -8,8 +8,7 @@ __pycache__
 Icon*
 
 # Temporary virtual environment files
-/.cache/
-.pytest_cache/
+/.*cache/
 /.venv/
 
 # Temporary server files
