@@ -8,19 +8,16 @@ name = "pypi"
 
 python_version = "2.7"
 
-[packages]
-
-verchew = { path = ".", editable = true }
-
 [dev-packages]
 
 # Linters
+isort = "*"
 pylint = "*"
 pycodestyle = "*"
 pydocstyle = "*"
 
 # Testing
-pytest = "~=3.3"
+pytest = "~= 3.3"
 pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
@@ -40,9 +37,10 @@ wheel = "*"
 pyinstaller = "*"
 
 # Release
-twine = "*"
+setuptools = ">= 38.6.0"
+twine = ">= 1.11.0"
 
 # Tooling
 sniffer = "*"
-pync = { version = "<2.0", sys_platform = "== 'darwin'" }
 MacFSEvents = { version = "*", sys_platform = "== 'darwin'" }
+pync = { version = "< 2.0", sys_platform = "== 'darwin'" }
