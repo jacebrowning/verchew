@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "verchew"
-version = "1.4"
+version = "1.4"  # also update verchew/script.py
 description = "System dependency version checker."
 
 license = "MIT"
@@ -68,7 +68,8 @@ scripttest = "*"
 coveragespace = "*"
 
 # Documentation
-mkdocs = "*"
+mkdocs = "<1"
+backports-abc = { version = "*", python = "^2.7" }  # needed for 'mkdocs'
 pygments = "*"
 
 # Tooling
