@@ -7,9 +7,7 @@ from __future__ import unicode_literals
 import pytest
 from expecter import expect
 
-from verchew.script import (
-    _, find_config, get_version, match_version, parse_config,
-)
+from verchew.script import _, find_config, get_version, match_version, parse_config
 
 
 def write(config, text, indent=8):

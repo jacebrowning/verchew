@@ -8,8 +8,7 @@
     * Windows: http://mingw.org/download/installer
     * Mac: http://developer.apple.com/xcode
     * Linux: http://www.gnu.org/software/make
-* pipenv: http://docs.pipenv.org
-* Pandoc: http://johnmacfarlane.net/pandoc/installing.html
+* Poetry: https://poetry.eustace.io
 * Graphviz: http://www.graphviz.org/Download.php
 
 To confirm these system dependencies are configured correctly:
@@ -28,23 +27,19 @@ $ make install
 
 ## Development Tasks
 
-### Testing
+### Manual
 
-Manually run the tests:
+Run the tests:
 
 ```sh
 $ make test
 ```
 
-or keep them running on change:
+Run static analysis:
 
 ```sh
-$ make watch
+$ make check
 ```
-
-> In order to have OS X notifications, `brew install terminal-notifier`.
-
-### Documentation
 
 Build the documentation:
 
@@ -52,16 +47,15 @@ Build the documentation:
 $ make docs
 ```
 
-### Static Analysis
+### Automatic
 
-Run linters and static analyzers:
+Keep all of the above tasks running on change:
 
 ```sh
-$ make pylint
-$ make pycodestyle
-$ make pydocstyle
-$ make check  # includes all checks
+$ make watch
 ```
+
+> In order to have OS X notifications, `brew install terminal-notifier`.
 
 ## Continuous Integration
 

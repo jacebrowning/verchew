@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 """Configuration file for sniffer."""
-# pylint: disable=superfluous-parens,bad-continuation
 
-import subprocess
 import time
+import subprocess
 
-from sniffer.api import file_validator, runnable, select_runnable
-
-
+from sniffer.api import select_runnable, file_validator, runnable
 try:
     from pync import Notifier
 except ImportError:
