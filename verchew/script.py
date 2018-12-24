@@ -43,7 +43,7 @@ try:
 except ImportError:
     import ConfigParser as configparser  # Python 2
 
-__version__ = '1.5a1'
+__version__ = '1.5'
 
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = [
