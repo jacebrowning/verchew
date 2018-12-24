@@ -1,7 +1,6 @@
 language: python
 python:
   - 2.7
-  - 3.3
   - 3.4
   - 3.5
   - 3.6
@@ -9,14 +8,15 @@ python:
 cache:
   pip: true
   directories:
-    - .venv
+    - ${VIRTUAL_ENV}
 
 env:
   global:
     - RANDOM_SEED=0
 
 before_install:
-  - pip install pipenv
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - source $HOME/.poetry/env
   - make doctor
 
 install:

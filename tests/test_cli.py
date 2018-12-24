@@ -4,13 +4,14 @@
 
 from __future__ import unicode_literals
 
+import logging
 import os
 import sys
-import logging
 
 import pytest
 import scripttest
 from expecter import expect
+
 
 TESTS_DIR = os.path.abspath(os.path.dirname(__file__))
 ROOT_DIR = os.path.join(TESTS_DIR, "..")
@@ -22,13 +23,13 @@ Checking for Working Program...
 
 $ working-program --version
 1.2.3
-✔ MATCHED: 1.2.
+✔ MATCHED: 1.2
 
 Checking for Newer Working Program...
 
 $ working-program --version
 1.2.3
-✘ EXPECTED: 4.1. | 4.2.
+✘ EXPECTED: 4.1 | 4.2
 ⭑ MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...
@@ -61,13 +62,13 @@ Checking for Working Program...
 
 $ working-program --version
 sh: command not found: working-program
-x EXPECTED: 1.2.
+x EXPECTED: 1.2
 
 Checking for Newer Working Program...
 
 $ working-program --version
 sh: command not found: working-program
-x EXPECTED: 4.1. | 4.2.
+x EXPECTED: 4.1 | 4.2
 * MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...

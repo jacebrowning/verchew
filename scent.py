@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+
 """Configuration file for sniffer."""
-# pylint: disable=superfluous-parens,bad-continuation
 
 import time
 import subprocess
@@ -52,12 +52,12 @@ def run_targets(*args):
 
         success = call(command, title, retry)
         if not success:
-            message = "✅ " * (count - 1) + "❌"
+            message = u"✅ " * (count - 1) + u"❌"
             show_notification(message, title)
 
             return False
 
-    message = "✅ " * count
+    message = u"✅ " * count
     title = "All Targets"
     show_notification(message, title)
     show_coverage()
@@ -74,6 +74,7 @@ def call(command, title, retry):
         if not success:
             return False
 
+    # pylint: disable=superfluous-parens
     print("")
     print("$ %s" % ' '.join(command))
     failure = subprocess.call(command)

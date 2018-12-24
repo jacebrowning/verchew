@@ -1,10 +1,15 @@
-Unix: [![Unix Build Status](https://img.shields.io/travis/jacebrowning/verchew/develop.svg)](https://travis-ci.org/jacebrowning/verchew) Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/verchew/develop.svg)](https://ci.appveyor.com/project/jacebrowning/verchew)<br>Metrics: [![Coverage Status](https://img.shields.io/coveralls/jacebrowning/verchew/develop.svg)](https://coveralls.io/r/jacebrowning/verchew) [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/jacebrowning/verchew.svg)](https://scrutinizer-ci.com/g/jacebrowning/verchew/?branch=develop)<br>Usage: [![PyPI Version](https://img.shields.io/pypi/v/verchew.svg)](https://pypi.python.org/pypi/verchew)
-
 # Overview
 
 > ...chews through your system dependencies, spitting out incompatible versions.
 
 When onboarding new team members, ensuring their computer has everything needed to work on the project can be painful. Verchew is a command-line program and embeddable Python script to check the versions of your project's system dependencies. Its only external dependency is any Python interpreter, which should already be installed on macOS and most Linux-based operating systems.
+
+[![Unix Build Status](https://img.shields.io/travis/jacebrowning/verchew/develop.svg?label=unix)](https://travis-ci.org/jacebrowning/verchew)
+[![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/verchew/develop.svg?label=windows)](https://ci.appveyor.com/project/jacebrowning/verchew)
+[![Coverage Status](https://img.shields.io/coveralls/jacebrowning/verchew/develop.svg)](https://coveralls.io/r/jacebrowning/verchew)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/jacebrowning/verchew.svg)](https://scrutinizer-ci.com/g/jacebrowning/verchew/?branch=develop)
+[![PyPI Version](https://img.shields.io/pypi/v/verchew.svg)](https://pypi.python.org/pypi/verchew)
+[![PyPI License](https://img.shields.io/pypi/l/verchew.svg)](https://pypi.org/project/verchew)
 
 # Setup
 
@@ -40,12 +45,12 @@ Update this file (`verchew.ini`) to include your project's system dependencies:
 [Working Program]
 
 cli = working-program
-version = 1.2.
+version = 1.2
 
 [Newer Working Program]
 
 cli = working-program
-versions =  4.1. | 4.2.
+versions =  4.1 | 4.2
 message = Version 4.x is required to get the special features.
 
 [Broken Program]
@@ -74,13 +79,13 @@ Checking for Working Program...
 
 $ working-program --version
 1.2.3
-✔ MATCHED: 1.2.
+✔ MATCHED: 1.2
 
 Checking for Newer Working Program...
 
 $ working-program --version
 1.2.3
-✘ EXPECTED: 4.1. | 4.2.
+✘ EXPECTED: 4.1 | 4.2
 ⭑ MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...
