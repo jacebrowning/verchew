@@ -45,12 +45,12 @@ Update this file (`verchew.ini`) to include your project's system dependencies:
 [Working Program]
 
 cli = working-program
-version = 1.2.
+version = 1.2
 
 [Newer Working Program]
 
 cli = working-program
-versions =  4.1. | 4.2.
+versions =  4.1 | 4.2
 message = Version 4.x is required to get the special features.
 
 [Broken Program]
@@ -79,13 +79,13 @@ Checking for Working Program...
 
 $ working-program --version
 1.2.3
-✔ MATCHED: 1.2.
+✔ MATCHED: 1.2
 
 Checking for Newer Working Program...
 
 $ working-program --version
 1.2.3
-✘ EXPECTED: 4.1. | 4.2.
+✘ EXPECTED: 4.1 | 4.2
 ⭑ MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...

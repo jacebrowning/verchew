@@ -16,7 +16,7 @@ If one of your system dependencies using an argument other than `--version` to d
 
 cli = dot
 cli_version_arg = -V
-version = 2.
+version = 2
 ```
 
 If the program lacks a specific argument to display its version, but contains version information in the default output, include an empty `cli_version_arg` setting:
@@ -26,7 +26,7 @@ If the program lacks a specific argument to display its version, but contains ve
 
 cli = 7z
 cli_version_arg = 
-version = 16.
+version = 16
 ```
 
 # Multiple Versions
@@ -37,7 +37,7 @@ If your project can use multiple versions of a system dependency, use the `versi
 [Python]
 
 cli = python
-versions = Python 2. | Python 3.
+versions = Python 2 | Python 3
 ```
 
 # Optional Programs
@@ -60,6 +60,6 @@ To provide additional information when a system dependency is missing, include t
 [Git]
 
 cli = git
-version = 2.
+version = 2
 message = Version 2.x is required to get the new push behavior.
 ```
