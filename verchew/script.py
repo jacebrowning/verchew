@@ -32,6 +32,7 @@ from __future__ import unicode_literals
 import argparse
 import logging
 import os
+import re
 import sys
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
@@ -42,7 +43,7 @@ try:
 except ImportError:
     import ConfigParser as configparser  # Python 2
 
-__version__ = '1.4'
+__version__ = '1.5a1'
 
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = [
@@ -65,7 +66,7 @@ version = Python 2.7
 [virtualenv]
 
 cli = virtualenv
-version = 15.
+version = 15
 message = Only required with Python 2.
 
 [Make]
@@ -233,7 +234,14 @@ def get_version(program, argument=None):
 
 
 def match_version(pattern, output):
-    return output.startswith(pattern) or " " + pattern in output
+    regex = pattern.replace('.', r'\.') + r'\b'
+
+    log.debug("Matching %s: %s", regex, output)
+    match = re.match(regex, output)
+    if match is None:
+        match = re.match(r'.*[^\d.]' + regex, output)
+
+    return bool(match)
 
 
 def call(args):

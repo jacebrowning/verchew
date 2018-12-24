@@ -114,20 +114,32 @@ def describe_get_version():
 
 def describe_match_version():
 
-    def when_exact():
+    def when_exact_match():
         expect(match_version("1.2.3", "1.2.3")) == True
 
-    def when_partial():
+    def when_partial_match():
         expect(match_version("1.2.", "1.2.3")) == True
+
+    def when_partial_match_at_boundary():
+        expect(match_version("1.2", "1.2.3")) == True
 
     def when_mismatch():
         expect(match_version("1.", "2.0")) == False
 
-    def when_match_inside():
+    def when_mismatch_at_boundary():
+        expect(match_version("1.2", "1.23")) == False
+
+    def when_match_with_name():
         expect(match_version("1.", "Foobar 1.2.3")) == True
 
-    def when_mismatch_inside():
+    def when_mismatch_with_name():
         expect(match_version("2.", "Foobar 1.2.3")) == False
+
+    def when_match_with_version():
+        expect(match_version("1.", "v1.2.3")) == True
+
+    def when_mismatch_with_version():
+        expect(match_version("2.", "v1.2.3")) == False
 
 
 def describe_format():
