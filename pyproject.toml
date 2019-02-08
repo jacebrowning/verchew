@@ -41,7 +41,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 
-python = "^2.7 || ^3.4"
+python = "^2.7.9 || ^3.4"
 
 [tool.poetry.dev-dependencies]
 
@@ -57,7 +57,7 @@ pydocstyle = "*"
 pylint = "*"
 
 # Testing
-pytest = "^3.3"
+pytest = "^4.2.0"
 pytest-cov = "*"
 pytest-describe = "*"
 pytest-expecter = "*"
@@ -68,7 +68,7 @@ scripttest = "*"
 coveragespace = "*"
 
 # Documentation
-mkdocs = "<1"
+mkdocs = "^1.0.4"
 backports-abc = { version = "*", python = "^2.7" }  # needed for 'mkdocs'
 pygments = "*"
 
