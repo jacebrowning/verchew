@@ -1,3 +1,7 @@
+# 1.6 (unreleased)
+
+- Added `--quiet` option to suppress output when all programs match.
+
 # 1.5 (2018-12-24)
 
 - Updated `version` to only match at word boundaries.
