@@ -21,13 +21,13 @@ When onboarding new team members, ensuring their computer has everything needed 
 
 Install verchew with pip:
 
-```sh
+```text
 $ pip install verchew
 ```
 
 or directly from the source code:
 
-```sh
+```text
 $ git clone https://github.com/jacebrowning/verchew.git
 $ cd verchew
 $ python setup.py install
@@ -72,7 +72,7 @@ version = 1.2.3
 
 Run `verchew` to see if you have the expected versions installed:
 
-```sh
+```text
 $ verchew
 
 Checking for Working Program...

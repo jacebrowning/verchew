@@ -117,54 +117,101 @@ def call(env, path, *args):
     return env.run(path, *args, expect_error=True)
 
 
-def describe_cli():
+def describe_meta():
 
     def it_displays_help_information(cli):
         cmd = cli('--help')
 
-        expect(cmd.returncode) == 0
         expect(cmd.stdout).contains("usage: verchew")
+        expect(cmd.returncode) == 0
 
     def it_displays_version_information(cli):
         cmd = cli('--version')
 
-        expect(cmd.returncode) == 0
         expect(cmd.stdout or cmd.stderr).contains("verchew v1.")
+        expect(cmd.returncode) == 0
+
+def describe_init():
 
     def it_generates_a_sample_config(cli):
         cmd = cli('--init')
 
-        expect(cmd.returncode) == 0
         expect(cmd.stderr) == ""
         expect(cmd.stdout).contains("Checking for Make")
+        expect(cmd.returncode) == 0
 
-    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
-    @pytest.mark.skipif(sys.version_info[0] == 2, reason="python3 only")
+def describe_main():
+
+    @pytest.mark.skipif(
+        sys.version_info[0] == 2 or sys.platform == 'win32',
+        reason="unix and python3 only",
+    )
     def it_displays_results_on_unix_python_3(cli):
         cmd = cli('--root', EXAMPLES_DIR)
 
-        expect(cmd.returncode) == 0
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == STYLED_OUTPUT
+        expect(cmd.returncode) == 0
 
-    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
-    @pytest.mark.skipif(sys.version_info[0] == 3, reason="python2 only")
+    @pytest.mark.skipif(
+        sys.version_info[0] == 3 or sys.platform == 'win32',
+        reason="unix and python2 only",
+    )
     def it_displays_results_on_unix_python_2(cli):
         cmd = cli('--root', EXAMPLES_DIR)
 
-        expect(cmd.returncode) == 0
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == UNSTYLED_OUTPUT
+        expect(cmd.returncode) == 0
 
     @pytest.mark.skipif(sys.platform != 'win32', reason="windows only")
     def it_displays_results_on_windows(cli):
         cmd = cli('--root', EXAMPLES_DIR)
 
-        expect(cmd.returncode) == 0
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == UNSTYLED_OUTPUT_WINDOWS
+        expect(cmd.returncode) == 0
 
     def it_exits_with_an_error_code_if_enabled(cli):
         cmd = cli('--root', EXAMPLES_DIR, '--exit-code')
 
         expect(cmd.returncode) == 1
+
+def describe_quiet():
+
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    def it_hides_output_when_no_error(cli, tmp_path):
+        verchew_ini = tmp_path / 'verchew.ini'
+        verchew_ini.write_text("""
+        [Working Program]
+
+        cli = working-program
+        version = 1.2
+        """)
+
+        cmd = cli('--root', str(tmp_path), '--quiet')
+
+        expect(cmd.stderr) == ""
+        expect(cmd.stdout) == ""
+        expect(cmd.returncode) == 0
+
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    def it_shows_failing_programs(cli, tmp_path):
+        verchew_ini = tmp_path / 'verchew.ini'
+        verchew_ini.write_text("""
+        [Working Program]
+
+        cli = working-program
+        version = 1.2
+
+        [Newer Working Program]
+
+        cli = working-program
+        version =  1.3
+        """)
+
+        cmd = cli('--root', str(tmp_path), '--quiet')
+
+        expect(cmd.stderr) == ""
+        expect(cmd.stdout) == "Unmatched Newer Working Program version: 1.3\n"
+        expect(cmd.returncode) == 0
