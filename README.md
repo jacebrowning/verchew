@@ -19,18 +19,10 @@ When onboarding new team members, ensuring their computer has everything needed 
 
 ## Installation
 
-Install verchew with pip:
+Install `verchew` globally with pip:
 
 ```text
 $ pip install verchew
-```
-
-or directly from the source code:
-
-```text
-$ git clone https://github.com/jacebrowning/verchew.git
-$ cd verchew
-$ python setup.py install
 ```
 
 or embedded the script in your project using [this guide](https://verchew.readthedocs.io/en/latest/cli/vendoring/).

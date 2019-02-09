@@ -9,7 +9,7 @@ Any of the following can be used as the `verchew` configuration filename:
     
 # Version Arguments
 
-If one of your system dependencies using an argument other than `--version` to display its version information, this can be changed in the configuration file using the `cli_version_arg` setting:
+If one of your system dependencies uses an argument other than `--version` to display its version information, this can be changed in the configuration file using the `cli_version_arg` setting:
 
 ```ini
 [Graphviz]
