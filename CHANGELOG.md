@@ -1,4 +1,4 @@
-# 1.6 (unreleased)
+# 1.6 (2019-02-08)
 
 - Added `--quiet` option to suppress output when all programs match.
 
