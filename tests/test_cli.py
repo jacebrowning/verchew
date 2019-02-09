@@ -179,6 +179,7 @@ def describe_main():
 
 def describe_quiet():
 
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
     def it_hides_output_when_no_error(cli, tmp_path):
         verchew_ini = tmp_path / 'verchew.ini'
         verchew_ini.write_text("""
@@ -194,6 +195,7 @@ def describe_quiet():
         expect(cmd.stdout) == ""
         expect(cmd.returncode) == 0
 
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
     def it_shows_failing_programs(cli, tmp_path):
         verchew_ini = tmp_path / 'verchew.ini'
         verchew_ini.write_text("""
