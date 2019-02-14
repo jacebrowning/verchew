@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "verchew"
-version = "1.6"  # also update verchew/script.py
+version = "1.6.1"  # also update verchew/script.py
 description = "System dependency version checker."
 
 license = "MIT"
@@ -58,7 +58,7 @@ pydocstyle = "*"
 pylint = "*"
 
 # Testing
-pytest = "^4.2.0"
+pytest = "=4.2.0"
 pytest-cov = "*"
 pytest-describe = "*"
 pytest-expecter = "*"
