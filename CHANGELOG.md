@@ -1,3 +1,7 @@
+# 1.6.1 (2019-02-14)
+
+- Fixed handling of programs that produce no output.
+
 # 1.6 (2019-02-08)
 
 - Added `--quiet` option to suppress output when all programs match.

@@ -43,7 +43,7 @@ try:
 except ImportError:
     import ConfigParser as configparser  # Python 2
 
-__version__ = '1.6'
+__version__ = '1.6.1'
 
 PY2 = sys.version_info[0] == 2
 
@@ -247,7 +247,7 @@ def get_version(program, argument=None):
 
     show("$ {0}".format(" ".join(args)))
     output = call(args)
-    show(output.splitlines()[0])
+    show(output.splitlines()[0] if output else "<nothing>")
 
     return output
 

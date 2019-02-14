@@ -111,6 +111,9 @@ def describe_get_version():
     def with_no_argument():
         expect(get_version('pip', argument='')).contains("Usage:")
 
+    def when_no_output():
+        expect(get_version('echo', argument='')) == ""
+
 
 def describe_match_version():
 
