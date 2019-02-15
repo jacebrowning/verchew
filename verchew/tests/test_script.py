@@ -144,6 +144,10 @@ def describe_match_version():
     def when_mismatch_with_version():
         expect(match_version("2.", "v1.2.3")) == False
 
+    def when_match_with_dash_followed_by_path():
+        """Test that the output of `printenv DIRENV_DIR` can be matched."""
+        expect(match_version("-", "-/foo/bar")) == True
+
 
 def describe_format():
 

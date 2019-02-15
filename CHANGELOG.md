@@ -1,3 +1,7 @@
+# 1.6.2 (2019-02-15)
+
+- Fixed handling of programs that produce output with file paths.
+
 # 1.6.1 (2019-02-14)
 
 - Fixed handling of programs that produce no output.
