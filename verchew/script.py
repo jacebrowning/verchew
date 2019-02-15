@@ -43,7 +43,7 @@ try:
 except ImportError:
     import ConfigParser as configparser  # Python 2
 
-__version__ = '1.6.1'
+__version__ = '1.6.2'
 
 PY2 = sys.version_info[0] == 2
 
@@ -253,7 +253,7 @@ def get_version(program, argument=None):
 
 
 def match_version(pattern, output):
-    regex = pattern.replace('.', r'\.') + r'\b'
+    regex = pattern.replace('.', r'\.') + r'(\b|/)'
 
     log.debug("Matching %s: %s", regex, output)
     match = re.match(regex, output)
