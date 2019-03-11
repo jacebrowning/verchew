@@ -55,7 +55,7 @@ isort = "=4.3.4"
 # TODO: Enable mypy after dropping legacy Python support
 # mypy = "*"
 pydocstyle = "*"
-pylint = "*"
+pylint = "<2"
 
 # Testing
 pytest = "=4.2.0"

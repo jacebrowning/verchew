@@ -145,8 +145,15 @@ def describe_match_version():
         expect(match_version("2.", "v1.2.3")) == False
 
     def when_match_with_dash_followed_by_path():
-        """Test that the output of `printenv DIRENV_DIR` can be matched."""
+        """Test that the output of `$ printenv DIRENV_DIR` can be matched."""
         expect(match_version("-", "-/foo/bar")) == True
+
+    def when_match_with_slug_inside_path():
+        """Test that the output of `$ which python` (pyenv) can be matched."""
+        expect(match_version(
+            ".pyenv",
+            "Users/foobar/.pyenv/versions/2.7.14/bin/python",
+        )) == True
 
 
 def describe_format():
