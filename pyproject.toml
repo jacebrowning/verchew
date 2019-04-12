@@ -85,7 +85,7 @@ verchew = "verchew.script:main"
 
 [tool.black]
 
-py36 = false
+target_version = ['py27', 'py37']
 skip-string-normalization = true
 
 [build-system]
