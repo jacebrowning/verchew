@@ -60,7 +60,7 @@ def describe_parse_config():
 
         expect(parse_config(str(config))) == {
             'Foobar': {
-                'versions': '',
+                'version': '',
                 'patterns': [''],
             },
         }
@@ -76,7 +76,7 @@ def describe_parse_config():
         expect(parse_config(str(config))) == {
             'Foobar': {
                 'cli': 'foobar',
-                'versions': 'v1.2.3',
+                'version': 'v1.2.3',
                 'patterns': ['v1.2.3'],
             },
         }
@@ -85,14 +85,45 @@ def describe_parse_config():
         write(config, """
         [Foobar]
 
-        version = 1
-        versions = 2 | 3 |     4
+        version = 2 || 3 ||     4
         """)
 
         expect(parse_config(str(config))) == {
             'Foobar': {
-                'versions': '2 | 3 |     4',
+                'version': '2 || 3 ||     4',
                 'patterns': ['2', '3', '4'],
+            },
+        }
+
+    def with_legacy_versions_option(config):
+        write(config, """
+        [Foobar]
+
+        cli = foobar
+        versions = v1.2.3
+        """)
+
+        expect(parse_config(str(config))) == {
+            'Foobar': {
+                'cli': 'foobar',
+                'version': 'v1.2.3',
+                'patterns': ['v1.2.3'],
+            },
+        }
+
+    def with_legacy_versions_separator(config):
+        write(config, """
+        [Foobar]
+
+        cli = foobar
+        version = v1.2.3 | v1.2.4
+        """)
+
+        expect(parse_config(str(config))) == {
+            'Foobar': {
+                'cli': 'foobar',
+                'version': 'v1.2.3 || v1.2.4',
+                'patterns': ['v1.2.3', 'v1.2.4'],
             },
         }
 

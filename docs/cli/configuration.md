@@ -31,13 +31,13 @@ version = 16
 
 # Multiple Versions
 
-If your project can use multiple versions of a system dependency, use the `versions` setting and separate versions with the pipe character (`|`):
+If your project can work with more than one version of a system dependency, separate them with a double pipe (`||`) symbol:
 
 ```ini
 [Python]
 
 cli = python
-versions = Python 2 | Python 3
+version = Python 2 || Python 3
 ```
 
 # Optional Programs
