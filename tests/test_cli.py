@@ -29,7 +29,7 @@ Checking for Newer Working Program...
 
 $ working-program --version
 1.2.3
-✘ EXPECTED: 4.1 | 4.2
+✘ EXPECTED: 4.1 || 4.2
 ⭑ MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...
@@ -68,7 +68,7 @@ Checking for Newer Working Program...
 
 $ working-program --version
 sh: command not found: working-program
-x EXPECTED: 4.1 | 4.2
+x EXPECTED: 4.1 || 4.2
 * MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...

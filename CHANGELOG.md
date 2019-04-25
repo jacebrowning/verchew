@@ -1,3 +1,8 @@
+# Unreleased
+
+- Deprecated `versions` in favor of `version` option.
+- Deprecated `|` in favor of `||` for checking multiple versions.
+
 # 1.6.2 (2019-02-15)
 
 - Fixed handling of programs that produce output with file paths.

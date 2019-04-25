@@ -34,6 +34,7 @@ import logging
 import os
 import re
 import sys
+import warnings
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
 
@@ -58,7 +59,7 @@ SAMPLE_CONFIG = """
 [Python]
 
 cli = python
-versions = Python 3.5 | Python 3.6
+version = Python 3.5 || Python 3.6
 
 [Legacy Python]
 
@@ -198,9 +199,24 @@ def parse_config(path):
             data[section][name] = value
 
     for name in data:
-        versions = data[name].get('versions', data[name].pop('version', ""))
-        data[name]['versions'] = versions
-        data[name]['patterns'] = [v.strip() for v in versions.split('|')]
+        if 'versions' in data[name]:
+            warnings.warn(
+                "'versions' is deprecated, use 'version' instead",
+                DeprecationWarning
+            )
+            version = data[name].pop('versions') or ""
+        else:
+            version = data[name].get('version') or ""
+
+        if ' | ' in version:
+            warnings.warn(
+                "'|' is deprecated, use '||' to separate multiple versions",
+                DeprecationWarning
+            )
+            version = version.replace(' | ', ' || ')
+
+        data[name]['version'] = version
+        data[name]['patterns'] = [v.strip() for v in version.split('||')]
 
     return data
 
@@ -219,15 +235,15 @@ def check_dependencies(config):
                 break
         else:
             if settings.get('optional'):
-                show(_("?") + " EXPECTED: {0}".format(settings['versions']))
+                show(_("?") + " EXPECTED: {0}".format(settings['version']))
                 success.append(_("?"))
             else:
                 if QUIET:
                     print("Unmatched {0} version: {1}".format(
                         name,
-                        settings['versions'],
+                        settings['version'],
                     ))
-                show(_("x") + " EXPECTED: {0}".format(settings['versions']))
+                show(_("x") + " EXPECTED: {0}".format(settings['version']))
                 success.append(_("x"))
             if settings.get('message'):
                 show(_("*") + " MESSAGE: {0}".format(settings['message']))
