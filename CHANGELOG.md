@@ -2,6 +2,9 @@
 
 - Deprecated `versions` in favor of `version` option.
 - Deprecated `|` in favor of `||` for checking multiple versions.
+# 1.6.3 (2019-10-12)
+
+- Fixed handling of programs that produce no output.
 
 # 1.6.2 (2019-02-15)
 
