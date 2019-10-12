@@ -43,12 +43,7 @@ from subprocess import PIPE, STDOUT, Popen
 __version__ = '1.6.3'
 
 
-CONFIG_FILENAMES = [
-    'verchew.ini',
-    '.verchew.ini',
-    '.verchewrc',
-    '.verchew',
-]
+CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
 
 SAMPLE_CONFIG = """
 [Python]
@@ -75,12 +70,7 @@ optional = true
 
 """.strip()
 
-STYLE = {
-    "~": "✔",
-    "*": "⭑",
-    "?": "⚠",
-    "x": "✘",
-}
+STYLE = {"~": "✔", "*": "⭑", "?": "⚠", "x": "✘"}
 
 COLOR = {
     "x": "\033[91m",  # red
@@ -118,18 +108,25 @@ def parse_args():
 
     version = "%(prog)s v" + __version__
     parser.add_argument('--version', action='version', version=version)
-    parser.add_argument('-r', '--root', metavar='PATH',
-                        help="specify a custom project root directory")
-    parser.add_argument('--init', action='store_true',
-                        help="generate a sample configuration file")
-    parser.add_argument('--exit-code', action='store_true',
-                        help="return a non-zero exit code on failure")
+    parser.add_argument(
+        '-r', '--root', metavar='PATH', help="specify a custom project root directory"
+    )
+    parser.add_argument(
+        '--init', action='store_true', help="generate a sample configuration file"
+    )
+    parser.add_argument(
+        '--exit-code',
+        action='store_true',
+        help="return a non-zero exit code on failure",
+    )
 
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-v', '--verbose', action='count', default=0,
-                       help="enable verbose logging")
-    group.add_argument('-q', '--quiet', action='store_true',
-                       help="suppress all output on success")
+    group.add_argument(
+        '-v', '--verbose', action='count', default=0, help="enable verbose logging"
+    )
+    group.add_argument(
+        '-q', '--quiet', action='store_true', help="suppress all output on success"
+    )
 
     args = parser.parse_args()
 
@@ -196,8 +193,7 @@ def parse_config(path):
     for name in data:
         if 'versions' in data[name]:
             warnings.warn(
-                "'versions' is deprecated, use 'version' instead",
-                DeprecationWarning
+                "'versions' is deprecated, use 'version' instead", DeprecationWarning
             )
             version = data[name].pop('versions') or ""
         else:
@@ -206,7 +202,7 @@ def parse_config(path):
         if ' | ' in version:
             warnings.warn(
                 "'|' is deprecated, use '||' to separate multiple versions",
-                DeprecationWarning
+                DeprecationWarning,
             )
             version = version.replace(' | ', ' || ')
 
@@ -234,10 +230,9 @@ def check_dependencies(config):
                 success.append(_("?"))
             else:
                 if QUIET:
-                    print("Unmatched {0} version: {1}".format(
-                        name,
-                        settings['version'],
-                    ))
+                    print(
+                        "Unmatched {0} version: {1}".format(name, settings['version'])
+                    )
                 show(_("x") + " EXPECTED: {0}".format(settings['version']))
                 success.append(_("x"))
             if settings.get('message'):
@@ -301,7 +296,7 @@ def show(text, start='', end='\n', head=False):
     if log.getEffectiveLevel() < logging.WARNING:
         log.info(text)
     else:
-        formatted = (start + text + end)
+        formatted = start + text + end
         sys.stdout.write(formatted)
         sys.stdout.flush()
 

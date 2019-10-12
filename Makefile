@@ -61,8 +61,7 @@ poetry.lock: pyproject.toml
 .PHONY: format
 format: install
 	poetry run isort $(PACKAGES) --recursive --apply
-	# TODO: Enable black after dropping legacy Python support
-	# poetry run black $(PACKAGES)
+	poetry run black $(PACKAGES)
 	@ echo
 
 .PHONY: check

@@ -15,7 +15,6 @@ def write(config, text, indent=8):
 
 
 def describe_find_config():
-
     @pytest.fixture
     def config(tmpdir):
         tmpdir.chdir()
@@ -40,7 +39,6 @@ def describe_find_config():
 
 
 def describe_parse_config():
-
     @pytest.fixture
     def config(tmpdir):
         tmpdir.chdir()
@@ -54,82 +52,82 @@ def describe_parse_config():
         expect(parse_config(str(config))) == {}
 
     def with_an_empty_section(config):
-        write(config, """
+        write(
+            config,
+            """
         [Foobar]
-        """)
+        """,
+        )
 
         expect(parse_config(str(config))) == {
-            'Foobar': {
-                'version': '',
-                'patterns': [''],
-            },
+            'Foobar': {'version': '', 'patterns': ['']}
         }
 
     def with_a_filled_section(config):
-        write(config, """
+        write(
+            config,
+            """
         [Foobar]
 
         cli = foobar
         version = v1.2.3
-        """)
+        """,
+        )
 
         expect(parse_config(str(config))) == {
-            'Foobar': {
-                'cli': 'foobar',
-                'version': 'v1.2.3',
-                'patterns': ['v1.2.3'],
-            },
+            'Foobar': {'cli': 'foobar', 'version': 'v1.2.3', 'patterns': ['v1.2.3']}
         }
 
     def with_multiple_versions(config):
-        write(config, """
+        write(
+            config,
+            """
         [Foobar]
 
         version = 2 || 3 ||     4
-        """)
+        """,
+        )
 
         expect(parse_config(str(config))) == {
-            'Foobar': {
-                'version': '2 || 3 ||     4',
-                'patterns': ['2', '3', '4'],
-            },
+            'Foobar': {'version': '2 || 3 ||     4', 'patterns': ['2', '3', '4']}
         }
 
     def with_legacy_versions_option(config):
-        write(config, """
+        write(
+            config,
+            """
         [Foobar]
 
         cli = foobar
         versions = v1.2.3
-        """)
+        """,
+        )
 
         expect(parse_config(str(config))) == {
-            'Foobar': {
-                'cli': 'foobar',
-                'version': 'v1.2.3',
-                'patterns': ['v1.2.3'],
-            },
+            'Foobar': {'cli': 'foobar', 'version': 'v1.2.3', 'patterns': ['v1.2.3']}
         }
 
     def with_legacy_versions_separator(config):
-        write(config, """
+        write(
+            config,
+            """
         [Foobar]
 
         cli = foobar
         version = v1.2.3 | v1.2.4
-        """)
+        """,
+        )
 
         expect(parse_config(str(config))) == {
             'Foobar': {
                 'cli': 'foobar',
                 'version': 'v1.2.3 || v1.2.4',
                 'patterns': ['v1.2.3', 'v1.2.4'],
-            },
+            }
         }
 
 
 def describe_get_version():
-
     def when_missing():
         expect(get_version('foobar')) == "sh: command not found: foobar"
 
@@ -147,7 +145,6 @@ def describe_get_version():
 
 
 def describe_match_version():
-
     def when_exact_match():
         expect(match_version("1.2.3", "1.2.3")) == True
 
@@ -181,30 +178,31 @@ def describe_match_version():
 
     def when_match_with_slug_inside_path():
         """Test that the output of `$ which python` (pyenv) can be matched."""
-        expect(match_version(
-            ".pyenv",
-            "Users/foobar/.pyenv/versions/2.7.14/bin/python",
-        )) == True
+        expect(
+            match_version(".pyenv", "Users/foobar/.pyenv/versions/2.7.14/bin/python")
+        ) == True
 
 
 def describe_format():
-
     def default():
         expect(_('~')) == "~"
 
-    @pytest.mark.parametrize("is_tty,supports_utf8,supports_ansi,formatted", [
-        (0, 0, 0, "~"),
-        (0, 0, 1, "~"),
-        (0, 1, 0, "✔"),
-        (0, 1, 1, "✔"),
-        (1, 0, 0, "~"),
-        (1, 0, 1, "\033[92m~\033[0m"),
-        (1, 1, 0, "✔"),
-        (1, 1, 1, "\033[92m✔\033[0m"),
-    ])
+    @pytest.mark.parametrize(
+        "is_tty,supports_utf8,supports_ansi,formatted",
+        [
+            (0, 0, 0, "~"),
+            (0, 0, 1, "~"),
+            (0, 1, 0, "✔"),
+            (0, 1, 1, "✔"),
+            (1, 0, 0, "~"),
+            (1, 0, 1, "\033[92m~\033[0m"),
+            (1, 1, 0, "✔"),
+            (1, 1, 1, "\033[92m✔\033[0m"),
+        ],
+    )
     def with_options(is_tty, supports_utf8, supports_ansi, formatted):
-        options = dict(is_tty=is_tty,
-                       supports_utf8=supports_utf8,
-                       supports_ansi=supports_ansi)
+        options = dict(
+            is_tty=is_tty, supports_utf8=supports_utf8, supports_ansi=supports_ansi
+        )
 
         expect(_('~', **options)) == formatted
