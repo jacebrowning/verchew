@@ -69,9 +69,8 @@ check: install format  ## Run formaters, linters, and static analysis
 ifdef CI
 	git diff --exit-code
 endif
+	poetry run mypy $(PACKAGES) --config-file=.mypy.ini
 	poetry run pylint $(PACKAGES) --rcfile=.pylint.ini
-	# TODO: Enable mypy after dropping legacy Python support
-	# poetry run mypy $(PACKAGES) --config-file=.mypy.ini
 	poetry run pydocstyle $(PACKAGES) $(CONFIG)
 
 # TESTS #######################################################################

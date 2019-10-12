@@ -38,6 +38,7 @@ import sys
 import warnings
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
+from typing import Any, Dict
 
 
 __version__ = '1.6.3'
@@ -179,7 +180,7 @@ def generate_config(root=None, filenames=None):
 
 
 def parse_config(path):
-    data = OrderedDict()
+    data: Dict[str, Any] = OrderedDict()
 
     log.info("Parsing config file: %s", path)
     config = configparser.ConfigParser()

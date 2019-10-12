@@ -45,8 +45,7 @@ black = "=19.3b0"
 isort = "=4.3.21"
 
 # Linters
-# TODO: Enable mypy after dropping legacy Python support
-# mypy = "*"
+mypy = "*"
 pydocstyle = "^3"
 pylint = "^2"
 
