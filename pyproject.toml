@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "verchew"
-version = "1.6.2"  # also update verchew/script.py
+version = "1.6.3"  # also update verchew/script.py
 description = "System dependency version checker."
 
 license = "MIT"
@@ -54,7 +54,7 @@ isort = "=4.3.4"
 # Linters
 # TODO: Enable mypy after dropping legacy Python support
 # mypy = "*"
-pydocstyle = "*"
+pydocstyle = "^3"
 pylint = "*"
 
 # Testing
@@ -64,6 +64,7 @@ pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
 scripttest = "*"
+attrs = "=19.1.0"  # avoid bug in 19.2.0, pulled in by test
 
 # Reports
 coveragespace = "*"
