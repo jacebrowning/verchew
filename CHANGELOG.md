@@ -1,7 +1,9 @@
-# Unreleased
+# 2.0 (unreleased)
 
 - Deprecated `versions` in favor of `version` option.
 - Deprecated `|` in favor of `||` for checking multiple versions.
+- Dropped support for Python 2, Python 3.4, and Python 3.5
+
 # 1.6.3 (2019-10-12)
 
 - Fixed handling of programs that produce no output.
