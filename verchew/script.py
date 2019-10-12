@@ -30,6 +30,7 @@
 from __future__ import unicode_literals
 
 import argparse
+import configparser
 import logging
 import os
 import re
@@ -39,14 +40,8 @@ from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
 
 
-try:
-    import configparser  # Python 3
-except ImportError:
-    import ConfigParser as configparser  # Python 2
-
 __version__ = '1.6.3'
 
-PY2 = sys.version_info[0] == 2
 
 CONFIG_FILENAMES = [
     'verchew.ini',
@@ -307,8 +302,6 @@ def show(text, start='', end='\n', head=False):
         log.info(text)
     else:
         formatted = (start + text + end)
-        if PY2:
-            formatted = formatted.encode('utf-8')
         sys.stdout.write(formatted)
         sys.stdout.flush()
 
