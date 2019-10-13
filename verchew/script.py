@@ -30,35 +30,27 @@
 from __future__ import unicode_literals
 
 import argparse
+import configparser
 import logging
 import os
 import re
 import sys
+import warnings
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
+from typing import Any, Dict
 
 
-try:
-    import configparser  # Python 3
-except ImportError:
-    import ConfigParser as configparser  # Python 2
+__version__ = '2.0'
 
-__version__ = '1.6.3'
 
-PY2 = sys.version_info[0] == 2
-
-CONFIG_FILENAMES = [
-    'verchew.ini',
-    '.verchew.ini',
-    '.verchewrc',
-    '.verchew',
-]
+CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
 
 SAMPLE_CONFIG = """
 [Python]
 
 cli = python
-versions = Python 3.5 | Python 3.6
+version = Python 3.5 || Python 3.6
 
 [Legacy Python]
 
@@ -79,12 +71,7 @@ optional = true
 
 """.strip()
 
-STYLE = {
-    "~": "✔",
-    "*": "⭑",
-    "?": "⚠",
-    "x": "✘",
-}
+STYLE = {"~": "✔", "*": "⭑", "?": "⚠", "x": "✘"}
 
 COLOR = {
     "x": "\033[91m",  # red
@@ -122,18 +109,25 @@ def parse_args():
 
     version = "%(prog)s v" + __version__
     parser.add_argument('--version', action='version', version=version)
-    parser.add_argument('-r', '--root', metavar='PATH',
-                        help="specify a custom project root directory")
-    parser.add_argument('--init', action='store_true',
-                        help="generate a sample configuration file")
-    parser.add_argument('--exit-code', action='store_true',
-                        help="return a non-zero exit code on failure")
+    parser.add_argument(
+        '-r', '--root', metavar='PATH', help="specify a custom project root directory"
+    )
+    parser.add_argument(
+        '--init', action='store_true', help="generate a sample configuration file"
+    )
+    parser.add_argument(
+        '--exit-code',
+        action='store_true',
+        help="return a non-zero exit code on failure",
+    )
 
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-v', '--verbose', action='count', default=0,
-                       help="enable verbose logging")
-    group.add_argument('-q', '--quiet', action='store_true',
-                       help="suppress all output on success")
+    group.add_argument(
+        '-v', '--verbose', action='count', default=0, help="enable verbose logging"
+    )
+    group.add_argument(
+        '-q', '--quiet', action='store_true', help="suppress all output on success"
+    )
 
     args = parser.parse_args()
 
@@ -186,7 +180,7 @@ def generate_config(root=None, filenames=None):
 
 
 def parse_config(path):
-    data = OrderedDict()
+    data: Dict[str, Any] = OrderedDict()
 
     log.info("Parsing config file: %s", path)
     config = configparser.ConfigParser()
@@ -198,9 +192,23 @@ def parse_config(path):
             data[section][name] = value
 
     for name in data:
-        versions = data[name].get('versions', data[name].pop('version', ""))
-        data[name]['versions'] = versions
-        data[name]['patterns'] = [v.strip() for v in versions.split('|')]
+        if 'versions' in data[name]:
+            warnings.warn(
+                "'versions' is deprecated, use 'version' instead", DeprecationWarning
+            )
+            version = data[name].pop('versions') or ""
+        else:
+            version = data[name].get('version') or ""
+
+        if ' | ' in version:
+            warnings.warn(
+                "'|' is deprecated, use '||' to separate multiple versions",
+                DeprecationWarning,
+            )
+            version = version.replace(' | ', ' || ')
+
+        data[name]['version'] = version
+        data[name]['patterns'] = [v.strip() for v in version.split('||')]
 
     return data
 
@@ -219,15 +227,14 @@ def check_dependencies(config):
                 break
         else:
             if settings.get('optional'):
-                show(_("?") + " EXPECTED: {0}".format(settings['versions']))
+                show(_("?") + " EXPECTED: {0}".format(settings['version']))
                 success.append(_("?"))
             else:
                 if QUIET:
-                    print("Unmatched {0} version: {1}".format(
-                        name,
-                        settings['versions'],
-                    ))
-                show(_("x") + " EXPECTED: {0}".format(settings['versions']))
+                    print(
+                        "Unmatched {0} version: {1}".format(name, settings['version'])
+                    )
+                show(_("x") + " EXPECTED: {0}".format(settings['version']))
                 success.append(_("x"))
             if settings.get('message'):
                 show(_("*") + " MESSAGE: {0}".format(settings['message']))
@@ -290,9 +297,7 @@ def show(text, start='', end='\n', head=False):
     if log.getEffectiveLevel() < logging.WARNING:
         log.info(text)
     else:
-        formatted = (start + text + end)
-        if PY2:
-            formatted = formatted.encode('utf-8')
+        formatted = start + text + end
         sys.stdout.write(formatted)
         sys.stdout.flush()
 

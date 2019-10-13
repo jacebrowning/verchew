@@ -19,18 +19,10 @@ When onboarding new team members, ensuring their computer has everything needed 
 
 ## Installation
 
-Install verchew with pip:
+Install `verchew` globally with pip:
 
 ```text
 $ pip install verchew
-```
-
-or directly from the source code:
-
-```text
-$ git clone https://github.com/jacebrowning/verchew.git
-$ cd verchew
-$ python setup.py install
 ```
 
 or embedded the script in your project using [this guide](https://verchew.readthedocs.io/en/latest/cli/vendoring/).
@@ -50,7 +42,7 @@ version = 1.2
 [Newer Working Program]
 
 cli = working-program
-versions =  4.1 | 4.2
+version =  4.1 || 4.2
 message = Version 4.x is required to get the special features.
 
 [Broken Program]
@@ -85,7 +77,7 @@ Checking for Newer Working Program...
 
 $ working-program --version
 1.2.3
-✘ EXPECTED: 4.1 | 4.2
+✘ EXPECTED: 4.1 || 4.2
 ⭑ MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...

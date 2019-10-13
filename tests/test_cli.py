@@ -29,7 +29,7 @@ Checking for Newer Working Program...
 
 $ working-program --version
 1.2.3
-✘ EXPECTED: 4.1 | 4.2
+✘ EXPECTED: 4.1 || 4.2
 ⭑ MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...
@@ -54,8 +54,12 @@ Results: ✔ ✘ ✘ ⚠ ✘
 
 """
 
-UNSTYLED_OUTPUT = STYLED_OUTPUT \
-    .replace('✔', '~').replace('⭑', '*').replace('⚠', '?').replace('✘', 'x')
+UNSTYLED_OUTPUT = (
+    STYLED_OUTPUT.replace('✔', '~')
+    .replace('⭑', '*')
+    .replace('⚠', '?')
+    .replace('✘', 'x')
+)
 
 UNSTYLED_OUTPUT_WINDOWS = """
 Checking for Working Program...
@@ -68,7 +72,7 @@ Checking for Newer Working Program...
 
 $ working-program --version
 sh: command not found: working-program
-x EXPECTED: 4.1 | 4.2
+x EXPECTED: 4.1 || 4.2
 * MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...
@@ -118,7 +122,6 @@ def call(env, path, *args):
 
 
 def describe_meta():
-
     def it_displays_help_information(cli):
         cmd = cli('--help')
 
@@ -128,11 +131,11 @@ def describe_meta():
     def it_displays_version_information(cli):
         cmd = cli('--version')
 
-        expect(cmd.stdout or cmd.stderr).contains("verchew v1.")
+        expect(cmd.stdout or cmd.stderr).contains("verchew v2.")
         expect(cmd.returncode) == 0
 
-def describe_init():
 
+def describe_init():
     def it_generates_a_sample_config(cli):
         cmd = cli('--init')
 
@@ -140,8 +143,8 @@ def describe_init():
         expect(cmd.stdout).contains("Checking for Make")
         expect(cmd.returncode) == 0
 
-def describe_main():
 
+def describe_main():
     @pytest.mark.skipif(
         sys.version_info[0] == 2 or sys.platform == 'win32',
         reason="unix and python3 only",
@@ -177,17 +180,19 @@ def describe_main():
 
         expect(cmd.returncode) == 1
 
-def describe_quiet():
 
+def describe_quiet():
     @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
     def it_hides_output_when_no_error(cli, tmp_path):
         verchew_ini = tmp_path / 'verchew.ini'
-        verchew_ini.write_text("""
+        verchew_ini.write_text(
+            """
         [Working Program]
 
         cli = working-program
         version = 1.2
-        """)
+        """
+        )
 
         cmd = cli('--root', str(tmp_path), '--quiet')
 
@@ -198,7 +203,8 @@ def describe_quiet():
     @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
     def it_shows_failing_programs(cli, tmp_path):
         verchew_ini = tmp_path / 'verchew.ini'
-        verchew_ini.write_text("""
+        verchew_ini.write_text(
+            """
         [Working Program]
 
         cli = working-program
@@ -208,7 +214,8 @@ def describe_quiet():
 
         cli = working-program
         version =  1.3
-        """)
+        """
+        )
 
         cmd = cli('--root', str(tmp_path), '--quiet')
 

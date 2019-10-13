@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "verchew"
-version = "1.6.3"  # also update verchew/script.py
+version = "2.0"  # also update verchew/script.py
 description = "System dependency version checker."
 
 license = "MIT"
@@ -25,12 +25,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 2",
-    "Programming Language :: Python :: 2.7",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.4",
-    "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Topic :: Software Development",
@@ -42,36 +36,32 @@ classifiers = [
 
 [tool.poetry.dependencies]
 
-python = "^2.7.9 || ^3.4"
+python = "^3.6"
 
 [tool.poetry.dev-dependencies]
 
 # Formatters
-# TODO: Enable black after dropping legacy Python support
-#black = "=18.9b0"
-isort = "=4.3.4"
+black = "=19.3b0"
+isort = "=4.3.21"
 
 # Linters
-# TODO: Enable mypy after dropping legacy Python support
-# mypy = "*"
+mypy = "*"
 pydocstyle = "^3"
-pylint = "*"
+pylint = "^2"
 
 # Testing
-pytest = "=4.2.0"
+pytest = "^5"
 pytest-cov = "*"
 pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
 scripttest = "*"
-attrs = "=19.1.0"  # avoid bug in 19.2.0, pulled in by test
 
 # Reports
 coveragespace = "*"
 
 # Documentation
 mkdocs = "^1.0.4"
-backports-abc = { version = "*", python = "^2.7" }  # needed for 'mkdocs'
 pygments = "*"
 
 # Tooling
@@ -86,7 +76,7 @@ verchew = "verchew.script:main"
 
 [tool.black]
 
-py36 = false
+target_version = ['py36', 'py37']
 skip-string-normalization = true
 
 [build-system]
