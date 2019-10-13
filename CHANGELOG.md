@@ -1,4 +1,4 @@
-# 2.0 (unreleased)
+# 2.0 (2019-10-13)
 
 - Deprecated `versions` in favor of `version` option.
 - Deprecated `|` in favor of `||` for checking multiple versions.

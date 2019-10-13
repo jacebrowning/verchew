@@ -41,7 +41,7 @@ from subprocess import PIPE, STDOUT, Popen
 from typing import Any, Dict
 
 
-__version__ = '1.6.3'
+__version__ = '2.0'
 
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
