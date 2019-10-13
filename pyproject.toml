@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "verchew"
-version = "2.0"  # also update verchew/script.py
+version = "2.0.1"  # also update verchew/script.py
 description = "System dependency version checker."
 
 license = "MIT"
@@ -25,8 +25,13 @@ classifiers = [
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Operating System :: OS Independent",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3.3",
+    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
     "Topic :: Software Development",
     "Topic :: Software Development :: Build Tools",
     "Topic :: Software Development :: Testing",

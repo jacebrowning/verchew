@@ -30,7 +30,6 @@
 from __future__ import unicode_literals
 
 import argparse
-import configparser
 import logging
 import os
 import re
@@ -41,8 +40,14 @@ from subprocess import PIPE, STDOUT, Popen
 from typing import Any, Dict
 
 
-__version__ = '2.0'
+PY2 = sys.version_info[0] == 2
 
+if PY2:
+    import ConfigParser as configparser
+else:
+    import configparser  # type: ignore
+
+__version__ = '2.0.1'
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
 
@@ -298,6 +303,8 @@ def show(text, start='', end='\n', head=False):
         log.info(text)
     else:
         formatted = start + text + end
+        if PY2:
+            formatted = formatted.encode('utf-8')
         sys.stdout.write(formatted)
         sys.stdout.flush()
 

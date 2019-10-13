@@ -1,8 +1,12 @@
+# 2.0.1 (2019-10-13)
+
+- Restore compatibility layer to unofficially support legacy Python.
+
 # 2.0 (2019-10-13)
 
 - Deprecated `versions` in favor of `version` option.
 - Deprecated `|` in favor of `||` for checking multiple versions.
-- Dropped support for Python 2, Python 3.4, and Python 3.5
+- Stopped testing against Python 2, Python 3.4, and Python 3.5.
 
 # 1.6.3 (2019-10-12)
 
