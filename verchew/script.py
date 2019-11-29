@@ -43,7 +43,7 @@ from typing import Any, Dict
 PY2 = sys.version_info[0] == 2
 
 if PY2:
-    import ConfigParser as configparser
+    import ConfigParser as configparser  # pylint: disable=import-error
 else:
     import configparser  # type: ignore
 
