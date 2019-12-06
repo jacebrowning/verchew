@@ -131,7 +131,7 @@ def describe_meta():
     def it_displays_version_information(cli):
         cmd = cli('--version')
 
-        expect(cmd.stdout or cmd.stderr).contains("verchew v2.")
+        expect(cmd.stdout).startswith("verchew v")
         expect(cmd.returncode) == 0
 
 

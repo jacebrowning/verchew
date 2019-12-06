@@ -1,3 +1,8 @@
+# 3.0 (unreleased)
+
+- Removed `versions` in favor of `version` option.
+- Removed `|` in favor of `||` for checking multiple versions.
+
 # 2.0.1 (2019-10-13)
 
 - Restore compatibility layer to unofficially support legacy Python.

@@ -34,7 +34,6 @@ import logging
 import os
 import re
 import sys
-import warnings
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
 from typing import Any, Dict
@@ -47,7 +46,7 @@ if PY2:
 else:
     import configparser  # type: ignore
 
-__version__ = '2.0.1'
+__version__ = '3.0b1'
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
 
@@ -197,21 +196,7 @@ def parse_config(path):
             data[section][name] = value
 
     for name in data:
-        if 'versions' in data[name]:
-            warnings.warn(
-                "'versions' is deprecated, use 'version' instead", DeprecationWarning
-            )
-            version = data[name].pop('versions') or ""
-        else:
-            version = data[name].get('version') or ""
-
-        if ' | ' in version:
-            warnings.warn(
-                "'|' is deprecated, use '||' to separate multiple versions",
-                DeprecationWarning,
-            )
-            version = version.replace(' | ', ' || ')
-
+        version = data[name].get('version') or ""
         data[name]['version'] = version
         data[name]['patterns'] = [v.strip() for v in version.split('||')]
 
