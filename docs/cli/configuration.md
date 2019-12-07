@@ -6,7 +6,7 @@ Any of the following can be used as the `verchew` configuration filename:
 * `verchew.ini`
 * `.verchew`
 * `.verchewrc`
-    
+
 # Version Arguments
 
 If one of your system dependencies uses an argument other than `--version` to display its version information, this can be changed in the configuration file using the `cli_version_arg` setting:
@@ -25,7 +25,7 @@ If the program lacks a specific argument to display its version, but contains ve
 [7-Zip]
 
 cli = 7z
-cli_version_arg = 
+cli_version_arg =
 version = 16
 ```
 
@@ -38,6 +38,16 @@ If your project can work with more than one version of a system dependency, sepa
 
 cli = python
 version = Python 2 || Python 3
+```
+
+# Any Version
+
+If the version of a system dependency is not important to your project, leave out the `version` setting to simply check for the existence of that program:
+
+```ini
+[Hugo]
+
+cli = hugo
 ```
 
 # Optional Programs
