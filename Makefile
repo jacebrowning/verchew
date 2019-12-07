@@ -28,8 +28,8 @@ run: install
 	poetry run python $(PACKAGE)/__main__.py
 
 .PHONY: demo ## Run the example
-demo: install
-	make doctor -C examples
+demo:
+	cd examples && make doctor
 
 # SYSTEM DEPENDENCIES ##########################################################
 

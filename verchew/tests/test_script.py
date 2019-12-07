@@ -148,6 +148,9 @@ def describe_match_version():
             match_version(".pyenv", "Users/foobar/.pyenv/versions/2.7.14/bin/python")
         ) == True
 
+    def when_mismatch_with_missing_program():
+        expect(match_version("", "program not found")) == False
+
 
 def describe_format():
     def default():
