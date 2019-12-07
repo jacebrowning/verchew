@@ -2,6 +2,7 @@
 
 - Removed `versions` in favor of `version` option.
 - Removed `|` in favor of `||` for checking multiple versions.
+- Added support for matching **any** version when `version` is not specified.
 
 # 2.0.1 (2019-10-13)
 

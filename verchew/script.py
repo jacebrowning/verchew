@@ -212,7 +212,7 @@ def check_dependencies(config):
 
         for pattern in settings['patterns']:
             if match_version(pattern, output):
-                show(_("~") + " MATCHED: {0}".format(pattern))
+                show(_("~") + " MATCHED: {0}".format(pattern or "<anything>"))
                 success.append(_("~"))
                 break
         else:
@@ -222,9 +222,14 @@ def check_dependencies(config):
             else:
                 if QUIET:
                     print(
-                        "Unmatched {0} version: {1}".format(name, settings['version'])
+                        "Unmatched {0} version: {1}".format(
+                            name, settings['version'] or "<anything>"
+                        )
                     )
-                show(_("x") + " EXPECTED: {0}".format(settings['version']))
+                show(
+                    _("x")
+                    + " EXPECTED: {0}".format(settings['version'] or "<anything>")
+                )
                 success.append(_("x"))
             if settings.get('message'):
                 show(_("*") + " MESSAGE: {0}".format(settings['message']))
@@ -251,6 +256,9 @@ def get_version(program, argument=None):
 
 
 def match_version(pattern, output):
+    if "not found" in output:
+        return False
+
     regex = pattern.replace('.', r'\.') + r'(\b|/)'
 
     log.debug("Matching %s: %s", regex, output)
