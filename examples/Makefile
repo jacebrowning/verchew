@@ -5,4 +5,4 @@ all: doctor
 doctor:
 	@ echo
 	@ echo "$$ verchew"
-	@ PATH=bin:$(PATH) ../verchew/script.py
+	@ ../verchew/script.py

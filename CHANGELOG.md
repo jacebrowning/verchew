@@ -1,3 +1,9 @@
+# 3.0 (2019-12-07)
+
+- Removed `versions` in favor of `version` option.
+- Removed `|` in favor of `||` for checking multiple versions.
+- Added support for matching **any** version when `version` is not specified.
+
 # 2.0.1 (2019-10-13)
 
 - Restore compatibility layer to unofficially support legacy Python.

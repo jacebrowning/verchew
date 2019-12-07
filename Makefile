@@ -28,8 +28,8 @@ run: install
 	poetry run python $(PACKAGE)/__main__.py
 
 .PHONY: demo ## Run the example
-demo: install
-	make doctor -C examples
+demo:
+	cd examples && make doctor
 
 # SYSTEM DEPENDENCIES ##########################################################
 
@@ -45,13 +45,15 @@ DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetr
 install: $(DEPENDENCIES) .cache
 
 $(DEPENDENCIES): poetry.lock
-	@ poetry config settings.virtualenvs.in-project true || poetry config virtualenvs.in-project true
+	@ poetry config virtualenvs.in-project true || poetry config settings.virtualenvs.in-project true
 	poetry install
 	@ touch $@
 
+ifndef CI
 poetry.lock: pyproject.toml
 	poetry lock
 	@ touch $@
+endif
 
 .cache:
 	@ mkdir -p .cache

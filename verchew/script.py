@@ -34,7 +34,6 @@ import logging
 import os
 import re
 import sys
-import warnings
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
 from typing import Any, Dict
@@ -43,11 +42,11 @@ from typing import Any, Dict
 PY2 = sys.version_info[0] == 2
 
 if PY2:
-    import ConfigParser as configparser
+    import ConfigParser as configparser  # pylint: disable=import-error
 else:
     import configparser  # type: ignore
 
-__version__ = '2.0.1'
+__version__ = '3.0'
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
 
@@ -197,21 +196,7 @@ def parse_config(path):
             data[section][name] = value
 
     for name in data:
-        if 'versions' in data[name]:
-            warnings.warn(
-                "'versions' is deprecated, use 'version' instead", DeprecationWarning
-            )
-            version = data[name].pop('versions') or ""
-        else:
-            version = data[name].get('version') or ""
-
-        if ' | ' in version:
-            warnings.warn(
-                "'|' is deprecated, use '||' to separate multiple versions",
-                DeprecationWarning,
-            )
-            version = version.replace(' | ', ' || ')
-
+        version = data[name].get('version') or ""
         data[name]['version'] = version
         data[name]['patterns'] = [v.strip() for v in version.split('||')]
 
@@ -227,7 +212,7 @@ def check_dependencies(config):
 
         for pattern in settings['patterns']:
             if match_version(pattern, output):
-                show(_("~") + " MATCHED: {0}".format(pattern))
+                show(_("~") + " MATCHED: {0}".format(pattern or "<anything>"))
                 success.append(_("~"))
                 break
         else:
@@ -237,9 +222,14 @@ def check_dependencies(config):
             else:
                 if QUIET:
                     print(
-                        "Unmatched {0} version: {1}".format(name, settings['version'])
+                        "Unmatched {0} version: {1}".format(
+                            name, settings['version'] or "<anything>"
+                        )
                     )
-                show(_("x") + " EXPECTED: {0}".format(settings['version']))
+                show(
+                    _("x")
+                    + " EXPECTED: {0}".format(settings['version'] or "<anything>")
+                )
                 success.append(_("x"))
             if settings.get('message'):
                 show(_("*") + " MESSAGE: {0}".format(settings['message']))
@@ -266,6 +256,9 @@ def get_version(program, argument=None):
 
 
 def match_version(pattern, output):
+    if "not found" in output:
+        return False
+
     regex = pattern.replace('.', r'\.') + r'(\b|/)'
 
     log.debug("Matching %s: %s", regex, output)

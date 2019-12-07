@@ -92,40 +92,6 @@ def describe_parse_config():
             'Foobar': {'version': '2 || 3 ||     4', 'patterns': ['2', '3', '4']}
         }
 
-    def with_legacy_versions_option(config):
-        write(
-            config,
-            """
-        [Foobar]
-
-        cli = foobar
-        versions = v1.2.3
-        """,
-        )
-
-        expect(parse_config(str(config))) == {
-            'Foobar': {'cli': 'foobar', 'version': 'v1.2.3', 'patterns': ['v1.2.3']}
-        }
-
-    def with_legacy_versions_separator(config):
-        write(
-            config,
-            """
-        [Foobar]
-
-        cli = foobar
-        version = v1.2.3 | v1.2.4
-        """,
-        )
-
-        expect(parse_config(str(config))) == {
-            'Foobar': {
-                'cli': 'foobar',
-                'version': 'v1.2.3 || v1.2.4',
-                'patterns': ['v1.2.3', 'v1.2.4'],
-            }
-        }
-
 
 def describe_get_version():
     def when_missing():
@@ -181,6 +147,9 @@ def describe_match_version():
         expect(
             match_version(".pyenv", "Users/foobar/.pyenv/versions/2.7.14/bin/python")
         ) == True
+
+    def when_mismatch_with_missing_program():
+        expect(match_version("", "program not found")) == False
 
 
 def describe_format():
