@@ -19,10 +19,16 @@ When onboarding new team members, ensuring their computer has everything needed 
 
 ## Installation
 
-Install `verchew` globally with pip:
+Install `verchew` globally with [pipx](https://pipxproject.github.io/pipx/installation/) (or pip):
 
 ```text
-$ pip install verchew
+$ pipx install verchew
+```
+
+or add it to your [Poetry](https://poetry.eustace.io/) project:
+
+```text
+$ poetry add verchew
 ```
 
 or embedded the script in your project using [this guide](https://verchew.readthedocs.io/en/latest/cli/vendoring/).
