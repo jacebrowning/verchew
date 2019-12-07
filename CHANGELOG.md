@@ -1,4 +1,4 @@
-# 3.0 (unreleased)
+# 3.0 (2019-12-07)
 
 - Removed `versions` in favor of `version` option.
 - Removed `|` in favor of `||` for checking multiple versions.

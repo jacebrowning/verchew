@@ -46,7 +46,7 @@ if PY2:
 else:
     import configparser  # type: ignore
 
-__version__ = '3.0b1'
+__version__ = '3.0'
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
 
