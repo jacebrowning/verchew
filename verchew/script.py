@@ -46,7 +46,7 @@ if PY2:
 else:
     import configparser  # type: ignore
 
-__version__ = '3.0'
+__version__ = '3.0.1'
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
 
@@ -256,7 +256,7 @@ def get_version(program, argument=None):
 
 
 def match_version(pattern, output):
-    if "not found" in output:
+    if "not found" in output.split('\n')[0]:
         return False
 
     regex = pattern.replace('.', r'\.') + r'(\b|/)'

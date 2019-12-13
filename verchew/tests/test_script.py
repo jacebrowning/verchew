@@ -150,6 +150,7 @@ def describe_match_version():
 
     def when_mismatch_with_missing_program():
         expect(match_version("", "program not found")) == False
+        expect(match_version("", "v1.2.3\nother not found")) == True
 
 
 def describe_format():
