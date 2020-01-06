@@ -36,7 +36,6 @@ import re
 import sys
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
-from typing import Any, Dict
 
 
 PY2 = sys.version_info[0] == 2
@@ -46,7 +45,7 @@ if PY2:
 else:
     import configparser  # type: ignore
 
-__version__ = '3.0.1'
+__version__ = '3.0.2'
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
 
@@ -184,7 +183,7 @@ def generate_config(root=None, filenames=None):
 
 
 def parse_config(path):
-    data: Dict[str, Any] = OrderedDict()
+    data = OrderedDict()  # type: ignore
 
     log.info("Parsing config file: %s", path)
     config = configparser.ConfigParser()
