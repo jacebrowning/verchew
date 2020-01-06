@@ -1,3 +1,11 @@
+# 3.0.2 (2020-01-06)
+
+- Removed type annotations to continue supporting legacy Python.
+
+# 3.0.1 (2019-12-13)
+
+- Fixed missing program detection to only look for "not found" in the first line.
+
 # 3.0 (2019-12-07)
 
 - Removed `versions` in favor of `version` option.
