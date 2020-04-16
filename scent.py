@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Configuration file for sniffer."""
 
 import time
@@ -17,7 +15,7 @@ else:
 watch_paths = ["verchew", "tests"]
 
 
-class Options(object):
+class Options:
     group = int(time.time())  # unique per run
     show_coverage = False
     rerun_args = None
@@ -33,7 +31,7 @@ class Options(object):
 @select_runnable('run_targets')
 @file_validator
 def python_files(filename):
-    return filename.endswith('.py')
+    return filename.endswith('.py') and '.py.' not in filename
 
 
 @select_runnable('run_targets')
@@ -52,12 +50,12 @@ def run_targets(*args):
 
         success = call(command, title, retry)
         if not success:
-            message = u"✅ " * (count - 1) + u"❌"
+            message = "✅ " * (count - 1) + "❌"
             show_notification(message, title)
 
             return False
 
-    message = u"✅ " * count
+    message = "✅ " * count
     title = "All Targets"
     show_notification(message, title)
     show_coverage()
@@ -74,7 +72,6 @@ def call(command, title, retry):
         if not success:
             return False
 
-    # pylint: disable=superfluous-parens
     print("")
     print("$ %s" % ' '.join(command))
     failure = subprocess.call(command)
