@@ -1,3 +1,7 @@
+# 3.1 (unreleased)
+
+- Added support for unicode characters in Python 3.8.
+
 # 3.0.2 (2020-01-06)
 
 - Removed type annotations to continue supporting legacy Python.
@@ -86,4 +90,4 @@
 
 # 0.1 (2016-10-17)
 
- - Initial release.
+- Initial release.
