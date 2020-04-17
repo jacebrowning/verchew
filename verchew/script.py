@@ -308,7 +308,7 @@ def _(word, is_tty=None, supports_utf8=None, supports_ansi=None):
     if is_tty is None:
         is_tty = hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
     if supports_utf8 is None:
-        supports_utf8 = sys.stdout.encoding == 'UTF-8'
+        supports_utf8 = str(sys.stdout.encoding).lower() == 'utf-8'
     if supports_ansi is None:
         supports_ansi = sys.platform != 'win32' or 'ANSICON' in os.environ
 
