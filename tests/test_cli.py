@@ -30,7 +30,7 @@ Checking for Newer Working Program...
 $ working-program --version
 1.2.3
 ✘ EXPECTED: 4.1 || 4.2
-⭑ MESSAGE: Version 4.x is required to get the special features.
+䷉ MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...
 
@@ -42,7 +42,7 @@ Checking for Optional Missing Program...
 
 $ missing-program --version
 sh: command not found: missing-program
-⚠ EXPECTED: 1.2.3
+▴ EXPECTED (OPTIONAL): 1.2.3
 
 Checking for Missing Program...
 
@@ -50,14 +50,14 @@ $ missing-program --version
 sh: command not found: missing-program
 ✘ EXPECTED: 1.2.3
 
-Results: ✔ ✘ ✘ ⚠ ✘
+Results: ✔ ✘ ✘ ▴ ✘
 
 """
 
 UNSTYLED_OUTPUT = (
     STYLED_OUTPUT.replace('✔', '~')
-    .replace('⭑', '*')
-    .replace('⚠', '?')
+    .replace('䷉', '#')
+    .replace('▴', '?')
     .replace('✘', 'x')
 )
 
@@ -73,7 +73,7 @@ Checking for Newer Working Program...
 $ working-program --version
 sh: command not found: working-program
 x EXPECTED: 4.1 || 4.2
-* MESSAGE: Version 4.x is required to get the special features.
+# MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...
 
@@ -85,7 +85,7 @@ Checking for Optional Missing Program...
 
 $ missing-program --version
 sh: command not found: missing-program
-? EXPECTED: 1.2.3
+? EXPECTED (OPTIONAL): 1.2.3
 
 Checking for Missing Program...
 

@@ -80,13 +80,18 @@ optional = true
 
 """.strip()
 
-STYLE = {"~": "✔", "*": "⭑", "?": "⚠", "x": "✘"}
+STYLE = {
+    "~": "✔",
+    "?": "▴",
+    "x": "✘",
+    "#": "䷉",
+}
 
 COLOR = {
-    "x": "\033[91m",  # red
     "~": "\033[92m",  # green
     "?": "\033[93m",  # yellow
-    "*": "\033[94m",  # cyan
+    "x": "\033[91m",  # red
+    "#": "\033[96m",  # cyan
     None: "\033[0m",  # reset
 }
 
@@ -248,7 +253,7 @@ def check_dependencies(config):
                 break
         else:
             if settings.get('optional'):
-                show(_("?") + " EXPECTED: {0}".format(settings['version']))
+                show(_("?") + " EXPECTED (OPTIONAL): {0}".format(settings['version']))
                 success.append(_("?"))
             else:
                 if QUIET:
@@ -264,7 +269,7 @@ def check_dependencies(config):
                 )
                 success.append(_("x"))
             if settings.get('message'):
-                show(_("*") + " MESSAGE: {0}".format(settings['message']))
+                show(_("#") + " MESSAGE: {0}".format(settings['message']))
 
     show("Results: " + " ".join(success), head=True)
 
