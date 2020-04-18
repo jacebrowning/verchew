@@ -1,6 +1,7 @@
-# 3.1 (unreleased)
+# 3.1 (beta)
 
 - Added support for unicode characters in Python 3.8.
+- Added `--vendor PATH` command to download the program for offline use.
 
 # 3.0.2 (2020-01-06)
 

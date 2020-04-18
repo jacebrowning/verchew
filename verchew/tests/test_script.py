@@ -4,14 +4,57 @@
 
 from __future__ import unicode_literals
 
+import os
+
 import pytest
 from expecter import expect
 
-from verchew.script import _, find_config, get_version, match_version, parse_config
+from verchew.script import (
+    _,
+    find_config,
+    get_version,
+    match_version,
+    parse_config,
+    vendor_script,
+)
 
 
 def write(config, text, indent=8):
     config.write(text.replace(' ' * indent, ''))
+
+
+def describe_vendor_script():
+    def when_missing_file(tmpdir):
+        tmpdir.chdir()
+        path = os.path.join(tmpdir, 'missing')
+
+        vendor_script('missing')
+
+        expect(os.access(path, os.X_OK)) == True
+        with open(path, 'r') as f:
+            expect(f.read()).contains("verchew")
+
+    def when_missing_directory(tmpdir):
+        tmpdir.chdir()
+        path = os.path.join(tmpdir, 'bin/missing')
+
+        vendor_script('bin/missing')
+
+        expect(os.access(path, os.X_OK)) == True
+        with open(path, 'r') as f:
+            expect(f.read()).contains("verchew")
+
+    def when_existing_file(tmpdir):
+        tmpdir.chdir()
+        path = os.path.join(tmpdir, 'existing')
+        with open(path, 'w') as f:
+            f.write('Hello, world!')
+
+        vendor_script('existing')
+
+        expect(os.access(path, os.X_OK)) == True
+        with open(path, 'r') as f:
+            expect(f.read()).contains("verchew")
 
 
 def describe_find_config():
