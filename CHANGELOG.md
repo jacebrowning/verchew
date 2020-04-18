@@ -1,4 +1,4 @@
-# 3.1 (beta)
+# 3.1 (2020-04-18)
 
 - Added support for unicode characters in Python 3.8.
 - Added `--vendor PATH` command to download the program for offline use.

@@ -47,7 +47,7 @@ else:
     import configparser
     from urllib.request import urlretrieve
 
-__version__ = '3.1b1'
+__version__ = '3.1'
 
 SCRIPT_URL = (
     "https://raw.githubusercontent.com/jacebrowning/verchew/master/verchew/script.py"
