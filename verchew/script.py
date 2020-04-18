@@ -41,11 +41,17 @@ from subprocess import PIPE, STDOUT, Popen
 PY2 = sys.version_info[0] == 2
 
 if PY2:
-    import ConfigParser as configparser  # pylint: disable=import-error
+    import ConfigParser as configparser
+    from urllib import urlretrieve
 else:
-    import configparser  # type: ignore
+    import configparser
+    from urllib.request import urlretrieve
 
-__version__ = '3.0.2'
+__version__ = '3.1'
+
+SCRIPT_URL = (
+    "https://raw.githubusercontent.com/jacebrowning/verchew/master/verchew/script.py"
+)
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
 
@@ -74,13 +80,18 @@ optional = true
 
 """.strip()
 
-STYLE = {"~": "✔", "*": "⭑", "?": "⚠", "x": "✘"}
+STYLE = {
+    "~": "✔",
+    "?": "▴",
+    "x": "✘",
+    "#": "䷉",
+}
 
 COLOR = {
-    "x": "\033[91m",  # red
     "~": "\033[92m",  # green
     "?": "\033[93m",  # yellow
-    "*": "\033[94m",  # cyan
+    "x": "\033[91m",  # red
+    "#": "\033[96m",  # cyan
     None: "\033[0m",  # reset
 }
 
@@ -100,6 +111,10 @@ def main():
     log.debug("PWD: %s", os.getenv('PWD'))
     log.debug("PATH: %s", os.getenv('PATH'))
 
+    if args.vendor:
+        vendor_script(args.vendor)
+        sys.exit(0)
+
     path = find_config(args.root, generate=args.init)
     config = parse_config(path)
 
@@ -108,15 +123,14 @@ def main():
 
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="System dependency version checker.",)
 
     version = "%(prog)s v" + __version__
-    parser.add_argument('--version', action='version', version=version)
     parser.add_argument(
-        '-r', '--root', metavar='PATH', help="specify a custom project root directory"
+        '--version', action='version', version=version,
     )
     parser.add_argument(
-        '--init', action='store_true', help="generate a sample configuration file"
+        '-r', '--root', metavar='PATH', help="specify a custom project root directory"
     )
     parser.add_argument(
         '--exit-code',
@@ -124,12 +138,21 @@ def parse_args():
         help="return a non-zero exit code on failure",
     )
 
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument(
+    group_logging = parser.add_mutually_exclusive_group()
+    group_logging.add_argument(
         '-v', '--verbose', action='count', default=0, help="enable verbose logging"
     )
-    group.add_argument(
+    group_logging.add_argument(
         '-q', '--quiet', action='store_true', help="suppress all output on success"
+    )
+
+    group_commands = parser.add_argument_group('commands')
+    group_commands.add_argument(
+        '--init', action='store_true', help="generate a sample configuration file"
+    )
+
+    group_commands.add_argument(
+        '--vendor', metavar='PATH', help="download the program for offline use"
     )
 
     args = parser.parse_args()
@@ -146,6 +169,20 @@ def configure_logging(count=0):
         level = logging.DEBUG
 
     logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
+
+
+def vendor_script(path):
+    root = os.path.abspath(os.path.join(path, os.pardir))
+    if not os.path.isdir(root):
+        log.info("Creating directory %s", root)
+        os.makedirs(root)
+
+    log.info("Downloading %s to %s", SCRIPT_URL, path)
+    urlretrieve(SCRIPT_URL, path)
+
+    log.debug("Making %s executable", path)
+    mode = os.stat(path).st_mode
+    os.chmod(path, mode | 0o111)
 
 
 def find_config(root=None, filenames=None, generate=False):
@@ -216,22 +253,23 @@ def check_dependencies(config):
                 break
         else:
             if settings.get('optional'):
-                show(_("?") + " EXPECTED: {0}".format(settings['version']))
+                show(_("?") + " EXPECTED (OPTIONAL): {0}".format(settings['version']))
                 success.append(_("?"))
             else:
                 if QUIET:
-                    print(
-                        "Unmatched {0} version: {1}".format(
-                            name, settings['version'] or "<anything>"
-                        )
-                    )
+                    if "not found" in output:
+                        actual = "Not found"
+                    else:
+                        actual = output.split('\n')[0].strip('.')
+                    expected = settings['version'] or "<anything>"
+                    print("{0}: {1}, EXPECTED: {2}".format(name, actual, expected))
                 show(
                     _("x")
                     + " EXPECTED: {0}".format(settings['version'] or "<anything>")
                 )
                 success.append(_("x"))
             if settings.get('message'):
-                show(_("*") + " MESSAGE: {0}".format(settings['message']))
+                show(_("#") + " MESSAGE: {0}".format(settings['message']))
 
     show("Results: " + " ".join(success), head=True)
 
@@ -308,7 +346,7 @@ def _(word, is_tty=None, supports_utf8=None, supports_ansi=None):
     if is_tty is None:
         is_tty = hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
     if supports_utf8 is None:
-        supports_utf8 = sys.stdout.encoding == 'UTF-8'
+        supports_utf8 = str(sys.stdout.encoding).lower() == 'utf-8'
     if supports_ansi is None:
         supports_ansi = sys.platform != 'win32' or 'ANSICON' in os.environ
 

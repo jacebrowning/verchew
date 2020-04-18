@@ -30,7 +30,7 @@ Checking for Newer Working Program...
 $ working-program --version
 1.2.3
 ✘ EXPECTED: 4.1 || 4.2
-⭑ MESSAGE: Version 4.x is required to get the special features.
+䷉ MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...
 
@@ -42,7 +42,7 @@ Checking for Optional Missing Program...
 
 $ missing-program --version
 sh: command not found: missing-program
-⚠ EXPECTED: 1.2.3
+▴ EXPECTED (OPTIONAL): 1.2.3
 
 Checking for Missing Program...
 
@@ -50,14 +50,14 @@ $ missing-program --version
 sh: command not found: missing-program
 ✘ EXPECTED: 1.2.3
 
-Results: ✔ ✘ ✘ ⚠ ✘
+Results: ✔ ✘ ✘ ▴ ✘
 
 """
 
 UNSTYLED_OUTPUT = (
     STYLED_OUTPUT.replace('✔', '~')
-    .replace('⭑', '*')
-    .replace('⚠', '?')
+    .replace('䷉', '#')
+    .replace('▴', '?')
     .replace('✘', 'x')
 )
 
@@ -73,7 +73,7 @@ Checking for Newer Working Program...
 $ working-program --version
 sh: command not found: working-program
 x EXPECTED: 4.1 || 4.2
-* MESSAGE: Version 4.x is required to get the special features.
+# MESSAGE: Version 4.x is required to get the special features.
 
 Checking for Broken Program...
 
@@ -85,7 +85,7 @@ Checking for Optional Missing Program...
 
 $ missing-program --version
 sh: command not found: missing-program
-? EXPECTED: 1.2.3
+? EXPECTED (OPTIONAL): 1.2.3
 
 Checking for Missing Program...
 
@@ -142,6 +142,26 @@ def describe_init():
         expect(cmd.stderr) == ""
         expect(cmd.stdout).contains("Checking for Make")
         expect(cmd.returncode) == 0
+
+
+def describe_vendor():
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    def it_creates_a_new_file_on_unix(cli):
+        cmd = cli('--vendor', 'bin/verchew')
+
+        expect(cmd.stderr) == ""
+        expect(cmd.stdout) == ""
+        expect(cmd.returncode) == 0
+        expect(cmd.files_created).contains('bin/verchew')
+
+    @pytest.mark.skipif(sys.platform != 'win32', reason="windows only")
+    def it_creates_a_new_file_on_windows(cli):
+        cmd = cli('--vendor', 'bin\\verchew')
+
+        expect(cmd.stderr) == ""
+        expect(cmd.stdout) == ""
+        expect(cmd.returncode) == 0
+        expect(cmd.files_created).contains('bin\\verchew')
 
 
 def describe_main():
@@ -214,11 +234,19 @@ def describe_quiet():
 
         cli = working-program
         version =  1.3
+
+        [Missing Program]
+
+        cli = missing-program
+        version = 1.2.3
         """
         )
 
         cmd = cli('--root', str(tmp_path), '--quiet')
 
         expect(cmd.stderr) == ""
-        expect(cmd.stdout) == "Unmatched Newer Working Program version: 1.3\n"
+        expect(cmd.stdout) == (
+            "Newer Working Program: 1.2.3, EXPECTED: 1.3\n"
+            "Missing Program: Not found, EXPECTED: 1.2.3\n"
+        )
         expect(cmd.returncode) == 0

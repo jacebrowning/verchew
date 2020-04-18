@@ -1,3 +1,9 @@
+# 3.1 (2020-04-18)
+
+- Added support for unicode characters in Python 3.8.
+- Added `--vendor PATH` command to download the program for offline use.
+- Updated `--quiet` output to include actual program versions.
+
 # 3.0.2 (2020-01-06)
 
 - Removed type annotations to continue supporting legacy Python.
@@ -86,4 +92,4 @@
 
 # 0.1 (2016-10-17)
 
- - Initial release.
+- Initial release.

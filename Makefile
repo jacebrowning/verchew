@@ -17,7 +17,7 @@ VIRTUAL_ENV ?= .venv
 all: install
 
 .PHONY: ci
-ci: check test ## Run all tasks that determine CI status
+ci: format check test mkdocs ## Run all tasks that determine CI status
 
 .PHONY: watch
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
@@ -27,17 +27,17 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 run: install
 	poetry run python $(PACKAGE)/__main__.py
 
-.PHONY: demo ## Run the example
-demo:
-	cd examples && make doctor
+.PHONY: ipython ## Launch an IPython session
+ipython: install
+	poetry run ipython --ipython-dir=notebooks
 
-# SYSTEM DEPENDENCIES ##########################################################
+# SYSTEM DEPENDENCIES #########################################################
 
 .PHONY: doctor
 doctor:  ## Confirm system dependencies are available
-	verchew/script.py
+	bin/verchew
 
-# PROJECT DEPENDENCIES #########################################################
+# PROJECT DEPENDENCIES ########################################################
 
 DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetry.lock)
 
@@ -45,7 +45,7 @@ DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetr
 install: $(DEPENDENCIES) .cache
 
 $(DEPENDENCIES): poetry.lock
-	@ poetry config virtualenvs.in-project true || poetry config settings.virtualenvs.in-project true
+	@ poetry config virtualenvs.in-project true
 	poetry install
 	@ touch $@
 
@@ -62,8 +62,8 @@ endif
 
 .PHONY: format
 format: install
-	poetry run isort $(PACKAGES) --recursive --apply
-	poetry run black $(PACKAGES)
+	poetry run isort $(PACKAGES) notebooks --recursive --apply
+	poetry run black $(PACKAGES) notebooks
 	@ echo
 
 .PHONY: check
@@ -81,8 +81,8 @@ RANDOM_SEED ?= $(shell date +%s)
 FAILURES := .cache/v/cache/lastfailed
 
 PYTEST_OPTIONS := --random --random-seed=$(RANDOM_SEED)
-ifdef DISABLE_COVERAGE
-PYTEST_OPTIONS += --no-cov --disable-warnings
+ifndef DISABLE_COVERAGE
+PYTEST_OPTIONS += --cov=$(PACKAGE)
 endif
 PYTEST_RERUN_OPTIONS := --last-failed --exitfirst
 
@@ -131,9 +131,9 @@ $(MKDOCS_INDEX): docs/requirements.txt mkdocs.yml docs/*.md
 	@ cd docs/about && ln -sf ../../LICENSE.md license.md
 	poetry run mkdocs build --clean --strict
 
-# Workaround: https://github.com/rtfd/readthedocs.org/issues/5090
 docs/requirements.txt: poetry.lock
 	@ poetry run pip freeze -qqq | grep mkdocs > $@
+	@ poetry run pip freeze -qqq | grep Pygments >> $@
 
 .PHONY: uml
 uml: install docs/*.png
@@ -142,8 +142,8 @@ docs/*.png: $(MODULES)
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
-.PHONY: mkdocs-live
-mkdocs-live: mkdocs
+.PHONY: mkdocs-serve
+mkdocs-serve: mkdocs
 	eval "sleep 3; bin/open http://127.0.0.1:8000" &
 	poetry run mkdocs serve
 

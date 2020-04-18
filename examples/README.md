@@ -1,3 +1,1 @@
-This directory contains a sample project.
-
-Either install and run `verchew` or run `make doctor`.
+This directory contains a sample project using `verchew` to check for its required system dependencies. Run `make doctor` to see the sample output.

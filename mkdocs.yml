@@ -8,16 +8,15 @@ edit_uri: https://github.com/jacebrowning/verchew/edit/develop/docs
 theme: readthedocs
 
 markdown_extensions:
-  - codehilite:
-      linenums: true
+  - codehilite
 
 nav:
-- Home: index.md
-- CLI:
-  - Configuration: cli/configuration.md
-  - Options: cli/options.md
-  - Vendoring: cli/vendoring.md
-- About:
-  - Release Notes: about/changelog.md
-  - Contributing: about/contributing.md
-  - License: about/license.md
+  - Home: index.md
+  - CLI:
+    - Configuration: cli/configuration.md
+    - Options: cli/options.md
+    - Vendoring: cli/vendoring.md
+  - About:
+    - Release Notes: about/changelog.md
+    - Contributing: about/contributing.md
+    - License: about/license.md

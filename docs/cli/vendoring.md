@@ -2,13 +2,15 @@
 
 Normally, `verchew` is installed using `pip`, but given the variety of environments in which this program is run, you might be in a situation where `pip`:
 
-* is not installed
-* does not have the correct permissions to install `verchew`
-* does not have network access to PyPI
+- is not installed
+- does not have the correct permissions to install `verchew`
+- does not have network access to PyPI
 
 For this reason, `verchew` can also be embedded into your project as a standalone Python script.
 
 ## Setup
+
+### Manual
 
 Create a `bin/` directory in your project:
 
@@ -27,6 +29,14 @@ Ensure the script has executable permissions:
 
 ```
 $ chmod a+x bin/verchew
+```
+
+### Automatic
+
+If you already have `verchew` installed, it can download itself:
+
+```
+$ verchew --vendor bin/verchew
 ```
 
 ## Usage
