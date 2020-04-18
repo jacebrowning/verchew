@@ -144,6 +144,26 @@ def describe_init():
         expect(cmd.returncode) == 0
 
 
+def describe_vendor():
+    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    def it_creates_a_new_file_on_unix(cli):
+        cmd = cli('--vendor', 'bin/verchew')
+
+        expect(cmd.stderr) == ""
+        expect(cmd.stdout) == ""
+        expect(cmd.returncode) == 0
+        expect(cmd.files_created).contains('bin/verchew')
+
+    @pytest.mark.skipif(sys.platform != 'win32', reason="windows only")
+    def it_creates_a_new_file_on_windows(cli):
+        cmd = cli('--vendor', 'bin\\verchew')
+
+        expect(cmd.stderr) == ""
+        expect(cmd.stdout) == ""
+        expect(cmd.returncode) == 0
+        expect(cmd.files_created).contains('bin\\verchew')
+
+
 def describe_main():
     @pytest.mark.skipif(
         sys.version_info[0] == 2 or sys.platform == 'win32',

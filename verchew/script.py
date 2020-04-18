@@ -41,11 +41,17 @@ from subprocess import PIPE, STDOUT, Popen
 PY2 = sys.version_info[0] == 2
 
 if PY2:
-    import ConfigParser as configparser  # pylint: disable=import-error
+    import ConfigParser as configparser
+    from urllib import urlretrieve
 else:
-    import configparser  # type: ignore
+    import configparser
+    from urllib.request import urlretrieve
 
-__version__ = '3.0.2'
+__version__ = '3.1b1'
+
+SCRIPT_URL = (
+    "https://raw.githubusercontent.com/jacebrowning/verchew/master/verchew/script.py"
+)
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
 
@@ -100,6 +106,10 @@ def main():
     log.debug("PWD: %s", os.getenv('PWD'))
     log.debug("PATH: %s", os.getenv('PATH'))
 
+    if args.vendor:
+        vendor_script(args.vendor)
+        sys.exit(0)
+
     path = find_config(args.root, generate=args.init)
     config = parse_config(path)
 
@@ -108,15 +118,14 @@ def main():
 
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="System dependency version checker.",)
 
     version = "%(prog)s v" + __version__
-    parser.add_argument('--version', action='version', version=version)
     parser.add_argument(
-        '-r', '--root', metavar='PATH', help="specify a custom project root directory"
+        '--version', action='version', version=version,
     )
     parser.add_argument(
-        '--init', action='store_true', help="generate a sample configuration file"
+        '-r', '--root', metavar='PATH', help="specify a custom project root directory"
     )
     parser.add_argument(
         '--exit-code',
@@ -124,12 +133,21 @@ def parse_args():
         help="return a non-zero exit code on failure",
     )
 
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument(
+    group_logging = parser.add_mutually_exclusive_group()
+    group_logging.add_argument(
         '-v', '--verbose', action='count', default=0, help="enable verbose logging"
     )
-    group.add_argument(
+    group_logging.add_argument(
         '-q', '--quiet', action='store_true', help="suppress all output on success"
+    )
+
+    group_commands = parser.add_argument_group('commands')
+    group_commands.add_argument(
+        '--init', action='store_true', help="generate a sample configuration file"
+    )
+
+    group_commands.add_argument(
+        '--vendor', metavar='PATH', help="download the program for offline use"
     )
 
     args = parser.parse_args()
@@ -146,6 +164,20 @@ def configure_logging(count=0):
         level = logging.DEBUG
 
     logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
+
+
+def vendor_script(path):
+    root = os.path.abspath(os.path.join(path, os.pardir))
+    if not os.path.isdir(root):
+        log.info("Creating directory %s", root)
+        os.makedirs(root)
+
+    log.info("Downloading %s to %s", SCRIPT_URL, path)
+    urlretrieve(SCRIPT_URL, path)
+
+    log.debug("Making %s executable", path)
+    mode = os.stat(path).st_mode
+    os.chmod(path, mode | 0o111)
 
 
 def find_config(root=None, filenames=None, generate=False):

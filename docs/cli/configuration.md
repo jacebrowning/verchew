@@ -2,10 +2,10 @@
 
 Any of the following can be used as the `verchew` configuration filename:
 
-* `.verchew.ini`
-* `verchew.ini`
-* `.verchew`
-* `.verchewrc`
+- `.verchew.ini`
+- `verchew.ini`
+- `.verchew`
+- `.verchewrc`
 
 # Version Arguments
 
