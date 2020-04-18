@@ -252,11 +252,12 @@ def check_dependencies(config):
                 success.append(_("?"))
             else:
                 if QUIET:
-                    print(
-                        "Unmatched {0} version: {1}".format(
-                            name, settings['version'] or "<anything>"
-                        )
-                    )
+                    if "not found" in output:
+                        actual = "Not found"
+                    else:
+                        actual = output.split('\n')[0].strip('.')
+                    expected = settings['version'] or "<anything>"
+                    print("{0}: {1}, EXPECTED: {2}".format(name, actual, expected))
                 show(
                     _("x")
                     + " EXPECTED: {0}".format(settings['version'] or "<anything>")

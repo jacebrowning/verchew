@@ -234,11 +234,19 @@ def describe_quiet():
 
         cli = working-program
         version =  1.3
+
+        [Missing Program]
+
+        cli = missing-program
+        version = 1.2.3
         """
         )
 
         cmd = cli('--root', str(tmp_path), '--quiet')
 
         expect(cmd.stderr) == ""
-        expect(cmd.stdout) == "Unmatched Newer Working Program version: 1.3\n"
+        expect(cmd.stdout) == (
+            "Newer Working Program: 1.2.3, EXPECTED: 1.3\n"
+            "Missing Program: Not found, EXPECTED: 1.2.3\n"
+        )
         expect(cmd.returncode) == 0
