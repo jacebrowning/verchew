@@ -21,7 +21,7 @@ $ mkdir -p bin
 Download the standalone script:
 
 ```
-$ wget https://raw.githubusercontent.com/jacebrowning/verchew/master/verchew/script.py
+$ wget https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/script.py
 $ mv script.py bin/verchew
 ```
 

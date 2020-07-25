@@ -3,7 +3,7 @@ site_description: Chews through your system dependencies, spitting out incompati
 site_author: Jace Browning
 
 repo_url: https://github.com/jacebrowning/verchew
-edit_uri: https://github.com/jacebrowning/verchew/edit/develop/docs
+edit_uri: https://github.com/jacebrowning/verchew/edit/main/docs
 
 theme: readthedocs
 
@@ -13,10 +13,10 @@ markdown_extensions:
 nav:
   - Home: index.md
   - CLI:
-    - Configuration: cli/configuration.md
-    - Options: cli/options.md
-    - Vendoring: cli/vendoring.md
+      - Configuration: cli/configuration.md
+      - Options: cli/options.md
+      - Vendoring: cli/vendoring.md
   - About:
-    - Release Notes: about/changelog.md
-    - Contributing: about/contributing.md
-    - License: about/license.md
+      - Release Notes: about/changelog.md
+      - Contributing: about/contributing.md
+      - License: about/license.md

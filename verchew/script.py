@@ -50,7 +50,7 @@ else:
 __version__ = '3.1'
 
 SCRIPT_URL = (
-    "https://raw.githubusercontent.com/jacebrowning/verchew/master/verchew/script.py"
+    "https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/script.py"
 )
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']

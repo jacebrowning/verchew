@@ -57,7 +57,7 @@ pylint = "^2"
 # Testing
 pytest = "^5"
 pytest-cov = "*"
-pytest-describe = { git = "https://github.com/jacebrowning/pytest-describe", branch = "pytest-5.4-support" }
+pytest-describe = "^1.0"
 pytest-expecter = "*"
 pytest-random = "*"
 scripttest = "*"
