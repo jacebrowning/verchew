@@ -66,7 +66,7 @@ scripttest = "*"
 coveragespace = "^3.1.1"
 
 # Documentation
-mkdocs = "~1.0.4"
+mkdocs = "~1.2.3"
 pygments = "~2.7.4"
 
 # Tooling
