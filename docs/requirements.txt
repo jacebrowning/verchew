@@ -1,2 +1,2 @@
-mkdocs==1.0.4
-Pygments==2.7.4
+mkdocs==1.2.3; python_version >= "3.6"
+pygments==2.7.4; python_version >= "3.5"
