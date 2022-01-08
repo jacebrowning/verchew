@@ -146,6 +146,9 @@ def describe_get_version():
     def with_custom_argument():
         expect(get_version('python', argument='-V')).contains("Python ")
 
+    def with_multiple_arguments():
+        expect(get_version('python', argument='-V -V')).contains("Python ")
+
     def with_no_argument():
         expect(get_version('pip', argument='')).contains("Usage:")
 

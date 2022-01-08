@@ -19,6 +19,8 @@ cli_version_arg = -V
 version = 2
 ```
 
+To pass multiple args, use spaces as separators.
+
 If the program lacks a specific argument to display its version, but contains version information in the default output, include an empty `cli_version_arg` setting:
 
 ```ini

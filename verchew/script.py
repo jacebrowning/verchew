@@ -280,7 +280,7 @@ def get_version(program, argument=None):
     if argument is None:
         args = [program, '--version']
     elif argument:
-        args = [program, argument]
+        args = [program] + argument.split()
     else:
         args = [program]
 
