@@ -1,3 +1,7 @@
+# 3.2 (2022-01-07)
+
+- Added support for passing multiple version arguments.
+
 # 3.1 (2020-04-18)
 
 - Added support for unicode characters in Python 3.8.
