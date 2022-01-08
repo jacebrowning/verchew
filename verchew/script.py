@@ -47,7 +47,7 @@ else:
     import configparser
     from urllib.request import urlretrieve
 
-__version__ = '3.1.1'
+__version__ = '3.2'
 
 SCRIPT_URL = (
     "https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/script.py"
@@ -260,7 +260,7 @@ def check_dependencies(config):
                     if "not found" in output:
                         actual = "Not found"
                     else:
-                        actual = output.split('\n')[0].strip('.')
+                        actual = output.split('\n', maxsplit=1)[0].strip('.')
                     expected = settings['version'] or "<anything>"
                     print("{0}: {1}, EXPECTED: {2}".format(name, actual, expected))
                 show(

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# pylint: disable=unused-variable,unused-argument,expression-not-assigned,singleton-comparison
+# pylint: disable=unused-variable,unused-argument,expression-not-assigned,singleton-comparison,use-implicit-booleaness-not-comparison
 
 from __future__ import unicode_literals
 
