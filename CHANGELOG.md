@@ -1,3 +1,7 @@
+# 3.2.1 (2022-01-12)
+
+- Fix handling of `optional=false` in configuration files.
+
 # 3.2 (2022-01-07)
 
 - Added support for passing multiple version arguments.
