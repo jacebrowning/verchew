@@ -35,6 +35,7 @@ import os
 import re
 import sys
 from collections import OrderedDict
+from distutils.util import strtobool
 from subprocess import PIPE, STDOUT, Popen
 
 
@@ -252,7 +253,7 @@ def check_dependencies(config):
                 success.append(_("~"))
                 break
         else:
-            if settings.get('optional'):
+            if strtobool(settings.get('optional', 'false')):
                 show(_("?") + " EXPECTED (OPTIONAL): {0}".format(settings['version']))
                 success.append(_("?"))
             else:
