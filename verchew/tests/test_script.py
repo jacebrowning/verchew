@@ -119,7 +119,12 @@ def describe_parse_config():
         )
 
         expect(parse_config(str(config))) == {
-            'Foobar': {'cli': 'foobar', 'version': 'v1.2.3', 'patterns': ['v1.2.3'], 'optional': True}
+            'Foobar': {
+                'cli': 'foobar',
+                'version': 'v1.2.3',
+                'patterns': ['v1.2.3'],
+                'optional': True,
+            }
         }
 
     def with_multiple_versions(config):
@@ -133,7 +138,11 @@ def describe_parse_config():
         )
 
         expect(parse_config(str(config))) == {
-            'Foobar': {'version': '2 || 3 ||     4', 'patterns': ['2', '3', '4'], 'optional': False}
+            'Foobar': {
+                'version': '2 || 3 ||     4',
+                'patterns': ['2', '3', '4'],
+                'optional': False,
+            }
         }
 
 

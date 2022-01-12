@@ -236,7 +236,9 @@ def parse_config(path):
         data[name]['version'] = version
         data[name]['patterns'] = [v.strip() for v in version.split('||')]
 
-        data[name]['optional'] = data[name].get('optional', 'false').strip().lower() in ('true', 'yes', 'y', True)
+        data[name]['optional'] = data[name].get(
+            'optional', 'false'
+        ).strip().lower() in ('true', 'yes', 'y', True)
 
     return data
 
