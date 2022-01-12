@@ -35,7 +35,6 @@ import os
 import re
 import sys
 from collections import OrderedDict
-from distutils.util import strtobool
 from subprocess import PIPE, STDOUT, Popen
 
 
@@ -237,6 +236,8 @@ def parse_config(path):
         data[name]['version'] = version
         data[name]['patterns'] = [v.strip() for v in version.split('||')]
 
+        data[name]['optional'] = data[name].get('optional', 'false').strip().lower() in ('true', 'yes', 'y', True)
+
     return data
 
 
@@ -253,7 +254,7 @@ def check_dependencies(config):
                 success.append(_("~"))
                 break
         else:
-            if strtobool(settings.get('optional', 'false')):
+            if settings.get('optional'):
                 show(_("?") + " EXPECTED (OPTIONAL): {0}".format(settings['version']))
                 success.append(_("?"))
             else:
