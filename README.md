@@ -8,8 +8,9 @@ When onboarding new team members, ensuring their computer has everything needed 
 [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/verchew/main.svg?label=windows)](https://ci.appveyor.com/project/jacebrowning/verchew)
 [![Coverage Status](https://img.shields.io/coveralls/jacebrowning/verchew/main.svg)](https://coveralls.io/r/jacebrowning/verchew)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/jacebrowning/verchew.svg)](https://scrutinizer-ci.com/g/jacebrowning/verchew/?branch=main)
-[![PyPI Version](https://img.shields.io/pypi/v/verchew.svg)](https://pypi.python.org/pypi/verchew)
 [![PyPI License](https://img.shields.io/pypi/l/verchew.svg)](https://pypi.org/project/verchew)
+[![PyPI Version](https://img.shields.io/pypi/v/verchew.svg)](https://pypi.python.org/pypi/verchew)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/verchew.svg?color=orange)](https://pypistats.org/packages/verchew)
 
 # Setup
 
