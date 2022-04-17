@@ -10,6 +10,7 @@ import pytest
 from expecter import expect
 
 from verchew.script import (
+    SCRIPT_URL,
     _,
     find_config,
     get_version,
@@ -28,7 +29,7 @@ def describe_vendor_script():
         tmpdir.chdir()
         path = os.path.join(tmpdir, 'missing')
 
-        vendor_script('missing')
+        vendor_script(SCRIPT_URL, 'missing')
 
         expect(os.access(path, os.X_OK)) == True
         with open(path, 'r') as f:
@@ -38,7 +39,7 @@ def describe_vendor_script():
         tmpdir.chdir()
         path = os.path.join(tmpdir, 'bin/missing')
 
-        vendor_script('bin/missing')
+        vendor_script(SCRIPT_URL, 'bin/missing')
 
         expect(os.access(path, os.X_OK)) == True
         with open(path, 'r') as f:
@@ -50,7 +51,7 @@ def describe_vendor_script():
         with open(path, 'w') as f:
             f.write('Hello, world!')
 
-        vendor_script('existing')
+        vendor_script(SCRIPT_URL, 'existing')
 
         expect(os.access(path, os.X_OK)) == True
         with open(path, 'r') as f:
