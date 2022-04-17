@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+#
 # The MIT License (MIT)
 # Copyright © 2016, Jace Browning
 #
@@ -47,10 +47,13 @@ else:
     import configparser
     from urllib.request import urlretrieve
 
-__version__ = '3.2'
+__version__ = '3.3a1'
 
 SCRIPT_URL = (
     "https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/script.py"
+)
+WRAPPER_URL = (
+    "https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/wrapper.sh"
 )
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
@@ -112,7 +115,8 @@ def main():
     log.debug("PATH: %s", os.getenv('PATH'))
 
     if args.vendor:
-        vendor_script(args.vendor)
+        vendor_script(SCRIPT_URL, args.vendor)
+        vendor_script(WRAPPER_URL, args.vendor + "-wrapper")
         sys.exit(0)
 
     path = find_config(args.root, generate=args.init)
@@ -171,14 +175,14 @@ def configure_logging(count=0):
     logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
 
 
-def vendor_script(path):
+def vendor_script(url, path):
     root = os.path.abspath(os.path.join(path, os.pardir))
     if not os.path.isdir(root):
         log.info("Creating directory %s", root)
         os.makedirs(root)
 
-    log.info("Downloading %s to %s", SCRIPT_URL, path)
-    urlretrieve(SCRIPT_URL, path)
+    log.info("Downloading %s to %s", url, path)
+    urlretrieve(url, path)
 
     log.debug("Making %s executable", path)
     mode = os.stat(path).st_mode
