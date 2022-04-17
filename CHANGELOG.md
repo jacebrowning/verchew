@@ -1,3 +1,7 @@
+# 4.0 (beta)
+
+- Updated script to assume `python3` is available, dropping support for legacy Python.
+
 # 3.2.1 (2022-01-12)
 
 - Fix handling of `optional=false` in configuration files.

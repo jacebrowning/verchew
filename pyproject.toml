@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "verchew"
-version = "3.2.1"  # also update verchew/script.py
+version = "4.0b1"  # also update verchew/script.py
 description = "System dependency version checker."
 
 license = "MIT"
@@ -25,13 +25,11 @@ classifiers = [
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 2.7",
-    "Programming Language :: Python :: 3.3",
-    "Programming Language :: Python :: 3.4",
-    "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Software Development",
     "Topic :: Software Development :: Build Tools",
     "Topic :: Software Development :: Testing",
@@ -82,10 +80,9 @@ verchew = "verchew.script:main"
 
 [tool.black]
 
-target_version = ['py36', 'py37']
 skip-string-normalization = true
 
 [build-system]
 
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0"]
+build-backend = "poetry.core.masonry.api"

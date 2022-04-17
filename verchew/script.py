@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # The MIT License (MIT)
@@ -30,24 +30,17 @@
 from __future__ import unicode_literals
 
 import argparse
+import configparser
 import logging
 import os
 import re
 import sys
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
+from urllib.request import urlretrieve
 
 
-PY2 = sys.version_info[0] == 2
-
-if PY2:
-    import ConfigParser as configparser
-    from urllib import urlretrieve
-else:
-    import configparser
-    from urllib.request import urlretrieve
-
-__version__ = '3.2'
+__version__ = '4.0b1'
 
 SCRIPT_URL = (
     "https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/script.py"
@@ -337,8 +330,6 @@ def show(text, start='', end='\n', head=False):
         log.info(text)
     else:
         formatted = start + text + end
-        if PY2:
-            formatted = formatted.encode('utf-8')
         sys.stdout.write(formatted)
         sys.stdout.flush()
 
