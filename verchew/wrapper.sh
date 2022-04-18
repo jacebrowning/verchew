@@ -6,4 +6,9 @@
 set -e
 set -o pipefail
 
-python3 script.py "$@"
+if [ -e verchew ]
+then
+    python3 verchew "$@"
+else
+    python3 script.py "$@"
+fi
