@@ -1,4 +1,4 @@
-# Standalone Script
+# Vendoring
 
 Normally, `verchew` is installed using `pip`, but given the variety of environments in which this program is run, you might be in a situation where `pip`:
 
@@ -38,6 +38,8 @@ If you already have `verchew` installed, it can download itself:
 ```
 $ verchew --vendor bin/verchew
 ```
+
+This will also create a `verchew-wrapper` script, which attempts to locate `python` on operating systems not compliant with [PEP 394](https://peps.python.org/pep-0394/), such as newer versions of macOS.
 
 ## Usage
 

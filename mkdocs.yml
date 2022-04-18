@@ -18,5 +18,5 @@ nav:
       - Vendoring: cli/vendoring.md
   - About:
       - Release Notes: about/changelog.md
-      - Contributing: about/contributing.md
+      - Contributor Guide: about/contributing.md
       - License: about/license.md
