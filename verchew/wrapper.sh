@@ -6,9 +6,13 @@
 set -e
 set -o pipefail
 
-if [ -e verchew ]
-then
-    python3 verchew "$@"
+BIN=$(dirname $(realpath $0))
+
+if [ -e "${BIN}/verchew" ]; then
+    python3 "${BIN}/verchew" "$@"
+elif  [ -e "${BIN}/script.py" ]; then
+    python3 "${BIN}/script.py" "$@"
 else
-    python3 script.py "$@"
+    echo "ERROR: 'verchew' script is missing, run 'verchew --vendor' again"
+    exit 1
 fi
