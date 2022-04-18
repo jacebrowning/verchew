@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "verchew"
-version = "3.3a1"  # also update verchew/script.py
+version = "3.3"  # also update verchew/script.py
 description = "System dependency version checker."
 
 license = "MIT"

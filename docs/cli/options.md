@@ -1,4 +1,6 @@
-# Configuration Generation
+# Options
+
+## Configuration Generation
 
 In a new project, a sample configuration file can be generated:
 
@@ -8,7 +10,7 @@ $ verchew --init
 
 Update the generated file to match your project's system dependencies, including an optional `message` where helpful.
 
-# Custom Project Root
+## Custom Project Root
 
 To call `verchew` from an arbitrary directory, pass it the path to the root of your project:
 
@@ -16,7 +18,7 @@ To call `verchew` from an arbitrary directory, pass it the path to the root of y
 $ verchew --root=<path/to/project>
 ```
 
-# Exit Codes
+## Exit Codes
 
 When `verchew` runs, it will always return an exit code of 0 to avoid interrupting continuous integration. To force a non-zero exit code on failure, use the `--exit-code` option:
 

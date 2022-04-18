@@ -1,4 +1,6 @@
-# Filenames
+# Configuration
+
+## Filenames
 
 Any of the following can be used as the `verchew` configuration filename:
 
@@ -7,7 +9,7 @@ Any of the following can be used as the `verchew` configuration filename:
 - `.verchew`
 - `.verchewrc`
 
-# Version Arguments
+## Version Arguments
 
 If one of your system dependencies uses an argument other than `--version` to display its version information, this can be changed in the configuration file using the `cli_version_arg` setting:
 
@@ -31,7 +33,7 @@ cli_version_arg =
 version = 16
 ```
 
-# Multiple Versions
+## Multiple Versions
 
 If your project can work with more than one version of a system dependency, separate them with a double pipe (`||`) symbol:
 
@@ -42,7 +44,7 @@ cli = python
 version = Python 2 || Python 3
 ```
 
-# Any Version
+## Any Version
 
 If the version of a system dependency is not important to your project, leave out the `version` setting to simply check for the existence of that program:
 
@@ -52,7 +54,7 @@ If the version of a system dependency is not important to your project, leave ou
 cli = hugo
 ```
 
-# Optional Programs
+## Optional Programs
 
 If one of your system dependencies is optional and you only want to show a warning for incompatible versions, include the `optional` setting:
 
@@ -64,7 +66,7 @@ version = 1.8
 optional = true
 ```
 
-# Help Messages
+## Help Messages
 
 To provide additional information when a system dependency is missing, include the `message` setting:
 
