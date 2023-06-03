@@ -209,6 +209,9 @@ def describe_match_version():
         expect(match_version("", "program not found")) == False
         expect(match_version("", "v1.2.3\nother not found")) == True
 
+    def when_match_with_multiple_lines():
+        expect(match_version("1.2", "Foobar\nVersion 1.2.3")) == True
+
 
 def describe_format():
     def default():

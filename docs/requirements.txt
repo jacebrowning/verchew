@@ -1,2 +1,2 @@
-mkdocs==1.2.4; python_version >= "3.6"
-pygments==2.7.4; python_version >= "3.5"
+mkdocs==1.2.4 ; python_version >= "3.6" and python_version < "4.0"
+pygments==2.7.4 ; python_version >= "3.6" and python_version < "4.0"
