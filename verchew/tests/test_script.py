@@ -212,6 +212,9 @@ def describe_match_version():
     def when_match_with_multiple_lines():
         expect(match_version("1.2", "Foobar\nVersion 1.2.3")) == True
 
+    def when_mismatch_with_no_output():
+        expect(match_version("1.2.3", "")) == False
+
 
 def describe_format():
     def default():
