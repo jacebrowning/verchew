@@ -3,6 +3,7 @@
         "DIRENV",
         "printenv",
         "pyenv",
-        "USERPROFILE"
+        "USERPROFILE",
+        "verchewrc"
     ]
 }

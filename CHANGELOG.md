@@ -1,5 +1,13 @@
 # Release Notes
 
+## 3.4.1 (2022-06-13)
+
+- Fixed handling of programs with no output.
+
+## 3.4 (2023-06-03)
+
+- Added support for matching version not in the first line of output.
+
 ## 3.3 (2022-04-18)
 
 - Added a `verchew-wrapper` alongside the vendored script to support systems not following [PEP 394](https://peps.python.org/pep-0394/).

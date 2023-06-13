@@ -47,7 +47,7 @@ else:
     import configparser
     from urllib.request import urlretrieve
 
-__version__ = '3.4'
+__version__ = '3.4.1'
 
 SCRIPT_URL = (
     "https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/script.py"
@@ -311,7 +311,7 @@ def get_version(program, argument=None):
 
 def match_version(pattern, output):
     lines = output.splitlines()
-    if "not found" in lines[0]:
+    if not lines or "not found" in lines[0]:
         return False
 
     regex = pattern.replace('.', r'\.') + r'(\b|/)'
