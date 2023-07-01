@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
         "DIRENV",
+        "embeddable",
+        "pipx",
         "printenv",
         "pyenv",
         "USERPROFILE",

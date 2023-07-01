@@ -55,10 +55,10 @@ Results: ✔ ✘ ✘ ▴ ✘
 """
 
 UNSTYLED_OUTPUT = (
-    STYLED_OUTPUT.replace('✔', '~')
-    .replace('䷉', '#')
-    .replace('▴', '?')
-    .replace('✘', 'x')
+    STYLED_OUTPUT.replace("✔", "~")
+    .replace("䷉", "#")
+    .replace("▴", "?")
+    .replace("✘", "x")
 )
 
 UNSTYLED_OUTPUT_WINDOWS = """
@@ -105,7 +105,7 @@ def env(tmpdir):
     path = str(tmpdir.join("test"))
     env = scripttest.TestFileEnvironment(path)
     os.chdir(path)
-    env.environ['PATH'] = BIN_DIR
+    env.environ["PATH"] = BIN_DIR
     log.debug("ENV: %s", env.environ)
     return env
 
@@ -117,19 +117,19 @@ def cli(env):
 
 
 def call(env, path, *args):
-    log.info("$ %s %s", path, ' '.join(args))
+    log.info("$ %s %s", path, " ".join(args))
     return env.run(path, *args, expect_error=True)
 
 
 def describe_meta():
     def it_displays_help_information(cli):
-        cmd = cli('--help')
+        cmd = cli("--help")
 
         expect(cmd.stdout).contains("usage: verchew")
         expect(cmd.returncode) == 0
 
     def it_displays_version_information(cli):
-        cmd = cli('--version')
+        cmd = cli("--version")
 
         expect(cmd.stdout).startswith("verchew v")
         expect(cmd.returncode) == 0
@@ -137,7 +137,7 @@ def describe_meta():
 
 def describe_init():
     def it_generates_a_sample_config(cli):
-        cmd = cli('--init')
+        cmd = cli("--init")
 
         expect(cmd.stderr) == ""
         expect(cmd.stdout).contains("Checking for Make")
@@ -145,66 +145,66 @@ def describe_init():
 
 
 def describe_vendor():
-    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    @pytest.mark.skipif(sys.platform == "win32", reason="unix only")
     def it_creates_a_new_file_on_unix(cli):
-        cmd = cli('--vendor', 'bin/verchew')
+        cmd = cli("--vendor", "bin/verchew")
 
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == ""
         expect(cmd.returncode) == 0
-        expect(cmd.files_created).contains('bin/verchew')
+        expect(cmd.files_created).contains("bin/verchew")
 
-    @pytest.mark.skipif(sys.platform != 'win32', reason="windows only")
+    @pytest.mark.skipif(sys.platform != "win32", reason="windows only")
     def it_creates_a_new_file_on_windows(cli):
-        cmd = cli('--vendor', 'bin\\verchew')
+        cmd = cli("--vendor", "bin\\verchew")
 
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == ""
         expect(cmd.returncode) == 0
-        expect(cmd.files_created).contains('bin\\verchew')
+        expect(cmd.files_created).contains("bin\\verchew")
 
 
 def describe_main():
     @pytest.mark.skipif(
-        sys.version_info[0] == 2 or sys.platform == 'win32',
+        sys.version_info[0] == 2 or sys.platform == "win32",
         reason="unix and python3 only",
     )
     def it_displays_results_on_unix_python_3(cli):
-        cmd = cli('--root', EXAMPLES_DIR)
+        cmd = cli("--root", EXAMPLES_DIR)
 
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == STYLED_OUTPUT
         expect(cmd.returncode) == 0
 
     @pytest.mark.skipif(
-        sys.version_info[0] == 3 or sys.platform == 'win32',
+        sys.version_info[0] == 3 or sys.platform == "win32",
         reason="unix and python2 only",
     )
     def it_displays_results_on_unix_python_2(cli):
-        cmd = cli('--root', EXAMPLES_DIR)
+        cmd = cli("--root", EXAMPLES_DIR)
 
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == UNSTYLED_OUTPUT
         expect(cmd.returncode) == 0
 
-    @pytest.mark.skipif(sys.platform != 'win32', reason="windows only")
+    @pytest.mark.skipif(sys.platform != "win32", reason="windows only")
     def it_displays_results_on_windows(cli):
-        cmd = cli('--root', EXAMPLES_DIR)
+        cmd = cli("--root", EXAMPLES_DIR)
 
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == UNSTYLED_OUTPUT_WINDOWS
         expect(cmd.returncode) == 0
 
     def it_exits_with_an_error_code_if_enabled(cli):
-        cmd = cli('--root', EXAMPLES_DIR, '--exit-code')
+        cmd = cli("--root", EXAMPLES_DIR, "--exit-code")
 
         expect(cmd.returncode) == 1
 
 
 def describe_quiet():
-    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    @pytest.mark.skipif(sys.platform == "win32", reason="unix only")
     def it_hides_output_when_no_error(cli, tmp_path):
-        verchew_ini = tmp_path / 'verchew.ini'
+        verchew_ini = tmp_path / "verchew.ini"
         verchew_ini.write_text(
             """
         [Working Program]
@@ -214,15 +214,15 @@ def describe_quiet():
         """
         )
 
-        cmd = cli('--root', str(tmp_path), '--quiet')
+        cmd = cli("--root", str(tmp_path), "--quiet")
 
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == ""
         expect(cmd.returncode) == 0
 
-    @pytest.mark.skipif(sys.platform == 'win32', reason="unix only")
+    @pytest.mark.skipif(sys.platform == "win32", reason="unix only")
     def it_shows_failing_programs(cli, tmp_path):
-        verchew_ini = tmp_path / 'verchew.ini'
+        verchew_ini = tmp_path / "verchew.ini"
         verchew_ini.write_text(
             """
         [Working Program]
@@ -242,7 +242,7 @@ def describe_quiet():
         """
         )
 
-        cmd = cli('--root', str(tmp_path), '--quiet')
+        cmd = cli("--root", str(tmp_path), "--quiet")
 
         expect(cmd.stderr) == ""
         expect(cmd.stdout) == (

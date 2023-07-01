@@ -21,40 +21,40 @@ from verchew.script import (
 
 
 def write(config, text, indent=8):
-    config.write(text.replace(' ' * indent, ''))
+    config.write(text.replace(" " * indent, ""))
 
 
 def describe_vendor_script():
     def when_missing_file(tmpdir):
         tmpdir.chdir()
-        path = os.path.join(tmpdir, 'missing')
+        path = os.path.join(tmpdir, "missing")
 
-        vendor_script(SCRIPT_URL, 'missing')
+        vendor_script(SCRIPT_URL, "missing")
 
         expect(os.access(path, os.X_OK)) == True
-        with open(path, 'r') as f:
+        with open(path, "r") as f:
             expect(f.read()).contains("verchew")
 
     def when_missing_directory(tmpdir):
         tmpdir.chdir()
-        path = os.path.join(tmpdir, 'bin/missing')
+        path = os.path.join(tmpdir, "bin/missing")
 
-        vendor_script(SCRIPT_URL, 'bin/missing')
+        vendor_script(SCRIPT_URL, "bin/missing")
 
         expect(os.access(path, os.X_OK)) == True
-        with open(path, 'r') as f:
+        with open(path, "r") as f:
             expect(f.read()).contains("verchew")
 
     def when_existing_file(tmpdir):
         tmpdir.chdir()
-        path = os.path.join(tmpdir, 'existing')
-        with open(path, 'w') as f:
-            f.write('Hello, world!')
+        path = os.path.join(tmpdir, "existing")
+        with open(path, "w") as f:
+            f.write("Hello, world!")
 
-        vendor_script(SCRIPT_URL, 'existing')
+        vendor_script(SCRIPT_URL, "existing")
 
         expect(os.access(path, os.X_OK)) == True
-        with open(path, 'r') as f:
+        with open(path, "r") as f:
             expect(f.read()).contains("verchew")
 
 
@@ -104,7 +104,7 @@ def describe_parse_config():
         )
 
         expect(parse_config(str(config))) == {
-            'Foobar': {'version': '', 'patterns': [''], 'optional': False}
+            "Foobar": {"version": "", "patterns": [""], "optional": False}
         }
 
     def with_a_filled_section(config):
@@ -120,11 +120,11 @@ def describe_parse_config():
         )
 
         expect(parse_config(str(config))) == {
-            'Foobar': {
-                'cli': 'foobar',
-                'version': 'v1.2.3',
-                'patterns': ['v1.2.3'],
-                'optional': True,
+            "Foobar": {
+                "cli": "foobar",
+                "version": "v1.2.3",
+                "patterns": ["v1.2.3"],
+                "optional": True,
             }
         }
 
@@ -139,32 +139,32 @@ def describe_parse_config():
         )
 
         expect(parse_config(str(config))) == {
-            'Foobar': {
-                'version': '2 || 3 ||     4',
-                'patterns': ['2', '3', '4'],
-                'optional': False,
+            "Foobar": {
+                "version": "2 || 3 ||     4",
+                "patterns": ["2", "3", "4"],
+                "optional": False,
             }
         }
 
 
 def describe_get_version():
     def when_missing():
-        expect(get_version('foobar')) == "sh: command not found: foobar"
+        expect(get_version("foobar")) == "sh: command not found: foobar"
 
     def when_found():
-        expect(get_version('python')).contains("Python ")
+        expect(get_version("python")).contains("Python ")
 
     def with_custom_argument():
-        expect(get_version('python', argument='-V')).contains("Python ")
+        expect(get_version("python", argument="-V")).contains("Python ")
 
     def with_multiple_arguments():
-        expect(get_version('python', argument='-V -V')).contains("Python ")
+        expect(get_version("python", argument="-V -V")).contains("Python ")
 
     def with_no_argument():
-        expect(get_version('pip', argument='')).contains("Usage:")
+        expect(get_version("pip", argument="")).contains("Usage:")
 
     def when_no_output():
-        expect(get_version('echo', argument='')) == ""
+        expect(get_version("echo", argument="")) == ""
 
 
 def describe_match_version():
@@ -218,7 +218,7 @@ def describe_match_version():
 
 def describe_format():
     def default():
-        expect(_('~')) == "~"
+        expect(_("~")) == "~"
 
     @pytest.mark.parametrize(
         "is_tty,supports_utf8,supports_ansi,formatted",
@@ -238,4 +238,4 @@ def describe_format():
             is_tty=is_tty, supports_utf8=supports_utf8, supports_ansi=supports_ansi
         )
 
-        expect(_('~', **options)) == formatted
+        expect(_("~", **options)) == formatted
