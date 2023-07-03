@@ -61,6 +61,7 @@ pytest-cov = "*"
 pytest-describe = "^1.0"
 pytest-expecter = "*"
 pytest-random = "*"
+pytest-timeout = "*"
 scripttest = "*"
 
 # Reports

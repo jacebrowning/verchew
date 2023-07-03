@@ -166,6 +166,10 @@ def describe_get_version():
     def when_no_output():
         expect(get_version('echo', argument='')) == ""
 
+    @pytest.mark.timeout(5)
+    def when_stalled():
+        expect(get_version('yes')) == ""
+
 
 def describe_match_version():
     def when_exact_match():

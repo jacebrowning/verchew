@@ -37,15 +37,19 @@ import sys
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
 
+import subprocess
+import threading
 
 PY2 = sys.version_info[0] == 2
 
 if PY2:
     import ConfigParser as configparser
     from urllib import urlretrieve
+    from Queue import Queue
 else:
     import configparser
     from urllib.request import urlretrieve
+    from queue import Queue
 
 __version__ = '3.4.1'
 
@@ -284,7 +288,17 @@ def check_dependencies(config):
     return _("x") not in success
 
 
+def call_in_thread(args, queue):
+    try:
+        process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        output, _ = process.communicate()
+        queue.put((output, process.pid))
+    except subprocess.CalledProcessError:
+        queue.put(("sh: command not found: " + args[0], None))
+
 def get_version(program, argument=None):
+    queue = Queue()
+
     if argument is None:
         args = [program, '--version']
     elif argument:
@@ -292,8 +306,19 @@ def get_version(program, argument=None):
     else:
         args = [program]
 
-    show("$ {0}".format(" ".join(args)))
-    output = call(args)
+    # First, try running with '--help'
+    help_args = [program, '--help']
+    help_thread = threading.Thread(target=call_in_thread, args=(help_args, queue))
+    help_thread.start()
+    help_thread.join(timeout=1)
+
+    if help_thread.is_alive():
+        # The '--help' command timed out, so don't try to get the version
+        output = ""
+    else:
+        # The '--help' command succeeded, so try to get the version
+        output = call(args)
+
     lines = output.splitlines()
 
     if lines:
