@@ -12,7 +12,6 @@ import pytest
 import scripttest
 from expecter import expect
 
-
 TESTS_DIR = os.path.abspath(os.path.dirname(__file__))
 ROOT_DIR = os.path.join(TESTS_DIR, "..")
 EXAMPLES_DIR = os.path.join(ROOT_DIR, "examples")

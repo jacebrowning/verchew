@@ -37,7 +37,6 @@ import sys
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
 
-
 PY2 = sys.version_info[0] == 2
 
 if PY2:
@@ -127,12 +126,10 @@ def main():
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="System dependency version checker.",)
+    parser = argparse.ArgumentParser(description="System dependency version checker.")
 
     version = "%(prog)s v" + __version__
-    parser.add_argument(
-        "--version", action="version", version=version,
-    )
+    parser.add_argument("--version", action="version", version=version)
     parser.add_argument(
         "-r", "--root", metavar="PATH", help="specify a custom project root directory"
     )
