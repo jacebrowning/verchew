@@ -4,6 +4,7 @@
         "codehilite",
         "DIRENV",
         "embeddable",
+        "mkdocs",
         "pipx",
         "printenv",
         "pyenv",
