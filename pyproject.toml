@@ -53,15 +53,15 @@ pydocstyle = "^3"
 pylint = "^2"
 
 # Testing
-pytest = "^5"
+pytest = "^7.4"
 pytest-cov = "*"
-pytest-describe = "^1.0"
-pytest-expecter = "*"
+pytest-describe = "^2.1"
+pytest-expecter = "^3.0"
 pytest-random = "*"
 scripttest = "*"
 
 # Reports
-coveragespace = "^4.2"
+coveragespace = "^6.0"
 
 # Documentation
 mkdocs = "~1.2.3"
