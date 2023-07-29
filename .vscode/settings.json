@@ -1,7 +1,10 @@
 {
     "cSpell.words": [
+        "ANSICON",
+        "codehilite",
         "DIRENV",
         "embeddable",
+        "mkdocs",
         "pipx",
         "printenv",
         "pyenv",

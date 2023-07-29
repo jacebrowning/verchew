@@ -217,9 +217,6 @@ def describe_match_version():
 
 
 def describe_format():
-    def default():
-        expect(_("~")) == "~"
-
     @pytest.mark.parametrize(
         "is_tty,supports_utf8,supports_ansi,formatted",
         [

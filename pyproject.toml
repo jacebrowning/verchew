@@ -26,9 +26,6 @@ classifiers = [
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 2.7",
-    "Programming Language :: Python :: 3.5",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -42,13 +39,13 @@ classifiers = [
 
 [tool.poetry.dependencies]
 
-python = "^3.6"
+python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 
 # Formatters
-black = "=19.10b0"
-isort = "=4.3.21"
+black = "^23.7"
+isort = "^5.12"
 
 # Linters
 mypy = "*"
@@ -56,18 +53,18 @@ pydocstyle = "^3"
 pylint = "^2"
 
 # Testing
-pytest = "^5"
+pytest = "^7.4"
 pytest-cov = "*"
-pytest-describe = "^1.0"
-pytest-expecter = "*"
+pytest-describe = "^2.1"
+pytest-expecter = "^3.0"
 pytest-random = "*"
 scripttest = "*"
 
 # Reports
-coveragespace = "^4.2"
+coveragespace = "^6.0"
 
 # Documentation
-mkdocs = "~1.2.3"
+mkdocs = "^1.5.1"
 pygments = "~2.7.4"
 
 # Tooling
@@ -84,6 +81,12 @@ verchew = "verchew.script:main"
 [tool.black]
 
 quiet = true
+
+[tool.isort]
+
+profile = "black"
+
+extra_standard_library = "ConfigParser"
 
 [build-system]
 

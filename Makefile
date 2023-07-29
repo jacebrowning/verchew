@@ -59,7 +59,7 @@ endif
 
 .PHONY: format
 format: install
-	poetry run isort $(PACKAGES) notebooks --recursive --apply
+	poetry run isort $(PACKAGES) notebooks
 	poetry run black $(PACKAGES) notebooks
 	@ echo
 
@@ -129,8 +129,12 @@ $(MKDOCS_INDEX): docs/requirements.txt mkdocs.yml docs/*.md
 	poetry run mkdocs build --clean --strict
 
 docs/requirements.txt: poetry.lock
-	@ poetry export --dev --without-hashes | grep mkdocs > $@
-	@ poetry export --dev --without-hashes | grep pygments >> $@
+	@ rm -f $@
+	@ poetry export --with dev --without-hashes | grep jinja2 >> $@
+	@ poetry export --with dev --without-hashes | grep markdown >> $@
+	@ poetry export --with dev --without-hashes | grep mkdocs >> $@
+	@ poetry export --with dev --without-hashes | grep pygments >> $@
+	@ poetry export --with dev --without-hashes | grep importlib-metadata >> $@
 
 .PHONY: uml
 uml: install docs/*.png
