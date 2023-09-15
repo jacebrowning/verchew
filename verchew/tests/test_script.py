@@ -209,6 +209,11 @@ def describe_match_version():
         expect(match_version("", "program not found")) == False
         expect(match_version("", "v1.2.3\nother not found")) == True
 
+    def when_mismatch_with_missing_program_from_asdf():
+        expect(
+            match_version("1.4.2", "No poetry executable found for poetry 1.4.2")
+        ) == False
+
     def when_match_with_multiple_lines():
         expect(match_version("1.2", "Foobar\nVersion 1.2.3")) == True
 

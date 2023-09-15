@@ -1,6 +1,10 @@
 # Release Notes
 
-## 3.4.1 (2022-06-13)
+## 3.4.2 (2023-09-15)
+
+- Fixed handling of `asdf` "not found" error messages.
+
+## 3.4.1 (2023-06-13)
 
 - Fixed handling of programs with no output.
 

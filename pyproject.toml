@@ -1,13 +1,12 @@
 [tool.poetry]
 
 name = "verchew"
-version = "3.4.1"  # also update verchew/script.py
+version = "3.4.2" # also update verchew/script.py
+
 description = "System dependency version checker."
-
-license = "MIT"
-
 authors = ["Jace Browning <jacebrowning@gmail.com>"]
 
+license = "MIT"
 readme = "README.md"
 
 homepage = "https://pypi.org/project/verchew"
