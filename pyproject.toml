@@ -71,7 +71,7 @@ pyinstaller = "*"
 sniffer = "*"
 MacFSEvents = { version = "*", platform = "darwin" }
 pync = { version = "*", platform = "darwin" }
-ipython = "^7.12.0"
+ipython = "^8.10.0"
 
 [tool.poetry.scripts]
 
