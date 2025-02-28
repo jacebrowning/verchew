@@ -4,7 +4,7 @@
 
 When onboarding new team members, ensuring their computer has everything needed to work on the project can be painful. Verchew is a command-line program and embeddable Python script to check the versions of your project's system dependencies. Its only external dependency is any Python interpreter, which should already be installed on macOS and most Linux-based operating systems.
 
-[![Travis CI](https://img.shields.io/travis/com/jacebrowning/verchew/main.svg?label=unix)](https://app.travis-ci.com/jacebrowning/verchew)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/jacebrowning/verchew/main.yml?label=unix)](https://github.com/jacebrowning/verchew/actions)
 [![AppVeyor](https://img.shields.io/appveyor/ci/jacebrowning/verchew/main.svg?label=windows)](https://ci.appveyor.com/project/jacebrowning/verchew)
 [![Coverage Status](https://img.shields.io/coveralls/jacebrowning/verchew/main.svg)](https://coveralls.io/r/jacebrowning/verchew)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/jacebrowning/verchew.svg)](https://scrutinizer-ci.com/g/jacebrowning/verchew/?branch=main)

@@ -28,7 +28,6 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Topic :: Software Development",
     "Topic :: Software Development :: Build Tools",
     "Topic :: Software Development :: Testing",
@@ -40,7 +39,7 @@ classifiers = [
 
 python = "^3.8"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 
 # Formatters
 black = "^23.7"
@@ -49,7 +48,7 @@ isort = "^5.12"
 # Linters
 mypy = "*"
 pydocstyle = "^3"
-pylint = "^2"
+pylint = "~2.15"
 
 # Testing
 pytest = "^7.4"
@@ -72,6 +71,10 @@ sniffer = "*"
 MacFSEvents = { version = "*", platform = "darwin" }
 pync = { version = "*", platform = "darwin" }
 ipython = "^7.12.0"
+
+[tool.poetry.requires-plugins]
+
+poetry-plugin-export = ">=1.8"
 
 [tool.poetry.scripts]
 

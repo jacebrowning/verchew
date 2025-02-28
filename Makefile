@@ -48,7 +48,7 @@ $(DEPENDENCIES): poetry.lock
 
 ifndef CI
 poetry.lock: pyproject.toml
-	poetry lock --no-update
+	poetry lock
 	@ touch $@
 endif
 
@@ -130,11 +130,11 @@ $(MKDOCS_INDEX): docs/requirements.txt mkdocs.yml docs/*.md
 
 docs/requirements.txt: poetry.lock
 	@ rm -f $@
-	@ poetry export --with dev --without-hashes | grep jinja2 >> $@
-	@ poetry export --with dev --without-hashes | grep markdown >> $@
-	@ poetry export --with dev --without-hashes | grep mkdocs >> $@
-	@ poetry export --with dev --without-hashes | grep pygments >> $@
-	@ poetry export --with dev --without-hashes | grep importlib-metadata >> $@
+	@ poetry export --all-groups --without-hashes | grep jinja2 >> $@
+	@ poetry export --all-groups --without-hashes | grep markdown >> $@
+	@ poetry export --all-groups --without-hashes | grep mkdocs >> $@
+	@ poetry export --all-groups --without-hashes | grep pygments >> $@
+	@ poetry export --all-groups --without-hashes | grep importlib-metadata >> $@
 
 .PHONY: uml
 uml: install docs/*.png
