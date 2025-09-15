@@ -47,7 +47,7 @@ isort = "^5.12"
 
 # Linters
 mypy = "*"
-pydocstyle = "^3"
+pydocstyle = ">=3,<7"
 pylint = "~2.15"
 
 # Testing
