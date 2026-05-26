@@ -63,7 +63,7 @@ coveragespace = "^6.0"
 
 # Documentation
 mkdocs = "^1.5.1"
-pygments = "~2.15.0"
+pygments = ">=2.15,<2.20"
 
 # Tooling
 pyinstaller = "*"
