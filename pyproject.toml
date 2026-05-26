@@ -42,7 +42,7 @@ python = "^3.8"
 [tool.poetry.group.dev.dependencies]
 
 # Formatters
-black = "^23.7"
+black = ">=23.7,<25.0"
 isort = "^5.12"
 
 # Linters
