@@ -1566,18 +1566,18 @@ testing = ["process-tests", "pytest-xdist", "virtualenv"]
 
 [[package]]
 name = "pytest-describe"
-version = "2.1.0"
+version = "2.2.1"
 description = "Describe-style plugin for pytest"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
 files = [
-    {file = "pytest-describe-2.1.0.tar.gz", hash = "sha256:0630c95ac4942ab8dcd8e766236f86436b4984896db0c059fc234fef66fe9732"},
-    {file = "pytest_describe-2.1.0-py3-none-any.whl", hash = "sha256:3ea587839363a91ea24e35e442dae46b56bd91d670e63b755e002b0adfc7a7b2"},
+    {file = "pytest_describe-2.2.1-py3-none-any.whl", hash = "sha256:b7ea0c995599cb6db050b928d5650afdced3629b98cbb71c091fbf9ae5443ed0"},
+    {file = "pytest_describe-2.2.1.tar.gz", hash = "sha256:eb59307333508d700082a4a8aadba0f874f02c73602f7113071b0b41bfe183b7"},
 ]
 
 [package.dependencies]
-pytest = ">=4.6,<8"
+pytest = ">=4.6,<9"
 
 [[package]]
 name = "pytest-expecter"
