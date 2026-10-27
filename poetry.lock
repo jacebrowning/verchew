@@ -1762,14 +1762,14 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "scripttest"
-version = "2.0.post1"
+version = "3.0"
 description = "Helper to test command-line scripts"
 optional = false
-python-versions = "*"
+python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "scripttest-2.0.post1-py3-none-any.whl", hash = "sha256:ec818fd362d5ee0321e000ea43c0540020336771f5168bd591ddd5b37258ca06"},
-    {file = "scripttest-2.0.post1.tar.gz", hash = "sha256:a6067f1feadf4b2ed3e594b0b32e41589640e7fa3974765aa63d508520c0bfdc"},
+    {file = "scripttest-3.0-py3-none-any.whl", hash = "sha256:d8140a72bd17dc7ecdbdd667c91e155f48e16ceba53bcfa7d470531a48800031"},
+    {file = "scripttest-3.0.tar.gz", hash = "sha256:d40e8859d71b1d4918e1d918c667bce05928286f2cbd09cfb7a6cc1f3f308ad0"},
 ]
 
 [[package]]
