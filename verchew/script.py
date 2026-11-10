@@ -337,7 +337,9 @@ def call(args):
         output = "sh: command not found: {0}".format(args[0])
     else:
         raw = process.communicate()[0]
-        output = raw.decode("utf-8").strip()
+        # Program output is not always UTF-8 (e.g. a non-Unicode locale on
+        # Windows); never let an undecodable byte crash version detection.
+        output = raw.decode("utf-8", errors="replace").strip()
         log.debug("Command output: %r", output)
 
     return output

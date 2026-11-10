@@ -5,6 +5,7 @@
 from __future__ import unicode_literals
 
 import os
+import sys
 
 import pytest
 from expecter import expect
@@ -12,6 +13,7 @@ from expecter import expect
 from verchew.script import (
     SCRIPT_URL,
     _,
+    call,
     find_config,
     get_version,
     match_version,
@@ -165,6 +167,22 @@ def describe_get_version():
 
     def when_no_output():
         expect(get_version("echo", argument="")) == ""
+
+
+def test_call_replaces_non_utf8_output():
+    # A dependency whose --version output is not UTF-8 (e.g. a latin-1
+    # locale on Windows) must not crash version detection with
+    # UnicodeDecodeError; undecodable bytes become U+FFFD.
+    output = call(
+        [
+            sys.executable,
+            "-c",
+            "import sys; sys.stdout.buffer.write(b'Foobar 1.2.3 \\xff\\xfe')",
+        ]
+    )
+
+    expect("Foobar 1.2.3" in output) == True
+    expect("\ufffd" in output) == True
 
 
 def describe_match_version():
